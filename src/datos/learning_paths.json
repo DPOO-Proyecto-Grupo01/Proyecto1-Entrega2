@@ -1,0 +1,162 @@
+[
+    {
+        "learningPathID": "lp1",
+        "titulo": "Learning Path 1",
+        "descripcion": "Este es el learning path 1",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 4,
+        "duracionTotal": 32,
+        "fechaCreacion": "2024-10-6",
+        "actividadesID": [
+            "act1",
+            "act2",
+            "act3",
+            "act4",
+            "act5"
+        ]
+    },
+    {
+        "learningPathID": "lp2",
+        "titulo": "Learning Path 2",
+        "descripcion": "Este es el learning path 2",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 2,
+        "duracionTotal": 46,
+        "fechaCreacion": "2024-10-10",
+        "actividadesID": [
+            "act6",
+            "act7",
+            "act8",
+            "act9",
+            "act10"
+        ]
+    },
+    {
+        "learningPathID": "lp3",
+        "titulo": "Learning Path 3",
+        "descripcion": "Este es el learning path 3",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 4,
+        "duracionTotal": 41,
+        "fechaCreacion": "2024-10-5",
+        "actividadesID": [
+            "act11",
+            "act12",
+            "act13",
+            "act14",
+            "act15"
+        ]
+    },
+    {
+        "learningPathID": "lp4",
+        "titulo": "Learning Path 4",
+        "descripcion": "Este es el learning path 4",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 1,
+        "duracionTotal": 15,
+        "fechaCreacion": "2024-10-3",
+        "actividadesID": [
+            "act16",
+            "act17",
+            "act18",
+            "act19",
+            "act20"
+        ]
+    },
+    {
+        "learningPathID": "lp5",
+        "titulo": "Learning Path 5",
+        "descripcion": "Este es el learning path 5",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 2,
+        "duracionTotal": 38,
+        "fechaCreacion": "2024-10-2",
+        "actividadesID": [
+            "act21",
+            "act22",
+            "act23",
+            "act24",
+            "act25"
+        ]
+    },
+    {
+        "learningPathID": "lp6",
+        "titulo": "Learning Path 6",
+        "descripcion": "Este es el learning path 6",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 5,
+        "duracionTotal": 26,
+        "fechaCreacion": "2024-10-9",
+        "actividadesID": [
+            "act26",
+            "act27",
+            "act28",
+            "act29",
+            "act30"
+        ]
+    },
+    {
+        "learningPathID": "lp7",
+        "titulo": "Learning Path 7",
+        "descripcion": "Este es el learning path 7",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 5,
+        "duracionTotal": 27,
+        "fechaCreacion": "2024-10-4",
+        "actividadesID": [
+            "act31",
+            "act32",
+            "act33",
+            "act34",
+            "act35"
+        ]
+    },
+    {
+        "learningPathID": "lp8",
+        "titulo": "Learning Path 8",
+        "descripcion": "Este es el learning path 8",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 5,
+        "duracionTotal": 32,
+        "fechaCreacion": "2024-10-2",
+        "actividadesID": [
+            "act36",
+            "act37",
+            "act38",
+            "act39",
+            "act40"
+        ]
+    },
+    {
+        "learningPathID": "lp9",
+        "titulo": "Learning Path 9",
+        "descripcion": "Este es el learning path 9",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 4,
+        "duracionTotal": 22,
+        "fechaCreacion": "2024-10-7",
+        "actividadesID": [
+            "act41",
+            "act42",
+            "act43",
+            "act44",
+            "act45"
+        ]
+    },
+    {
+        "learningPathID": "lp10",
+        "titulo": "Learning Path 10",
+        "descripcion": "Este es el learning path 10",
+        "objetivo": "Desarrollar habilidades en un \u00e1rea espec\u00edfica",
+        "nivelDificultad": 2,
+        "duracionTotal": 14,
+        "fechaCreacion": "2024-10-10",
+        "actividadesID": [
+            "act46",
+            "act47",
+            "act48",
+            "act49",
+            "act50"
+        ]
+    }
+]
