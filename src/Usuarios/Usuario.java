@@ -41,7 +41,16 @@ public abstract class Usuario {
 	
 	
 	public boolean iniciarSesion(String usuarioID, String contraseña) {
-		return usuarioID.equals(this.usuarioID)&&contraseña.equals(contraseña);
+		boolean sentinela = true;
+		if (Authenticator.authenticate(usuarioID, contraseña, this)) {
+			System.out.println("Inicio de sesion exitoso");
+			sentinela = true;
+		} else {
+			System.out.println("Inicio de sesion fallido");
+			sentinela = false;
+		}
+		return sentinela;
+		
 		
 	}
 	

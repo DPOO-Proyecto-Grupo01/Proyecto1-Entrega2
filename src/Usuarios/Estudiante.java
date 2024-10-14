@@ -52,7 +52,8 @@ public class Estudiante extends Usuario {
 	
 	public void recibirRecomendacion(LearningPath learningPath) {
 		//Devuelve una lista de Learning Paths recomendados para el estudiante, basados en sus intereses. Que se le asigne learning oaths de su profesor asignado
-		Map<String, List<String>> mapaR = LearningPath.getRecomendacionProfesores();
+		LearningPath learningPathInstance = new LearningPath();
+		Map<String, List<String>> mapaR = learningPathInstance.getRecomendacionProfesores();
 		
 		if (mapaR.containsKey(ProfesorAsignado) && mapaR.get(ProfesorAsignado).contains(intereses)) {
 			System.out.println("Recomendacion: " + learningPath);
@@ -60,9 +61,9 @@ public class Estudiante extends Usuario {
 		
 	}
 	
-	public void enviarFeedback(Feedback feedback) {
-		// Envia un feedback a un Learning Path
-		Feedback.getFeedback().add(feedback);
+	public void enviarFeedback(String feedback) {
+		Feedback.setComentario(feedback);
+		
 	}
 	
 	public void verActividadesDisponibles(List<Actividades> actividades, LearningPath learningPath) {

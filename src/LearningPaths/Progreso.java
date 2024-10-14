@@ -87,6 +87,14 @@ public class Progreso {
 		public double getTasaÉxito() {
 			return tasaÉxito;
 		}
+		
+		public void registrarProgreso(Estudiante estudiante, LearningPath learningPath, Actividades actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado, double tasaÉxito) {
+			
+			
+			
+			
+
+		}
 	    
 	    
 }

@@ -52,6 +52,12 @@ public class Profesor extends Usuario {
 		
 	}
 	
+	public void crearActividad(Actividades actividad) {
+		// Crea una actividad
+		List<Actividades> actividadesCreadas = {actividad, actividad, actividad};
+		learningPathsCreados.add((LearningPath) actividadesCreadas);
+	}
+	
 	
 
 
