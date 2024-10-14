@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Usuarios.Usuario;
+
 
 
 public class PersistenciaUsuarios {
