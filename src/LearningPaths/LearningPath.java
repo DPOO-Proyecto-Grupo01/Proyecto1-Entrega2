@@ -21,6 +21,8 @@ public class LearningPath {
 	private Date fechaModificacion;
 	private List<Actividades> actividades;
 	private Map<Estudiante, Progreso> progreso;
+	private Map<String, List<String>> RecomendacionProfesores;
+	private List<String> intereses; 
 	private List<Feedback> feedback;
 	private Profesor profesor;
 	
@@ -30,7 +32,7 @@ public class LearningPath {
 	
 	
 	public LearningPath(String LearningPathID, String titulo, String descripcion, String objetivos,
-			int nivelDificultad, int duracion, Profesor profesor) {
+			int nivelDificultad, int duracion, Profesor profesor, List<Actividades> actividades, List<String> intereses, Map<String, List<String>> RecomendacionProfesores) {
 		}
 	
 	public String getLearningPathID() {
@@ -121,7 +123,24 @@ public class LearningPath {
 	public void setFechaModificacion(Date fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
 	}
+	
 
+
+	public Map<String, List<String>> getRecomendacionProfesores() {
+		return RecomendacionProfesores;
+	}
+
+	public void setRecomendacionProfesores(Map<String, List<String>> recomendacionProfesores) {
+		RecomendacionProfesores = recomendacionProfesores;
+	}
+
+	public List<String> getIntereses() {
+		return intereses;
+	}
+
+	public void setIntereses(List<String> intereses) {
+		this.intereses = intereses;
+	}
 
 	public List<Actividades> getActividades() {
 		return actividades;

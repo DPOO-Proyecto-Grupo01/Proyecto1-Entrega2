@@ -8,19 +8,45 @@ public abstract class Usuario {
 	
 	public Usuario (String UsuarioID, String nombre, String contraseña, String email) {
 		this.usuarioID= UsuarioID;
-		
+		this.nombre= nombre;
+		this.email= email;
+		this.contraseña= contraseña;
+	}
+	
+	
+	
+	public String getUsuarioID() {
+		return usuarioID;
+	}
+
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public String getContraseña() {
+		return contraseña;
 	}
 	
 	public abstract String getTipoUsuario();
-		
 	
-	public boolean registrar() {
-		return false;
-		
-	}
+	
 	public boolean iniciarSesion(String usuarioID, String contraseña) {
 		return usuarioID.equals(this.usuarioID)&&contraseña.equals(contraseña);
 		
 	}
+	
+	
+	
+	
 	
 }
