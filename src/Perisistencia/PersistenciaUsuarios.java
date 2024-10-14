@@ -3,14 +3,14 @@ package Perisistencia;
 import java.io.File;
 import java.nio.file.Files;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import Usuarios.Usuario;
 
 
 
-public class PersistenciaUsuarios {
+public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
 	
 	
