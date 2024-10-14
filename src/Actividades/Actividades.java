@@ -1,18 +1,21 @@
 package Actividades;
 
+import java.util.List;
+
 public abstract class Actividades {
 
-	private String actividadID;
-    private String descripcion;
-    private String objetivo;
-    private int nivelDificultad;
-    private int duracionEsperada;
-    private boolean esObligatoria;
-    private int fechaLimite;
-    private String resenas;
-    private double calificacion;
-    private int resultado;
+	protected String actividadID;
+    protected String descripcion;
+    protected String objetivo;
+    protected int nivelDificultad;
+    protected int duracionEsperada;
+    protected boolean esObligatoria;
+    protected int fechaLimite;
+    protected String resenas;
+    protected double calificacion;
+    protected int resultado;
     protected String preguntas;
+    protected List<String> respuestasUsuario;
     
 	public Actividades(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, int fechaLimite, String resenas, double calificacion,
@@ -114,16 +117,14 @@ public abstract class Actividades {
 	}
 
 
-
+	public abstract String getTipoActividad();
+	
 	public abstract void agregarContenido(String pregunta);
+
+	public abstract String EstadoActual(String estado);
+		
 	
-	public abstract void ObtenerResultado();
 	
-	public abstract void validarRespuesta();
-	
-	public abstract void calificarActividad();
-	
-	public abstract void iniciarActividad();
 	
 
 	

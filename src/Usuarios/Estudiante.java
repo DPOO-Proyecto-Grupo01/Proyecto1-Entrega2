@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import Actividades.Actividades;
+import Actividades.Tarea;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
@@ -32,12 +33,15 @@ public class Estudiante extends Usuario {
 		learningPathsInscritos.add(learningPath);
 	}
 	
-	public void completarActividad(Actividades actividad) {
+	public void completarActividad(Actividades actividad, Tarea tarea) {
 		// crea una lista de actividades completadas
 
 		List<Actividades> actividadesCompletadas = new ArrayList<>();
 		if(progresoActividades.get(actividad).getEstado()==100.0){
 			actividadesCompletadas.add(actividad);
+			actividad.EstadoActual("Completado");
+			
+			
 		}
 		
 	}
