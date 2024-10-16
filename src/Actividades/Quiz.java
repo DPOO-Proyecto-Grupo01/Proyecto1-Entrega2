@@ -1,6 +1,6 @@
 package Actividades;
 
-public class Quiz extends Actividades {
+public class Quiz extends Actividad {
 
 	public Quiz(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, int fechaLimite, String resenas, double calificacion, int resultado) {
@@ -10,6 +10,17 @@ public class Quiz extends Actividades {
 	}
 	
 	public static final String QUIZ = "Quiz";
+	private double calificacionMinima;
+	
+	
+
+	public double getCalificacionMinima() {
+		return calificacionMinima;
+	}
+
+	public void setCalificacionMinima(double calificacionMinima) {
+		this.calificacionMinima = calificacionMinima;
+	}
 
 	@Override
 	public String getTipoActividad() {
@@ -27,5 +38,7 @@ public class Quiz extends Actividades {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }

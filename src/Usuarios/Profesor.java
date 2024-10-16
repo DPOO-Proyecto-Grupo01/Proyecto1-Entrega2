@@ -2,8 +2,10 @@ package Usuarios;
 
 import java.util.List;
 
-import Actividades.Actividades;
+import Actividades.Actividad;
+
 import Actividades.Examen;
+import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
 import LearningPaths.LearningPath;
@@ -23,39 +25,50 @@ public class Profesor extends Usuario {
 
 	}
 	
-	public void revisarEstadoActividad(Actividades actividad, String estado ) {
+	public void revisarEstadoActividad(Actividad actividad, String estado ) {
 		// Revisa el estado de una actividad
-		if (actividad.getTipoActividad().equals(Tarea.TAREA) || actividad.getTipoActividad().equals(Examen.EXAMEN)) {
-			Tarea tarea = (Tarea) actividad;
-			if(tarea.EstadoActual(estado).equals("Enviado")) {
-				tarea.EstadoActual("Exitoso");
+		if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
+			if(actividad.EstadoActual(estado).equals("Enviado")) {
+				actividad.EstadoActual("Exitoso");
 			} else {
-				tarea.EstadoActual("Fallido");
+				actividad.EstadoActual("Fallido");
 			}
-			Examen examen = (Examen) actividad;
-			if (examen.EstadoActual(estado).equals("Enviado")) {
-				examen.EstadoActual("Exitoso");
+		} else if (actividad.getTipoActividad().equals("RecursoEducativo") || actividad.getTipoActividad().equals("Encuesta")) {
+            actividad.EstadoActual("Exitoso");
+        } else if (actividad.getTipoActividad().equals("Quiz")){
+			if (actividad.getCalificacion() >= ((Quiz) actividad).getCalificacionMinima()) {
+				actividad.EstadoActual("Exitoso");
 			} else {
-				examen.EstadoActual("Fallido");
+				actividad.EstadoActual("Fallido");
 			}
-		} else {
-			if (actividad.getTipoActividad().equals(RecursoEducativo.RECURSOEDUCATIVO)) {
-				RecursoEducativo recurso = (RecursoEducativo) actividad;
-				if (recurso.EstadoActual(estado).equals("Completado")) {
-					recurso.EstadoActual("Exitoso");
-				} else {
-					recurso.EstadoActual("Fallido");
-				}
-			}
+        	
 			
-		}
-		
+		} 
 	}
+		
+			
+		
+		
 	
-	public void crearActividad(Actividades actividad) {
+	
+	public void crearActividad(Actividad actividad) {
 		// Crea una actividad
+		
+		newInstanceOfActividad(actividad);
 		List<Actividades> actividadesCreadas = {actividad, actividad, actividad};
 		learningPathsCreados.add((LearningPath) actividadesCreadas);
+	}
+	
+	public void CalificacionMinima(Actividad actividad, double calificacionMinima) {
+		if(actividad.getTipoActividad().equals("Quiz")) {
+			((Quiz) actividad).setCalificacionMinima(calificacionMinima);
+		} else {
+			if (actividad.getTipoActividad().equals("Examen")) {
+				((Examen) actividad).setCalificacionMinima(calificacionMinima);
+			}
+		}
+		
+		
 	}
 	
 	

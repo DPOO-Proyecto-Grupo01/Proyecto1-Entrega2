@@ -4,7 +4,7 @@ package LearningPaths;
 
 import java.util.Date;
 
-import Actividades.Actividades;
+import Actividades.Actividad;
 import Usuarios.Estudiante;
 
 public class Progreso {
@@ -12,7 +12,7 @@ public class Progreso {
 	    private String progresoID;
 	    private Estudiante estudiante;
 	    private LearningPath learningPath;
-	    private Actividades actividad;
+	    private Actividad actividad;
 	    private Date fechaInicio;
 	    private Date fechaCompletado;
 	    private int tiempoDedicado;
@@ -21,7 +21,7 @@ public class Progreso {
 	
 	    
 	    
-	    public Progreso(String progresoID, Estudiante estudiante, LearningPath learningPath, Actividades actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado, double tasaÉxito) {
+	    public Progreso(String progresoID, Estudiante estudiante, LearningPath learningPath, Actividad actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado, double tasaÉxito) {
 	    	            this.progresoID = progresoID;
 	    	            this.estudiante = estudiante;
 	    	            this.learningPath = learningPath;
@@ -54,7 +54,7 @@ public class Progreso {
 
 
 
-		public Actividades getActividad() {
+		public Actividad getActividad() {
 			return actividad;
 		}
 
@@ -88,7 +88,7 @@ public class Progreso {
 			return tasaÉxito;
 		}
 		
-		public void registrarProgreso(Estudiante estudiante, LearningPath learningPath, Actividades actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado, double tasaÉxito) {
+		public void registrarProgreso(Estudiante estudiante, LearningPath learningPath, Actividad actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado, double tasaÉxito) {
 			
 			
 			

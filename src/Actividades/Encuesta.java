@@ -1,6 +1,6 @@
 package Actividades;
 
-public class Encuesta extends Actividades {
+public class Encuesta extends Actividad {
 
 	public Encuesta(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, int fechaLimite, String resenas, double calificacion, int resultado) {

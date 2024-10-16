@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import Actividades.Actividades;
+import Actividades.Actividad;
 import Actividades.Tarea;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
@@ -19,7 +19,7 @@ public class Estudiante extends Usuario {
 	
 
 	private List<LearningPath> learningPathsInscritos;
-	private Map<Actividades, Progreso> progresoActividades;
+	private Map<Actividad, Progreso> progresoActividades;
 	private List<String> intereses;
 	private String ProfesorAsignado;
 	public String estudiante = "Estudiante";
@@ -33,10 +33,10 @@ public class Estudiante extends Usuario {
 		learningPathsInscritos.add(learningPath);
 	}
 	
-	public void completarActividad(Actividades actividad, Tarea tarea) {
+	public void completarActividad(Actividad actividad, Tarea tarea) {
 		// crea una lista de actividades completadas
 
-		List<Actividades> actividadesCompletadas = new ArrayList<>();
+		List<Actividad> actividadesCompletadas = new ArrayList<>();
 		if(progresoActividades.get(actividad).getEstado()==100.0){
 			actividadesCompletadas.add(actividad);
 			actividad.EstadoActual("Completado");
@@ -46,7 +46,7 @@ public class Estudiante extends Usuario {
 		
 	}
 	
-	public void verProgreso(Actividades actividad, Progreso progreso) {
+	public void verProgreso(Actividad actividad, Progreso progreso) {
 		progresoActividades.put(actividad, progreso);
 	}
 	
@@ -66,7 +66,7 @@ public class Estudiante extends Usuario {
 		
 	}
 	
-	public void verActividadesDisponibles(List<Actividades> actividades, LearningPath learningPath) {
+	public void verActividadesDisponibles(List<Actividad> actividades, LearningPath learningPath) {
 		// Muestra las actividades disponibles en los Learning Paths inscritos.
 		if (progresoActividades.get(actividades).getEstado() != 100.0) {
 			System.out.println("Actividades disponibles: " + actividades);

@@ -2,7 +2,7 @@ package Actividades;
 
 import java.util.List;
 
-public abstract class Actividades {
+public abstract class Actividad {
 
 	protected String actividadID;
     protected String descripcion;
@@ -17,7 +17,19 @@ public abstract class Actividades {
     protected String preguntas;
     protected List<String> respuestasUsuario;
     
-	public Actividades(String actividadID, String descripcion, String objetivo, int nivelDificultad,
+    
+    
+    
+    //TODO: MOVER TODOS LOS STRINGS A UNA CLASE DE CONSTANTES
+    public static final String TAREA = "Tarea";
+    public static final String EXAMEN = "Examen";
+    public static final String RECURSOEDUCATIVO = "Recurso Educativo";
+    public static final String QUIZ = "Quiz";
+    public static final String ENCUESTA = "Encuesta";
+    
+   
+    
+	public Actividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, int fechaLimite, String resenas, double calificacion,
 			int resultado) {
 		this.actividadID = actividadID;
@@ -54,6 +66,23 @@ public abstract class Actividades {
 
 	public void setObjetivo(String objetivo) {
 		this.objetivo = objetivo;
+	}
+
+
+	public static String getTarea() {
+		return TAREA;
+	}
+
+
+
+	public static String getExamen() {
+		return EXAMEN;
+	}
+
+
+
+	public static String getRecursoeducativo() {
+		return RECURSOEDUCATIVO;
 	}
 
 

@@ -1,6 +1,6 @@
 package Actividades;
 
-public class RecursoEducativo extends Actividades {
+public class RecursoEducativo extends Actividad {
 	
 	public static final String RECURSOEDUCATIVO = "Recurso Educativo";
 	private String tipoRecurso;

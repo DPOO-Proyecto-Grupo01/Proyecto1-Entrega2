@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import Actividades.Actividades;
+import Actividades.Actividad;
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
 
@@ -19,7 +19,7 @@ public class LearningPath {
 	private int calificacion;
 	private Date fechaCreacion;
 	private Date fechaModificacion;
-	private List<Actividades> actividades;
+	private List<Actividad> actividades;
 	private Map<Estudiante, Progreso> progreso;
 	private Map<String, List<String>> RecomendacionProfesores;
 	private List<String> intereses; 
@@ -32,7 +32,7 @@ public class LearningPath {
 	
 	
 	public LearningPath(String LearningPathID, String titulo, String descripcion, String objetivos,
-			int nivelDificultad, int duracion, Profesor profesor, List<Actividades> actividades, List<String> intereses, Map<String, List<String>> RecomendacionProfesores) {
+			int nivelDificultad, int duracion, Profesor profesor, List<Actividad> actividades, List<String> intereses, Map<String, List<String>> RecomendacionProfesores) {
 		}
 	
 	public String getLearningPathID() {
@@ -142,12 +142,12 @@ public class LearningPath {
 		this.intereses = intereses;
 	}
 
-	public List<Actividades> getActividades() {
+	public List<Actividad> getActividades() {
 		return actividades;
 	}
 
 
-	public void setActividades(List<Actividades> actividades) {
+	public void setActividades(List<Actividad> actividades) {
 		this.actividades = actividades;
 	}
 
@@ -184,14 +184,14 @@ public class LearningPath {
 //////////////
 	
 	
-	public void agregarActividad(Actividades actividad) {
+	public void agregarActividad(Actividad actividad) {
 		
 	}
 	
-	public boolean eliminarActividad(Actividades actividad) {
+	public boolean eliminarActividad(Actividad actividad) {
 		return false;
 	}
-	public List<Actividades> obtenerActividades() {
+	public List<Actividad> obtenerActividades() {
 		return actividades;
 	}
 

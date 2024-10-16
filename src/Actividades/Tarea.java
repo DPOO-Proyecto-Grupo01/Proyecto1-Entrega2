@@ -2,7 +2,7 @@ package Actividades;
 
 import java.util.List;
 
-public class Tarea extends Actividades {
+public class Tarea extends Actividad {
 	
 	public static final String TAREA = "Tarea";
 	private String estado;

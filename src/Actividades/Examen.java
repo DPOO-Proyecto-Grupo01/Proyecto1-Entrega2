@@ -2,7 +2,7 @@ package Actividades;
 
 import java.util.List;
 
-public class Examen extends Actividades{
+public class Examen extends Actividad{
 
 	public Examen(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, int fechaLimite, String resenas, double calificacion, int resultado) {
@@ -13,6 +13,7 @@ public class Examen extends Actividades{
 
 	public static final String EXAMEN = "Examen";
 	public List<String> preguntas;
+	public double calificacionMinima;
 
 	@Override
 	public String getTipoActividad() {
@@ -33,6 +34,16 @@ public class Examen extends Actividades{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public double getCalificacionMinima() {
+		return calificacionMinima;
+	}
+	
+	public void setCalificacionMinima(double calificacionMinima) {
+		this.calificacionMinima = calificacionMinima;
+	}
+
+	
 	
 	
 

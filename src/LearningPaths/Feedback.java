@@ -1,7 +1,7 @@
 package LearningPaths;
 import java.util.Date;
 
-import Actividades.Actividades;
+import Actividades.Actividad;
 import Usuarios.Estudiante;
 public class Feedback {
 	
@@ -10,13 +10,13 @@ public class Feedback {
 	private double calificacion;
 	private Date fecha;
 	private Estudiante estudiante;
-	private Actividades actividad;
+	private Actividad actividad;
 	private LearningPath learningPath;
 
 	
 
 	public Feedback(String feedbackID, String comentario, double calificacion, Date fecha, Estudiante estudiante,
-			Actividades actividad, LearningPath learningPath) {
+			Actividad actividad, LearningPath learningPath) {
 		super();
 		this.feedbackID = feedbackID;
 		this.comentario = comentario;
@@ -61,7 +61,7 @@ public class Feedback {
 
 	
 
-	public Actividades getActividad() {
+	public Actividad getActividad() {
 		return actividad;
 	}
 
