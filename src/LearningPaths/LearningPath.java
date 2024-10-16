@@ -147,8 +147,8 @@ public class LearningPath {
 	}
 
 
-	public void setActividades(List<Actividad> actividades) {
-		this.actividades = actividades;
+	public void setActividades(Actividad actividad) {
+		this.actividades.add(actividad);
 	}
 
 

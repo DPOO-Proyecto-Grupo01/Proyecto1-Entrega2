@@ -1,9 +1,10 @@
 package Usuarios;
 
 import java.util.List;
+import java.util.Map;
 
 import Actividades.Actividad;
-
+import Actividades.Encuesta;
 import Actividades.Examen;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
@@ -16,7 +17,7 @@ public class Profesor extends Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-	private List<LearningPath> learningPathsCreados;
+	private Map<String, LearningPath> learningPathsCreados;
 	public String profesor = "Profesor";
 	
 	@Override
@@ -46,17 +47,54 @@ public class Profesor extends Usuario {
 		} 
 	}
 		
-			
-		
-		
 	
-	
-	public void crearActividad(Actividad actividad) {
+	public void crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
+			int duracionEsperada, boolean esObligatoria, int fechaLimite, String resenas, double calificacion,
+			int resultado, String tipo, String learningPathID) {
 		// Crea una actividad
+		Actividad actividad = null;
 		
-		Actividad actividad1= new Actividad("1", "descripcion", "objetivo", 1, 1, true, 1, "resenas", 1, 1);
-		List<Actividades> actividadesCreadas = {actividad, actividad, actividad};
-		learningPathsCreados.add((LearningPath) actividadesCreadas);
+		if (tipo.equals("Quiz")) {
+			Actividad quiz = new Quiz (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado);
+			
+			actividad = quiz;
+			}
+			
+		else if (tipo.equals("Examen")) {
+			Actividad examen = new Examen ( actividadID,descripcion, objetivo,nivelDificultad,duracionEsperada,
+					esObligatoria, fechaLimite, resenas, calificacion, resultado);
+			
+			actividad = examen;
+					}
+			
+		else if (tipo.equals("Encuesta")) {
+			Actividad encuesta = new Encuesta (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado);
+			actividad = encuesta;
+		}
+		
+		else if (tipo.equals("Recurso Educativo")) {
+			
+			//String tipoR= input??;
+			//Actividad recurso = new RecursoEducativo (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
+					//esObligatoria,fechaLimite,  resenas, calificacion, resultado, tipo);
+			//actividad = recurso;
+		}
+		
+		else if (tipo.equals("Tarea")){
+			//String instrucciones = input??;
+	
+			//Actividad tarea = new Tarea (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
+					//esObligatoria,fechaLimite,  resenas, calificacion, resultado, tipo, instrucciones);
+			
+			//actividad = tarea;
+		}
+		
+		LearningPath lp = learningPathsCreados.get(learningPathID);
+		
+		lp.setActividades(actividad);
+		
 	}
 	
 	public void CalificacionMinima(Actividad actividad, double calificacionMinima) {
@@ -70,8 +108,5 @@ public class Profesor extends Usuario {
 		
 		
 	}
-	
-	
 
-
-}
+	}
