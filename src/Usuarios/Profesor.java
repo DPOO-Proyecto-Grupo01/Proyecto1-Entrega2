@@ -54,7 +54,7 @@ public class Profesor extends Usuario {
 	public void crearActividad(Actividad actividad) {
 		// Crea una actividad
 		
-		newInstanceOfActividad(actividad);
+		Actividad actividad1= new Actividad("1", "descripcion", "objetivo", 1, 1, true, 1, "resenas", 1, 1);
 		List<Actividades> actividadesCreadas = {actividad, actividad, actividad};
 		learningPathsCreados.add((LearningPath) actividadesCreadas);
 	}
