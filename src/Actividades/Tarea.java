@@ -1,5 +1,6 @@
 package Actividades;
 
+import java.util.Date;
 import java.util.List;
 
 public class Tarea extends Actividad {
@@ -10,7 +11,7 @@ public class Tarea extends Actividad {
 	private List<String> preguntas;
 	
 	public Tarea(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, int fechaLimite, String resenas, double calificacion, int resultado) {
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado);
 		
@@ -53,13 +54,13 @@ public class Tarea extends Actividad {
 
 
 
-	public int getFechaLimite() {
+	public Date getFechaLimite() {
 		return fechaLimite;
 	}
 
 
 
-	public void setFechaLimite(int fechaLimite) {
+	public void setFechaLimite(Date fechaLimite) {
 		this.fechaLimite = fechaLimite;
 	}
 

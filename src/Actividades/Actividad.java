@@ -32,7 +32,7 @@ public abstract class Actividad {
    
     
 	public Actividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
-			int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas, double calificacion,
+			int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
 			int resultado) {
 		this.actividadID = actividadID;
 		this.descripcion = descripcion;
@@ -40,7 +40,7 @@ public abstract class Actividad {
 		this.nivelDificultad = nivelDificultad;
 		this.duracionEsperada = duracionEsperada;
 		this.esObligatoria = esObligatoria;
-		this.fechaLimite = fechaLimite;
+		this.fechaLimite = fechaLimite2;
 		this.resenas = resenas;
 		this.calificacion = calificacion;
 		this.resultado = resultado;

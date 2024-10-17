@@ -1,5 +1,6 @@
 package Usuarios;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +79,7 @@ public class Profesor extends Usuario {
 		
 	
 	public void crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
-			int duracionEsperada, boolean esObligatoria, int fechaLimite, String resenas, double calificacion,
+			int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas, double calificacion,
 			int resultado, String tipo, String learningPathID) {
 		// Crea una actividad
 		Actividad actividad = null;
