@@ -28,10 +28,6 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 		String jsonCompleto = new String( Files.readAllBytes( new File( archivo ).toPath( ) ) );
 		JSONObject archivo1 = new JSONObject(jsonCompleto);
 		JSONArray usuarios = archivo1.getJSONArray("usuarios");
-		
-		
-		
-		
 		for(int i = 0; i < usuarios.length(); i++) {
 			JSONObject usuario = usuarios.getJSONObject(i);
 			if (usuario.getString("usuarioID").equals(usuarioID)) {

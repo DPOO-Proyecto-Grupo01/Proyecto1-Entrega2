@@ -3,12 +3,6 @@ import java.util.List;
 
 public class Authenticator  {
 	
-	
-	
-	public static boolean authenticate(String usuarioID, String contraseña, Usuario usuario) {
-		return usuarioID.equals(usuario.getUsuarioID()) && contraseña.equals(usuario.getContraseña());
-	}
-	
 	private int codigo;
 	private boolean fueAutenticado;
 	private String ultimoLogin;
@@ -85,17 +79,19 @@ public class Authenticator  {
 		this.archivoUsuarios = archivoUsuarios;
 	}
 	
-	public boolean verificarCredenciales() {
-		return false;
-    
+	public static boolean authenticate(String usuarioID, String contraseña, Usuario usuario) {
+		return usuarioID.equals(usuario.getUsuarioID()) && contraseña.equals(usuario.getContraseña());
 	}
 	
-	public void cambiarPassword() {
-
+	public void cambiarPassword(Usuario usuario, String contraseña) {
+		usuario.setContraseña(contraseña);
 	}
-	
-	public void eliminarUsuario() {
 
+	
+	
+	public void eliminarUsuario(Usuario usuario) {
+		//TODO implementar
+		
 	}
 	
 	

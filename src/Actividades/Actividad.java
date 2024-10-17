@@ -16,7 +16,8 @@ public abstract class Actividad {
     protected int resultado;
     protected String preguntas;
     protected List<String> respuestasUsuario;
-    
+    public String estado;
+   
     
     
     
@@ -144,13 +145,24 @@ public abstract class Actividad {
 	public int getResultado() {
 		return resultado;
 	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 
 
 	public abstract String getTipoActividad();
 	
 	public abstract void agregarContenido(String pregunta);
 
-	public abstract String EstadoActual(String estado);
+
 		
 	
 	

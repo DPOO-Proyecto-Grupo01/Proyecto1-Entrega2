@@ -20,11 +20,10 @@ public class LearningPath {
 	private Date fechaCreacion;
 	private Date fechaModificacion;
 	private List<Actividad> actividades;
-	private Map<Estudiante, Progreso> progreso;
-	private Map<String, List<String>> RecomendacionProfesores;
 	private List<String> intereses; 
 	private List<Feedback> feedback;
 	private Profesor profesor;
+	public Progreso progreso;
 	
 	
 	
@@ -32,9 +31,34 @@ public class LearningPath {
 	
 	
 	public LearningPath(String LearningPathID, String titulo, String descripcion, String objetivos,
-			int nivelDificultad, int duracion, Profesor profesor, List<Actividad> actividades, List<String> intereses, Map<String, List<String>> RecomendacionProfesores) {
+			int nivelDificultad, int duracion, Profesor profesor, List<Actividad> actividades, List<String> intereses) {
+		this.LearningPathID = LearningPathID;
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.objetivos = objetivos;
+		this.nivelDificultad = nivelDificultad;
+		this.duracionMinutos = duracion;
+		this.profesor = profesor;
+		this.actividades = actividades;
+		this.intereses = intereses;
+		
+		
 		}
 	
+	
+	
+	public Progreso getProgreso() {
+		return progreso;
+	}
+
+
+
+	public void setProgreso(Progreso progreso) {
+		this.progreso = progreso;
+	}
+
+
+
 	public String getLearningPathID() {
 		return LearningPathID;
 	}
@@ -126,13 +150,7 @@ public class LearningPath {
 	
 
 
-	public Map<String, List<String>> getRecomendacionProfesores() {
-		return RecomendacionProfesores;
-	}
-
-	public void setRecomendacionProfesores(Map<String, List<String>> recomendacionProfesores) {
-		RecomendacionProfesores = recomendacionProfesores;
-	}
+	
 
 	public List<String> getIntereses() {
 		return intereses;
@@ -152,14 +170,7 @@ public class LearningPath {
 	}
 
 
-	public Map<Estudiante, Progreso> getProgreso() {
-		return progreso;
-	}
-
-
-	public void setProgreso(Map<Estudiante, Progreso> progreso) {
-		this.progreso = progreso;
-	}
+	
 
 
 	public List<Feedback> getFeedback() {
@@ -184,34 +195,42 @@ public class LearningPath {
 //////////////
 	
 	
-	public void agregarActividad(Actividad actividad) {
-		
-	}
-	
-	public boolean eliminarActividad(Actividad actividad) {
-		return false;
-	}
 	public List<Actividad> obtenerActividades() {
 		return actividades;
 	}
 
-	public void agregarProgreso(Progreso progreso) {
+	public void actualizarProgreso(Progreso progreso, List<Actividad> actividades) {
+		int exitosas = 0;
+		double porcentajeExitosas = 0;
+		for (Actividad actividad : actividades) {
+			if (actividad.getEstado().equals("Exitoso")) {
+				exitosas++;
+			}
+		}
+		porcentajeExitosas = exitosas/actividades.size();
+		progreso.setPorcentajeDeExito(porcentajeExitosas);
+	
+		
 	}
 	
 	public void obtenerProgresoEstudiante(Estudiante estudiante) {
 	}
-	public void agregarFeedback(Feedback feedback) {
-		
-	}
+
 	public List<Feedback> obtenerFeedback() {
 		return feedback;
 	}
 	
 	public double calcularRating() {
-		return 0.0;
+		double rating = 0;
+		for (Feedback f : feedback) {
+			rating += f.getCalificacion();
+		}
+		return rating/feedback.size();
 	}
 	public String obtenerDetalles() {
-		return "detalles";
+		return "Titulo: " + titulo + "\n" + "Descripcion: " + descripcion + "\n" + "Objetivos: " + objetivos + "\n" + "Nivel de Dificultad: " + nivelDificultad + "\n" + "Duracion: " + duracionMinutos + "\n" 
+	+ "Calificacion: " + calificacion + "\n" + "Fecha de Creacion: " + fechaCreacion + "\n" + "Fecha de Modificacion: " + fechaModificacion + "\n" + "Intereses: " + intereses + "\n" + "Profesor: " + profesor;
+		
 	}
 }
 

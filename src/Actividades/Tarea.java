@@ -10,11 +10,10 @@ public class Tarea extends Actividad {
 	private List<String> preguntas;
 	
 	public Tarea(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, int fechaLimite, String resenas, double calificacion, int resultado, String estado, String Instrucciones) {
+			boolean esObligatoria, int fechaLimite, String resenas, double calificacion, int resultado) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado);
-		this.estado = estado;
-		this.Instrucciones = Instrucciones;
+		
 
 	}
 	
@@ -124,11 +123,7 @@ public class Tarea extends Actividad {
 		
 	}
 	
-	@Override
-	public String EstadoActual(String estado) {
-		this.estado = estado;
-		return estado;
-	}
+
 	
 	
 

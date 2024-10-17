@@ -17,11 +17,11 @@ public class Progreso {
 	    private Date fechaCompletado;
 	    private int tiempoDedicado;
 	    private double estado;
-	    private double tasaÉxito;
+	    public double porcentajeDeExito;
 	
 	    
 	    
-	    public Progreso(String progresoID, Estudiante estudiante, LearningPath learningPath, Actividad actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado, double tasaÉxito) {
+	    public Progreso(String progresoID, Estudiante estudiante, LearningPath learningPath, Actividad actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado) {
 	    	            this.progresoID = progresoID;
 	    	            this.estudiante = estudiante;
 	    	            this.learningPath = learningPath;
@@ -30,7 +30,7 @@ public class Progreso {
 	    	            this.fechaCompletado = fechaCompletado;
 	    	            this.tiempoDedicado = tiempoDedicado;
 	    	            this.estado = estado;
-	    	            this.tasaÉxito = tasaÉxito;
+	    	            
 	    	            
 	    }
 
@@ -83,18 +83,19 @@ public class Progreso {
 		}
 
 
-
-		public double getTasaÉxito() {
-			return tasaÉxito;
+		public double getPorcentajeDeExito() {
+			return porcentajeDeExito;
 		}
+
+
+
+		public void setPorcentajeDeExito(double porcentajeDeExito) {
+			this.porcentajeDeExito = porcentajeDeExito;
+		}
+
+
+
 		
-		public void registrarProgreso(Estudiante estudiante, LearningPath learningPath, Actividad actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado, double tasaÉxito) {
-			
-			
-			
-			
-
-		}
 	    
 	    
 }

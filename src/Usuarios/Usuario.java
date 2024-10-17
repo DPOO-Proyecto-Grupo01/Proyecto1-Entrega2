@@ -12,31 +12,28 @@ public abstract class Usuario {
 		this.email= email;
 		this.contraseña= contraseña;
 	}
-	
-	
-	
+
+	public String getContraseña() {
+		return contraseña;
+	}
+
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
+	}
+
 	public String getUsuarioID() {
 		return usuarioID;
 	}
 
-
-
 	public String getNombre() {
 		return nombre;
 	}
-
-
 
 	public String getEmail() {
 		return email;
 	}
 
 
-
-	public String getContraseña() {
-		return contraseña;
-	}
-	
 	public abstract String getTipoUsuario();
 	
 	

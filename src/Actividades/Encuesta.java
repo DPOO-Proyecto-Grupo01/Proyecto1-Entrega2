@@ -22,11 +22,6 @@ public class Encuesta extends Actividad {
 		
 	}
 
-	@Override
-	public String EstadoActual(String estado) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	
 

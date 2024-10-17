@@ -7,10 +7,10 @@ public class RecursoEducativo extends Actividad {
 	
 	public RecursoEducativo(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, int fechaLimite, String resenas, double calificacion,
-			int resultado, String tipoRecurso) {
+			int resultado) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado);
-		this.tipoRecurso = tipoRecurso;
+		
 		
 	}
 	
@@ -24,17 +24,14 @@ public class RecursoEducativo extends Actividad {
 	public void agregarContenido(String tipoRecurso) {
 		// TODO Auto-generated method stub
 	}
-	
-	@Override
-	public String EstadoActual(String estado) {
-		return estado;
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	public String getTipoRecurso() {
 		return tipoRecurso;
+	}
+	
+	public void setTipoRecurso(String tipoRecurso) {
+		this.tipoRecurso = tipoRecurso;
 	}
 
 

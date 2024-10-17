@@ -9,6 +9,7 @@ import Actividades.Examen;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 
 public class Profesor extends Usuario {
@@ -16,31 +17,59 @@ public class Profesor extends Usuario {
 		super(UsuarioID, contraseña, contraseña, contraseña);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	private Map<String, List<LearningPath>> RecomendacionesProfesor;
 	private Map<String, LearningPath> learningPathsCreados;
 	public String profesor = "Profesor";
-	
+
 	@Override
 	public String getTipoUsuario() {
 		return this.profesor;
 
 	}
 	
+	
+	public Map<String, List<LearningPath>> getRecomendacionesProfesor() {
+		return RecomendacionesProfesor;
+	}
+
+
+
+	public void setRecomendacionesProfesor(Map<String, List<LearningPath>> recomendacionesProfesor) {
+		RecomendacionesProfesor = recomendacionesProfesor;
+	}
+
+	public Map<String, LearningPath> getLearningPathsCreados() {
+		return learningPathsCreados;
+	}
+
+
+	public void setLearningPathsCreados(Map<String, LearningPath> learningPathsCreados) {
+		this.learningPathsCreados = learningPathsCreados;
+	}
+
+
+	public String getProfesor() {
+		return profesor;
+	}
+
+
+
 	public void revisarEstadoActividad(Actividad actividad, String estado ) {
 		// Revisa el estado de una actividad
 		if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
-			if(actividad.EstadoActual(estado).equals("Enviado")) {
-				actividad.EstadoActual("Exitoso");
+			if(actividad.getEstado().equals("Enviado")) {
+				actividad.setEstado("Exitoso");
 			} else {
-				actividad.EstadoActual("Fallido");
+				actividad.setEstado("Fallido");
 			}
 		} else if (actividad.getTipoActividad().equals("RecursoEducativo") || actividad.getTipoActividad().equals("Encuesta")) {
-            actividad.EstadoActual("Exitoso");
+            actividad.setEstado("Exitoso");
         } else if (actividad.getTipoActividad().equals("Quiz")){
 			if (actividad.getCalificacion() >= ((Quiz) actividad).getCalificacionMinima()) {
-				actividad.EstadoActual("Exitoso");
+				actividad.setEstado("Exitoso");
 			} else {
-				actividad.EstadoActual("Fallido");
+				actividad.setEstado("Fallido");
 			}
         	
 			
@@ -76,19 +105,19 @@ public class Profesor extends Usuario {
 		
 		else if (tipo.equals("Recurso Educativo")) {
 			
-			//String tipoR= input??;
-			//Actividad recurso = new RecursoEducativo (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					//esObligatoria,fechaLimite,  resenas, calificacion, resultado, tipo);
-			//actividad = recurso;
+			
+			Actividad recurso = new RecursoEducativo (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado);
+			actividad = recurso;
 		}
 		
 		else if (tipo.equals("Tarea")){
-			//String instrucciones = input??;
-	
-			//Actividad tarea = new Tarea (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					//esObligatoria,fechaLimite,  resenas, calificacion, resultado, tipo, instrucciones);
 			
-			//actividad = tarea;
+	
+			Actividad tarea = new Tarea (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado);
+			
+			actividad = tarea;
 		}
 		
 		LearningPath lp = learningPathsCreados.get(learningPathID);
@@ -107,6 +136,17 @@ public class Profesor extends Usuario {
 		}
 		
 		
+	}
+	
+	
+	
+	public void agregarRecomendacion(Map<String, List<LearningPath>> recomendaciones, String interes, LearningPath learningPath) {
+        List<LearningPath> learningpaths = recomendaciones.get(interes);
+		learningpaths.add(learningPath);
+    }
+	
+	public boolean eliminarActividad(List<Actividad> actividades, String actividadID) {
+		return false;
 	}
 
 	}

@@ -10,20 +10,20 @@ public class Feedback {
 	private double calificacion;
 	private Date fecha;
 	private Estudiante estudiante;
-	private Actividad actividad;
+	
 	private LearningPath learningPath;
 
 	
 
 	public Feedback(String feedbackID, String comentario, double calificacion, Date fecha, Estudiante estudiante,
-			Actividad actividad, LearningPath learningPath) {
+		 LearningPath learningPath) {
 		super();
 		this.feedbackID = feedbackID;
 		this.comentario = comentario;
 		this.calificacion = calificacion;
 		this.fecha = fecha;
 		this.estudiante = estudiante;
-		this.actividad = actividad;
+		
 		this.learningPath = learningPath;
 	}
 
@@ -59,13 +59,6 @@ public class Feedback {
 		return estudiante;
 	}
 
-	
-
-	public Actividad getActividad() {
-		return actividad;
-	}
-
-	
 
 	public LearningPath getLearningPath() {
 		return learningPath;

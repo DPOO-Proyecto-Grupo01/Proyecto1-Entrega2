@@ -1,6 +1,7 @@
 package Usuarios;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,9 @@ public class Estudiante extends Usuario {
 	private List<String> intereses;
 	private String ProfesorAsignado;
 	public String estudiante = "Estudiante";
-
+	private Profesor profesor;
+	
+	
 	@Override
 	public String getTipoUsuario() {
 		return this.estudiante;
@@ -39,7 +42,7 @@ public class Estudiante extends Usuario {
 		List<Actividad> actividadesCompletadas = new ArrayList<>();
 		if(progresoActividades.get(actividad).getEstado()==100.0){
 			actividadesCompletadas.add(actividad);
-			actividad.EstadoActual("Completado");
+			actividad.setEstado("Completada");
 			
 			
 		}
@@ -50,26 +53,50 @@ public class Estudiante extends Usuario {
 		progresoActividades.put(actividad, progreso);
 	}
 	
-	public void recibirRecomendacion(LearningPath learningPath) {
+	public List<LearningPath> recibirRecomendacion() {
 		//Devuelve una lista de Learning Paths recomendados para el estudiante, basados en sus intereses. Que se le asigne learning oaths de su profesor asignado
-		LearningPath learningPathInstance = new LearningPath();
-		Map<String, List<String>> mapaR = learningPathInstance.getRecomendacionProfesores();
-		
-		if (mapaR.containsKey(ProfesorAsignado) && mapaR.get(ProfesorAsignado).contains(intereses)) {
-			System.out.println("Recomendacion: " + learningPath);
+		//crear lista vacia
+		List<LearningPath> learningPathsRecomendados = new ArrayList<>();
+		for (String interes : intereses) {
+			if (profesor.getRecomendacionesProfesor().containsKey(interes)) {
+				List<LearningPath> learningPaths= profesor.getRecomendacionesProfesor().get(interes);
+				learningPathsRecomendados.addAll(learningPaths);
+			}
+			
 		}
+		return learningPathsRecomendados;
+		
 		
 	}
 	
-	public void enviarFeedback(String feedback) {
-		Feedback.setComentario(feedback);
-		
-	}
 	
-	public void verActividadesDisponibles(List<Actividad> actividades, LearningPath learningPath) {
+	
+	public List<Actividad> actividadesDisponibles(List<Actividad> actividades, List<LearningPath> Lista) {
 		// Muestra las actividades disponibles en los Learning Paths inscritos.
-		if (progresoActividades.get(actividades).getEstado() != 100.0) {
-			System.out.println("Actividades disponibles: " + actividades);
+		List<Actividad> actividadesDisponibles = new ArrayList<>();
+		for (LearningPath learningPath : Lista) {
+			 actividadesDisponibles.addAll(learningPath.getActividades());
+			
 		}
+		return actividadesDisponibles;
 	}
+
+		
+		
+	
+	public double getProgresoLearningPath(LearningPath learningPath) {
+		// Calcula el progreso del estudiante en un Learning Path
+		return learningPath.getProgreso().getPorcentajeDeExito();
+		
+	}
+	
+	public void enviarFeedback(LearningPath learningPath, String feedback, double calificacion, 
+			String comentario, Date fecha, String feedbackID ) {
+		// Envia un feedback al profesor del Learning Path
+        Feedback feedbackEstudiante= new Feedback(feedbackID, comentario, calificacion, fecha, this, learningPath);
+        learningPath.getFeedback().add(feedbackEstudiante);
+    
+		
+	}
+	
 }
