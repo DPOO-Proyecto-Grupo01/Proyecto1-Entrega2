@@ -1,5 +1,6 @@
 package Actividades;
 
+import java.util.Date;
 import java.util.List;
 
 public abstract class Actividad {
@@ -10,7 +11,7 @@ public abstract class Actividad {
     protected int nivelDificultad;
     protected int duracionEsperada;
     protected boolean esObligatoria;
-    protected int fechaLimite;
+    protected Date fechaLimite;
     protected String resenas;
     protected double calificacion;
     protected int resultado;
@@ -31,7 +32,7 @@ public abstract class Actividad {
    
     
 	public Actividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
-			int duracionEsperada, boolean esObligatoria, int fechaLimite, String resenas, double calificacion,
+			int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas, double calificacion,
 			int resultado) {
 		this.actividadID = actividadID;
 		this.descripcion = descripcion;
@@ -100,13 +101,13 @@ public abstract class Actividad {
 
 
 
-	public int getFechaLimite() {
+	public Date getFechaLimite() {
 		return fechaLimite;
 	}
 
 
 
-	public void setFechaLimite(int fechaLimite) {
+	public void setFechaLimite(Date fechaLimite) {
 		this.fechaLimite = fechaLimite;
 	}
 

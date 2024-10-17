@@ -138,6 +138,14 @@ public class Profesor extends Usuario {
 		
 	}
 	
+	//Quiero que el profesor cree un learning path y le agregue actividades
+	
+	public void crearLearningPath(String learningPathID, String titulo, String descripcion, String objetivos,
+			int nivelDificultad, int duracion, Profesor profesor, List<Actividad> actividades, List<String> intereses) {
+		LearningPath learningPath = new LearningPath(learningPathID, titulo, descripcion, objetivos, nivelDificultad, duracion, profesor, actividades, intereses);
+		learningPathsCreados.put(learningPathID, learningPath);
+	}
+	
 	
 	
 	public void agregarRecomendacion(Map<String, List<LearningPath>> recomendaciones, String interes, LearningPath learningPath) {
