@@ -89,11 +89,6 @@ public class Authenticator  {
 
 	
 	
-	public void eliminarUsuario(Usuario usuario) {
-		//TODO implementar
-		
-	}
-	
 	
 }
 

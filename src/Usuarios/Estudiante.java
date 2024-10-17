@@ -13,8 +13,8 @@ import LearningPaths.Progreso;
 
 public class Estudiante extends Usuario {
 	
-	public Estudiante(String UsuarioID, String contraseña, String nombre, String email) {
-		super(UsuarioID, nombre, contraseña, email);
+	public Estudiante(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
+		super(UsuarioID, nombre, contraseña, email, tipoUsuario);
         // TODO Auto-generated constructor stub
     }
 	

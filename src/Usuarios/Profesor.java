@@ -13,8 +13,8 @@ import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 
 public class Profesor extends Usuario {
-	public Profesor(String UsuarioID, String contraseña) {
-		super(UsuarioID, contraseña, contraseña, contraseña);
+	public Profesor(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
+		super(UsuarioID, nombre, contraseña, email, tipoUsuario);
 		// TODO Auto-generated constructor stub
 	}
 	
