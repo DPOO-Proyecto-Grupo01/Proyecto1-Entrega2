@@ -20,12 +20,12 @@ public class Estudiante extends Usuario {
 	
 
 	private List<LearningPath> learningPathsInscritos;
-	private Map<Actividad, Progreso> progresoActividades;
 	private List<String> intereses;
 	private String ProfesorAsignado;
 	public String estudiante = "Estudiante";
 	private Profesor profesor;
 	private Map<LearningPath, Progreso> progresoLearningPath;
+	private List<Actividad> actividadesCompletadas;
 	
 	@Override
 	public String getTipoUsuario() {
@@ -36,18 +36,17 @@ public class Estudiante extends Usuario {
 		learningPathsInscritos.add(learningPath);
 	}
 	
-	public void completarActividad(Actividad actividad, Tarea tarea) {
+	public void completarActividad(Actividad actividad, List<Actividad> actividadesPrevia) {
 		// crea una lista de actividades completadas
 
-		List<Actividad> actividadesCompletadas = new ArrayList<>();
-		if(progresoActividades.get(actividad).getEstado()==100.0){
-			actividadesCompletadas.add(actividad);
-			actividad.setEstado("Completada");
-			
-			
+		for (Actividad actividadPrevia : actividadesPrevia) {
+			if (actividadPrevia.getEstado() == null) {
+				System.out.println("Tenga cuidado no ha realizado las actividades previas");
+				break;
+			}
 		}
-		
 	}
+	
 	
 	public void verProgresoLearningPath(LearningPath learningPath, Progreso progreso) {
 		progresoLearningPath.put(learningPath, progreso);

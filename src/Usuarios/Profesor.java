@@ -12,6 +12,7 @@ import Actividades.RecursoEducativo;
 import Actividades.Tarea;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
+import LearningPaths.Progreso;
 
 public class Profesor extends Usuario {
 	public Profesor(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
@@ -80,7 +81,7 @@ public class Profesor extends Usuario {
 	
 	public void crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas, double calificacion,
-			int resultado, String tipo, String learningPathID) {
+			int resultado, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento) {
 		// Crea una actividad
 		Actividad actividad = null;
 		
@@ -121,6 +122,8 @@ public class Profesor extends Usuario {
 			actividad = tarea;
 		}
 		
+		
+		
 		LearningPath lp = learningPathsCreados.get(learningPathID);
 		
 		lp.setActividades(actividad);
@@ -154,8 +157,8 @@ public class Profesor extends Usuario {
     }
 	
 	// ver el progreso de un estudiante
-	public void verProgresoEstudiante(String estudianteID, LearningPath learningPath) {
-		learningPath.obtenerProgresoEstudiante(estudianteID);
-	
+	public Map<String, String > verProgresoEstudiante(String estudianteID, LearningPath learningPath) {
+		Progreso progreso = learningPath.obtenerProgresoEstudiante(estudianteID);
+		return progreso.mostrarProgreso();
 	}
 }

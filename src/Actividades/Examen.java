@@ -6,9 +6,10 @@ import java.util.List;
 public class Examen extends Actividad{
 
 	public Examen(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado) {
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
+			List<String> actividadesPrevia, List<String> actividadesSeguimiento) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado);
+				calificacion, resultado, actividadesPrevia, actividadesSeguimiento);
 		// TODO Auto-generated constructor stub
 	}
 

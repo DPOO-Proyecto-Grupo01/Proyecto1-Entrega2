@@ -3,6 +3,8 @@ package LearningPaths;
 
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import Actividades.Actividad;
 import Usuarios.Estudiante;
@@ -94,7 +96,18 @@ public class Progreso {
 			this.porcentajeDeExito = porcentajeDeExito;
 		}
 
-
+		public  Map<String, String > mostrarProgreso() {
+			Map<String, String > map = new HashMap<>();
+			map.put("ProgresoID", progresoID);
+			map.put("EstudianteID", estudianteID);
+			map.put("Fecha Inicio", fechaInicio.toString());
+			map.put("Fecha Completado", fechaCompletado.toString());
+			map.put("Tiempo Dedicado", Integer.toString(tiempoDedicado));
+			map.put("Estado", Double.toString(estado));
+			map.put("Porcentaje de Exito", Double.toString(porcentajeDeExito));
+			
+			return map;
+		}
 
 		
 	    
