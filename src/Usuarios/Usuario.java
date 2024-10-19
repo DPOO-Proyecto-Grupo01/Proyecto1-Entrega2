@@ -3,7 +3,7 @@ package Usuarios;
 import java.util.List;
 
 public abstract class Usuario {
-	private String usuarioID;
+	protected String usuarioID;
 	private String nombre;
 	private String email;
 	private String contraseña;

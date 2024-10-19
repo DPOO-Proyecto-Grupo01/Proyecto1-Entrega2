@@ -25,7 +25,7 @@ public class Estudiante extends Usuario {
 	private String ProfesorAsignado;
 	public String estudiante = "Estudiante";
 	private Profesor profesor;
-	
+	private Map<LearningPath, Progreso> progresoLearningPath;
 	
 	@Override
 	public String getTipoUsuario() {
@@ -49,8 +49,8 @@ public class Estudiante extends Usuario {
 		
 	}
 	
-	public void verProgreso(Actividad actividad, Progreso progreso) {
-		progresoActividades.put(actividad, progreso);
+	public void verProgresoLearningPath(LearningPath learningPath, Progreso progreso) {
+		progresoLearningPath.put(learningPath, progreso);
 	}
 	
 	public List<LearningPath> recibirRecomendacion() {
@@ -97,6 +97,15 @@ public class Estudiante extends Usuario {
         learningPath.getFeedback().add(feedbackEstudiante);
     
 		
+	}
+	
+	public void crearProgreso(LearningPath learningPath, Date fechaInicio, Date fechaCompletado, int tiempoDedicado,
+			double estado) {
+		// Crea un registro de progreso para una actividad
+		int random = (int) (Math.random() * 1000 + 1);
+		String randomString = Integer.toString(random);
+		Progreso progreso = new Progreso(randomString, this.usuarioID, learningPath, fechaInicio, fechaCompletado, tiempoDedicado, estado);
+		progresoLearningPath.put(learningPath, progreso);
 	}
 	
 }

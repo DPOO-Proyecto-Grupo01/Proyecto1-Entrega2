@@ -24,6 +24,7 @@ public class LearningPath {
 	private List<Feedback> feedback;
 	private Profesor profesor;
 	public Progreso progreso;
+	public Map<String, Progreso> progresoEstudiante;
 	
 	
 	
@@ -169,10 +170,6 @@ public class LearningPath {
 		this.actividades.add(actividad);
 	}
 
-
-	
-
-
 	public List<Feedback> getFeedback() {
 		return feedback;
 	}
@@ -213,7 +210,9 @@ public class LearningPath {
 		
 	}
 	
-	public void obtenerProgresoEstudiante(Estudiante estudiante) {
+	public Progreso obtenerProgresoEstudiante(String estudianteID) {
+		return progresoEstudiante.get(estudianteID);
+		
 	}
 
 	public List<Feedback> obtenerFeedback() {

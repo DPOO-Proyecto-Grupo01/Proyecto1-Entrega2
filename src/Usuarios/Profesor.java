@@ -153,8 +153,9 @@ public class Profesor extends Usuario {
 		learningpaths.add(learningPath);
     }
 	
-	public boolean eliminarActividad(List<Actividad> actividades, String actividadID) {
-		return false;
+	// ver el progreso de un estudiante
+	public void verProgresoEstudiante(String estudianteID, LearningPath learningPath) {
+		learningPath.obtenerProgresoEstudiante(estudianteID);
+	
 	}
-
-	}
+}

@@ -10,7 +10,7 @@ import Usuarios.Estudiante;
 public class Progreso {
 	
 	    private String progresoID;
-	    private Estudiante estudiante;
+	    private String estudianteID;
 	    private LearningPath learningPath;
 	    private Actividad actividad;
 	    private Date fechaInicio;
@@ -21,11 +21,12 @@ public class Progreso {
 	
 	    
 	    
-	    public Progreso(String progresoID, Estudiante estudiante, LearningPath learningPath, Actividad actividad, Date fechaInicio, Date fechaCompletado, int tiempoDedicado, double estado) {
+	    public Progreso(String progresoID, String estudianteID, LearningPath learningPath, Date fechaInicio, 
+	    		Date fechaCompletado, int tiempoDedicado, double estado) {
 	    	            this.progresoID = progresoID;
-	    	            this.estudiante = estudiante;
+	    	            this.estudianteID = estudianteID;
 	    	            this.learningPath = learningPath;
-	    	            this.actividad = actividad;
+	    	            
 	    	            this.fechaInicio = fechaInicio;
 	    	            this.fechaCompletado = fechaCompletado;
 	    	            this.tiempoDedicado = tiempoDedicado;
@@ -42,8 +43,8 @@ public class Progreso {
 
 
 
-		public Estudiante getEstudiante() {
-			return estudiante;
+		public String getEstudiante() {
+			return estudianteID;
 		}
 
 
