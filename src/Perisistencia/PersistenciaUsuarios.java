@@ -25,7 +25,7 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
 	public ArrayList<Estudiante> cargarEstudiantes(String archivo) throws Exception {
 		
-		System.out.println("Cargando usuarios");
+		
 		
 		String jsonCompleto = new String( Files.readAllBytes( new File( archivo ).toPath( ) ) );
 		JSONArray usuarios = new JSONArray(jsonCompleto);
@@ -56,7 +56,6 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
 	public ArrayList<Profesor> cargarProfesores(String archivo) throws Exception {
 		
-		System.out.println("Cargando usuarios");
 		
 		String jsonCompleto = new String( Files.readAllBytes( new File( archivo ).toPath( ) ) );
 		JSONArray usuarios = new JSONArray(jsonCompleto);

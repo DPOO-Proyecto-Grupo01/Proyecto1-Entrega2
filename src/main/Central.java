@@ -18,6 +18,7 @@ import Perisistencia.PersistenciaUsuarios;
 import Usuarios.Authenticator;
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
+import Usuarios.Usuario;
 
 public class Central {
 
@@ -37,7 +38,10 @@ public class Central {
 	private static final String usuarios ="src\\datos\\users.json";
 	
 	
-	public static void main(String[] args) {		
+	public static void main(String[] args) {	
+		
+		
+		System.out.println("Iniciando sesión, por favor espere...");
 		persistenciaActividades = new PersistenciaActividades();
 		persistenciaUsuarios = new PersistenciaUsuarios();
 		persistenciaLearningPaths = new PersistenciaLearningPaths();
@@ -49,6 +53,31 @@ public class Central {
 
 			learningPaths=persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
 			actividades = persistenciaActividades.cargarActividades(actividadesFile);
+			
+			
+			
+			System.out.println("Actividades: ");
+			for (Actividad a: actividades) {
+				System.out.println("ID: "+ a.getActividadID() + ". Tipo: "+ a.getTipoActividad());
+			}
+			
+			System.out.println("Profesores: ");
+			for (Profesor p : profesores) {
+				System.out.println(p.getNombre());
+			}
+			
+			System.out.println("Estudiantes: ");
+			for (Estudiante e : estudiantes) {
+				System.out.println(e.getNombre());
+			}
+			
+			
+			System.out.println("Learning Paths: ");
+			for (LearningPath l : learningPaths) {
+				System.out.println(l.getTitulo());
+			}
+
+			//Test quiz persistence
 			ArrayList<String> actividadesID = new ArrayList<String>();
 			actividadesID.add("A505");
 			actividadesID.add("A304");
@@ -56,30 +85,55 @@ public class Central {
 			intereses.add("Java");
 			intereses.add("Programacion");
 			learningPaths.add(new LearningPath("LP105", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses));
-			
-			for (Actividad a: actividades) {
-				System.out.println("ID: "+ a.getActividadID() + ". Tipo: "+ a.getTipoActividad());
-			}
-			
-			for (Profesor p : profesores) {
-				System.out.println(p.getNombre());
-			}
-			for (LearningPath l : learningPaths) {
-				System.out.println(l.getTitulo());
-			}
-
-			//Test quiz persistence
 			persistenciaActividades.salvarActividad("actividades.json", actividades.get(1));
-
+			System.out.println("\n");
+			System.out.println("Se han leido los archivos y cargado los datos correctamente.");
+			System.out.println("\n");
+			System.out.println("Bienvenido al sistema de aprendizaje de la Universidad de los Andes. Por favor inicie sesión: ");
+			System.out.println("\n");
+			System.out.println("1. Iniciar sesión como Usuario");
 			
-			System.out.println("Nuevos");
+			Estudiante usuario = new Estudiante( "U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co", "Estudiante");
+			Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
+			estudiantes.add(usuario);
+			profesores.add(profesor);
+			
+			if( usuario.iniciarSesion("U105", "1234") ) {
+                System.out.println("Inicio de sesion exitoso: Estudiante "+ usuario.getUsuarioID());
+            }
+            else {
+                System.out.println("Inicio de sesion fallido: Estudiante");
+            }
+			
+			if(profesor.iniciarSesion("P105", "1234")) {
+                System.out.println("Inicio de sesion exitoso: Profesor "+ profesor.getUsuarioID());
+            }
+            else {
+                System.out.println("Inicio de sesion fallido: Profesor");
+            }
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
+		
 	}
+	
 
 
 

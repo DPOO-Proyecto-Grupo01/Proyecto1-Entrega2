@@ -16,7 +16,7 @@ public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 	
 	public List<LearningPath> cargarLearningPath(String archivo) throws Exception {
 
-	    System.out.println("Cargando Learning Paths");
+	   
 
 	    String jsonCompleto = new String(Files.readAllBytes(new File(archivo).toPath()));
 	    JSONArray learningPaths = new JSONArray(jsonCompleto);

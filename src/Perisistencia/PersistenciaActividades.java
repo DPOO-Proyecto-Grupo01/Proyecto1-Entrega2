@@ -20,7 +20,7 @@ public class PersistenciaActividades implements IpersistenciaActividades {
 
     @Override
     public ArrayList<Actividad> cargarActividades(String archivo) throws Exception {
-        System.out.println("Cargando Actividades");
+       
         String jsonCompleto = new String(Files.readAllBytes(new File(archivo).toPath()));
         JSONArray jActividades = new JSONArray(jsonCompleto);
         ArrayList<Actividad> lista = new ArrayList<>();

@@ -50,10 +50,8 @@ public abstract class Usuario {
 	public boolean iniciarSesion(String usuarioID, String contraseña) {
 		boolean centinela = true;
 		if (Authenticator.authenticate(usuarioID, contraseña, this)) {
-			System.out.println("Inicio de sesion exitoso");
 			centinela = true;
 		} else {
-			System.out.println("Inicio de sesion fallido");
 			centinela = false;
 		}
 		return centinela;

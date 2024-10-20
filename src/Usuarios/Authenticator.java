@@ -5,20 +5,15 @@ public class Authenticator  {
 	
 	private int codigo;
 	private boolean fueAutenticado;
-	private String ultimoLogin;
-	private int intentosFallidos;
-	private int token;
 	private List<Usuario> usuarios;
 	private String archivoUsuarios;
 
 	// Constructor, getters and setters
-	public Authenticator(int codigo, boolean fueAutenticado, String ultimoLogin, int intentosFallidos, int token,
+	public Authenticator(int codigo, boolean fueAutenticado,
 			List<Usuario> usuarios, String archivoUsuarios) {
 		this.codigo = codigo;
 		this.fueAutenticado = fueAutenticado;
-		this.ultimoLogin = ultimoLogin;
-		this.intentosFallidos = intentosFallidos;
-		this.token = token;
+		
 		this.usuarios = usuarios;
 		this.archivoUsuarios = archivoUsuarios;
 	}
@@ -37,30 +32,6 @@ public class Authenticator  {
 
 	public void setFueAutenticado(boolean fueAutenticado) {
 		this.fueAutenticado = fueAutenticado;
-	}
-
-	public String getUltimoLogin() {
-		return ultimoLogin;
-	}
-
-	public void setUltimoLogin(String ultimoLogin) {
-		this.ultimoLogin = ultimoLogin;
-	}
-
-	public int getIntentosFallidos() {
-		return intentosFallidos;
-	}
-
-	public void setIntentosFallidos(int intentosFallidos) {
-		this.intentosFallidos = intentosFallidos;
-	}
-
-	public int getToken() {
-		return token;
-	}
-
-	public void setToken(int token) {
-		this.token = token;
 	}
 
 	public List<Usuario> getUsuarios() {

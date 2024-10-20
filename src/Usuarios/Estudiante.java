@@ -151,6 +151,7 @@ public class Estudiante extends Usuario {
 	public void inscribirseLearnigPath(LearningPath learningPath) {
 		learningPathsInscritos.add(learningPath);
 		System.out.println();
+		
 	}
 	
 	
