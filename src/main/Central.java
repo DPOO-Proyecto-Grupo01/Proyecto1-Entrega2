@@ -43,12 +43,12 @@ public class Central {
 		persistenciaLearningPaths = new PersistenciaLearningPaths();
 		
 		try {
-			actividades = new ArrayList<Actividad>();
-			
+
 			estudiantes=persistenciaUsuarios.cargarEstudiantes(usuarios);
 			profesores=persistenciaUsuarios.cargarProfesores(usuarios);
 
 			learningPaths=persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+			actividades = persistenciaActividades.cargarActividades(actividadesFile);
 			ArrayList<String> actividadesID = new ArrayList<String>();
 			actividadesID.add("A505");
 			actividadesID.add("A304");
