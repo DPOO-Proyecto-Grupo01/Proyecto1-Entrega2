@@ -2,16 +2,17 @@ package Actividades;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Encuesta extends Actividad {
 	
-	private List<String> preguntas;
+	public List<String> preguntas;
+	
 
 	public Encuesta(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
-			List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento, List<String> preguntas) {
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesSeguimiento, List<String> actividadesPrevias, List<String> preguntas) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado, actividadesPrevia, actividadesSeguimiento, ENCUESTA);
+				calificacion, resultado, actividadesSeguimiento, actividadesPrevias, ENCUESTA);
 		// TODO Auto-generated constructor stub
 		
 		this.preguntas = preguntas;
@@ -36,8 +37,8 @@ public class Encuesta extends Actividad {
 	}
 
 	@Override
-	public void agregarContenido(String pregunta) {
-		// TODO Auto-generated method stub
+	public void agregarContenido(String pregunta, List<String> opciones) {
+		this.preguntas.add(pregunta);
 		
 	}
 	

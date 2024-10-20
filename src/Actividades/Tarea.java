@@ -1,26 +1,34 @@
 package Actividades;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Tarea extends Actividad {
 	
 	public static final String TAREA = "Tarea";
 	private String estado;
 	private String Instrucciones;
-	private List<String> preguntas;
+	private Map<String, List<String>> preguntas;
+	private Collection<List<String>> opciones;
 	
 	public Tarea(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
-
-			List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento, String estado, String Instrucciones, List<String> preguntas) {
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado,List<String> actividadesPrevias,  List<String> actividadesSeguimiento, Map<String, List<String>>preguntas, String Instrucciones ) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado, actividadesPrevia, actividadesSeguimiento, TAREA);
+				calificacion, resultado,actividadesPrevias, actividadesSeguimiento, TAREA);
 		this.estado = estado;
 		this.Instrucciones = Instrucciones;
 		this.preguntas = preguntas;
 		
 
+	}
+	
+	public void getOpciones(Map<String, List<String>> preguntas) {
+		this.opciones = preguntas.values();
+	
+		
 	}
 	
 	public String getDescripcion() {
@@ -112,8 +120,9 @@ public class Tarea extends Actividad {
 	}
 
 	@Override
-	public void agregarContenido(String pregunta) {
-		this.preguntas.add(pregunta);
+	public void agregarContenido(String pregunta, List<String> opciones) {
+		
+		this.preguntas.put(pregunta, opciones);		
 	}
 
 	public String getInstrucciones() {
@@ -129,11 +138,11 @@ public class Tarea extends Actividad {
 		
 	}
 
-	public List<String> getPreguntas() {
+	public Map<String, List<String>> getPreguntas() {
 		return preguntas;
 	}
 
-	public void setPreguntas(List<String> preguntas) {
+	public void setPreguntas(Map<String, List<String>> preguntas) {
 		this.preguntas = preguntas;
 	}
 	
@@ -141,6 +150,8 @@ public class Tarea extends Actividad {
 	public void completarTarea() {
 		System.out.println(this.preguntas);
 	}
+
+	
 	
 	
 

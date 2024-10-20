@@ -2,21 +2,24 @@ package Actividades;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class RecursoEducativo extends Actividad {
 	
 	public static final String RECURSOEDUCATIVO = "Recurso Educativo";
 	private String tipoRecurso;
 	private String linkRecusro;
+	private List<String> preguntas;
+	
 	
 	public RecursoEducativo(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<Actividad> actividadesPrevia, 
-			List<String> actividadesSeguimiento, String TIPORECURSO, String linkRecurso) {
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesPrevias, 
+			List<String> actividadesSeguimiento, String TIPORECURSO) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado, actividadesPrevia, actividadesSeguimiento, RECURSOEDUCATIVO);
+				calificacion, resultado,actividadesPrevias, actividadesSeguimiento, RECURSOEDUCATIVO);
 		
 		this.tipoRecurso = TIPORECURSO;
-		this.linkRecusro = linkRecurso;
+		
 		
 		
 	}
@@ -28,8 +31,8 @@ public class RecursoEducativo extends Actividad {
 	}
 	
 	@Override
-	public void agregarContenido(String tipoRecurso) {
-		// TODO Auto-generated method stub
+	public void agregarContenido(String pregunta, List<String> opciones) {
+		preguntas.add(pregunta);
 	}
 
 

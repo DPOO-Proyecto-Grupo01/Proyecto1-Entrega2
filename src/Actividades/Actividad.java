@@ -18,7 +18,7 @@ public abstract class Actividad {
     protected String preguntas;
     protected List<String> respuestasUsuario;
     public String estado;
-    public List<Actividad> actividadesPrevia;
+    public List<String> actividadesPrevia;
     public List<String> actividadesSeguimiento;
     public String tipoActividad;
 
@@ -37,7 +37,7 @@ public abstract class Actividad {
 	public Actividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
 
-			int resultado, List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento, String tipoActividad) {
+			int resultado, List<String> actividadesPrevia, List<String> actividadesSeguimiento, String tipoActividad) {
 
 		this.actividadID = actividadID;
 		this.descripcion = descripcion;
@@ -168,17 +168,17 @@ public abstract class Actividad {
 
 	public abstract String getTipoActividad();
 	
-	public abstract void agregarContenido(String pregunta);
+	public abstract void agregarContenido(String pregunta, List<String> Opciones);
 
 
 
-	public List<Actividad> getActividadesPrevia() {
+	public List<String> getActividadesPrevia() {
 		return actividadesPrevia;
 	}
 
 
 
-	public void setActividadesPrevia(Actividad actividad) {
+	public void setActividadesPrevia(String actividad) {
 		this.actividadesPrevia.add(actividad);
 	}
 

@@ -112,6 +112,35 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
 	@Override
 	public void salvarProfesor(String archivo, String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
+		
+		        try {
+            // Read the content of the file
+            String content = new String(Files.readAllBytes(Paths.get(archivo)));
+           
+
+            // Parse the content to a JSON array
+            JSONArray jsonArray = new JSONArray(content);
+            
+
+            // Create a new JSON object for the new student
+            JSONObject newObject = new JSONObject();
+            newObject.put("usuarioID", UsuarioID);
+            newObject.put("nombre", nombre);
+            newObject.put("contrasena", contraseña);
+            newObject.put("email", email);
+            newObject.put("tipoUsuario", tipoUsuario);
+
+            // Add the new object to the JSON array
+            jsonArray.put(newObject);
+            
+
+            // Write the updated JSON array back to the file
+            Files.write(Paths.get(archivo), jsonArray.toString().getBytes());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
 
 	}
 	
