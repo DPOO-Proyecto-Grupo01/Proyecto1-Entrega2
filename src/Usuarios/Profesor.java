@@ -97,7 +97,7 @@ public class Profesor extends Usuario {
 		
 		if (tipo.equals("Quiz")) {
 			Quiz quiz = new Quiz (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento, null, calificacion);
 			System.out.println("Ingrese la calificacion minima");
 	        Scanner scanner = new Scanner(System.in);
 			double min = scanner.nextDouble();
@@ -109,14 +109,14 @@ public class Profesor extends Usuario {
 			
 		else if (tipo.equals("Examen")) {
 			Examen examen = new Examen ( actividadID,descripcion, objetivo,nivelDificultad,duracionEsperada,
-					esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento, actividadesSeguimiento, calificacion);
 			
 			actividad = examen;
 					}
 			
 		else if (tipo.equals("Encuesta")) {
 			Encuesta encuesta = new Encuesta (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento, actividadesSeguimiento);
 			actividad = encuesta;
 		}
 		

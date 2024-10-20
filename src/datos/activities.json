@@ -11,7 +11,16 @@
         "calificacion": 0.0,
         "resultado": 0,
         "actividadesPrevia": ["A001", "A002"],
-        "actividadesSeguimiento": ["A102", "A103"]
+        "actividadesSeguimiento": ["A102", "A103"],
+        "tipoActividad": "tarea",
+        "estado": "pendiente",
+        "instrucciones": "Completar el ejercicio en el documento adjunto.",
+        "preguntas": [
+            {
+                "pregunta": "¿Qué es una variable?",
+                "respuestas": ["Un tipo de dato", "Un valor constante", "Una función", "Ninguna de las anteriores"]
+            }
+        ]
     },
     {
         "actividadID": "A102",
@@ -25,7 +34,14 @@
         "calificacion": 0.0,
         "resultado": 0,
         "actividadesPrevia": ["A101", "A003"],
-        "actividadesSeguimiento": ["A201", "A202"]
+        "actividadesSeguimiento": ["A201", "A202"],
+        "tipoActividad": "quiz",
+        "preguntas": [
+            {
+                "pregunta": "¿Qué método se utiliza para imprimir en consola?",
+                "opciones": ["print()", "console.log()", "System.out.println()", "echo()"]
+            }
+        ]
     },
     {
         "actividadID": "A201",
@@ -39,7 +55,15 @@
         "calificacion": 0.0,
         "resultado": 0,
         "actividadesPrevia": ["A101", "A102"],
-        "actividadesSeguimiento": ["A202", "A203"]
+        "actividadesSeguimiento": ["A202", "A203"],
+        "tipoActividad": "examen",
+        "preguntas": [
+            {
+                "pregunta": "¿Cuál es la sintaxis correcta para declarar una variable en Java?",
+                "opciones": ["int a;", "a int;", "declare int a;", "variable a int;"]
+            }
+        ],
+        "calificacionMinima": 60.0
     },
     {
         "actividadID": "A202",
@@ -53,6 +77,76 @@
         "calificacion": 0.0,
         "resultado": 0,
         "actividadesPrevia": ["A101", "A102"],
-        "actividadesSeguimiento": []
+        "actividadesSeguimiento": [],
+        "tipoActividad": "encuesta",
+        "preguntasAbiertas": [
+            "¿Qué parte de la programación te resulta más difícil y por qué?",
+            "¿Qué recursos adicionales te gustaría tener para aprender mejor?"
+        ]
+    },
+    {
+        "actividadID": "A203",
+        "descripcion": "Recurso educativo: Video sobre programación en Java.",
+        "objetivo": "Aprender los conceptos básicos de programación en Java a través de un video.",
+        "nivelDificultad": 1,
+        "duracionEsperada": 30,
+        "esObligatoria": false,
+        "fechaLimite2": "2024-12-31T23:59:59",
+        "resenas": "Un recurso visual que complementa el aprendizaje.",
+        "calificacion": 0.0,
+        "resultado": 0,
+        "actividadesPrevia": ["A001", "A002"],
+        "actividadesSeguimiento": [],
+        "tipoActividad": "recurso educativo",
+        "tipoRecurso": "video"
+    },
+    {
+        "actividadID": "A204",
+        "descripcion": "Recurso educativo: Artículo sobre estructuras de datos.",
+        "objetivo": "Comprender las diferentes estructuras de datos en Java.",
+        "nivelDificultad": 2,
+        "duracionEsperada": 45,
+        "esObligatoria": false,
+        "fechaLimite2": "2025-01-15T23:59:59",
+        "resenas": "Un artículo que profundiza en el tema.",
+        "calificacion": 0.0,
+        "resultado": 0,
+        "actividadesPrevia": ["A001", "A002"],
+        "actividadesSeguimiento": [],
+        "tipoActividad": "recurso educativo",
+        "tipoRecurso": "sitio web"
+    },
+    {
+        "actividadID": "A205",
+        "descripcion": "Recurso educativo: Libro de programación.",
+        "objetivo": "Estudiar los conceptos de programación en profundidad.",
+        "nivelDificultad": 2,
+        "duracionEsperada": 120,
+        "esObligatoria": false,
+        "fechaLimite2": "2025-01-30T23:59:59",
+        "resenas": "Un libro esencial para entender mejor la programación.",
+        "calificacion": 0.0,
+        "resultado": 0,
+        "actividadesPrevia": ["A001", "A002"],
+        "actividadesSeguimiento": [],
+        "tipoActividad": "recurso educativo",
+        "tipoRecurso": "libro"
+    },
+    {
+        "actividadID": "A206",
+        "descripcion": "Recurso educativo: PDF sobre buenas prácticas de programación.",
+        "objetivo": "Aprender sobre las mejores prácticas al programar.",
+        "nivelDificultad": 1,
+        "duracionEsperada": 60,
+        "esObligatoria": false,
+        "fechaLimite2": "2025-02-15T23:59:59",
+        "resenas": "Un PDF con información clave sobre programación.",
+        "calificacion": 0.0,
+        "resultado": 0,
+        "actividadesPrevia": ["A001", "A002"],
+        "actividadesSeguimiento": [],
+        "tipoActividad": "recurso educativo",
+        "tipoRecurso": "recurso adjunto"
     }
 ]
+
