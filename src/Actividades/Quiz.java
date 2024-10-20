@@ -10,12 +10,14 @@ public class Quiz extends Actividad {
 	private double calificacionMinima;
 	private Map<String, List<String>> preguntas;
 	public boolean aprobado;
+	private String respuestaCorrecta;
 	
 
 
 	public Quiz(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
 			List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento, Map<String, List<String>> preguntas, double calificacionMinima) {
+
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado, actividadesPrevia, actividadesSeguimiento, QUIZ);
 		// TODO Auto-generated constructor stub

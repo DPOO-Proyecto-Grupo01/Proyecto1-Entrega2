@@ -22,8 +22,8 @@ public class Profesor extends Usuario {
 		// TODO Auto-generated constructor stub
 	}
 	
-	private Map<String, List<LearningPath>> RecomendacionesProfesor;
-	private Map<String, LearningPath> learningPathsCreados;
+	public Map<String, List<LearningPath>> RecomendacionesProfesor;
+	public Map<String, LearningPath> learningPathsCreados;
 	public String profesor = "Profesor";
 	public Map<String, Actividad> actividades;
 
@@ -124,7 +124,7 @@ public class Profesor extends Usuario {
 			
 			
 			RecursoEducativo recurso = new RecursoEducativo (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento, learningPathID, learningPathID);
 			actividad = recurso;
 		}
 		
@@ -132,7 +132,7 @@ public class Profesor extends Usuario {
 			
 	
 			Tarea tarea = new Tarea (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento, learningPathID, learningPathID, actividadesSeguimiento);
 			
 			actividad = tarea;
 		}

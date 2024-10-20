@@ -10,6 +10,8 @@ public class Encuesta extends Actividad {
 	public Encuesta(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
 			List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento, List<String> preguntas) {
+
+
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado, actividadesPrevia, actividadesSeguimiento, ENCUESTA);
 		// TODO Auto-generated constructor stub

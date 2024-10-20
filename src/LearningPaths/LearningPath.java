@@ -30,6 +30,7 @@ public class LearningPath {
 	
 	
 	
+	
 //////////////////////
 	
 	
@@ -233,6 +234,11 @@ public class LearningPath {
 	+ "Calificacion: " + calificacion + "\n" + "Fecha de Creacion: " + fechaCreacion + "\n" + "Fecha de Modificacion: " + fechaModificacion + "\n" + "Intereses: " + intereses + "\n" + "Profesor: " + profesor;
 		
 	}
+	
+	public String inscripcionLearningPath() {
+		return "Titulo" + titulo + "Descripcion" + descripcion + "Actividades" + actividades;
+	}
+
 }
 
 

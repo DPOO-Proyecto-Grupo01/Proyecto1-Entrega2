@@ -36,7 +36,9 @@ public abstract class Actividad {
     
 	public Actividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
+
 			int resultado, List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento, String tipoActividad) {
+
 		this.actividadID = actividadID;
 		this.descripcion = descripcion;
 		this.objetivo = objetivo;

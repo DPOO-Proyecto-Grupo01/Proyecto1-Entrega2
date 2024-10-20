@@ -13,6 +13,7 @@ public class Examen extends Actividad{
 	public Examen(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
 			List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento, List<String> preguntas, double calificacionMinima) {
+
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado, actividadesPrevia, actividadesSeguimiento, EXAMEN);
 		// TODO Auto-generated constructor stub
