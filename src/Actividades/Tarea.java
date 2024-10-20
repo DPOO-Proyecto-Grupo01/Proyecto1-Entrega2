@@ -12,7 +12,7 @@ public class Tarea extends Actividad {
 	
 	public Tarea(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
-			List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento) {
+			List<Actividad> actividadesPrevia, Actividad actividadesSeguimiento) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado, actividadesPrevia, actividadesSeguimiento);
 		

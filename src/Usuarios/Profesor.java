@@ -22,8 +22,8 @@ public class Profesor extends Usuario {
 		// TODO Auto-generated constructor stub
 	}
 	
-	private Map<String, List<LearningPath>> RecomendacionesProfesor;
-	private Map<String, LearningPath> learningPathsCreados;
+	public Map<String, List<LearningPath>> RecomendacionesProfesor;
+	public Map<String, LearningPath> learningPathsCreados;
 	public String profesor = "Profesor";
 	public Map<String, Actividad> actividades;
 
@@ -84,10 +84,11 @@ public class Profesor extends Usuario {
 	
 	public void crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas, double calificacion,
-			int resultado, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento) {
+			int resultado, String tipo, String learningPathID, List<String> actividadesPrevia, String actividadesSeguimiento) {
 		// Crea una actividad
 		Actividad actividad = null;
 		List<Actividad> actividadesParametro = new ArrayList<>();
+		Actividad actividadesSeg = actividades.get(actividadesSeguimiento);
 		
 		for (String actividadPrevia: actividadesPrevia) {
 			Actividad anterior = actividades.get(actividadPrevia);
@@ -97,7 +98,7 @@ public class Profesor extends Usuario {
 		
 		if (tipo.equals("Quiz")) {
 			Quiz quiz = new Quiz (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeg);
 			System.out.println("Ingrese la calificacion minima");
 	        Scanner scanner = new Scanner(System.in);
 			double min = scanner.nextDouble();
@@ -109,14 +110,14 @@ public class Profesor extends Usuario {
 			
 		else if (tipo.equals("Examen")) {
 			Examen examen = new Examen ( actividadID,descripcion, objetivo,nivelDificultad,duracionEsperada,
-					esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesParametro, actividadesSeg);
 			
 			actividad = examen;
 					}
 			
 		else if (tipo.equals("Encuesta")) {
 			Encuesta encuesta = new Encuesta (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeg);
 			actividad = encuesta;
 		}
 		
@@ -124,7 +125,7 @@ public class Profesor extends Usuario {
 			
 			
 			RecursoEducativo recurso = new RecursoEducativo (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeg);
 			actividad = recurso;
 		}
 		
@@ -132,7 +133,7 @@ public class Profesor extends Usuario {
 			
 	
 			Tarea tarea = new Tarea (actividadID, descripcion, objetivo,nivelDificultad, duracionEsperada,
-					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeguimiento);
+					esObligatoria,fechaLimite,  resenas, calificacion, resultado, actividadesParametro, actividadesSeg);
 			
 			actividad = tarea;
 		}
@@ -176,5 +177,11 @@ public class Profesor extends Usuario {
 	public Map<String, String > verProgresoEstudiante(String estudianteID, LearningPath learningPath) {
 		Progreso progreso = learningPath.obtenerProgresoEstudiante(estudianteID);
 		return progreso.mostrarProgreso();
+	}
+	
+	public void actualizarLearningPath(String LearningPathID, String actividadID) {
+		LearningPath learningPath = learningPathsCreados.get(LearningPathID);
+        Actividad actividad = actividades.get(actividadID);
+        learningPath.setActividades(actividad);
 	}
 }

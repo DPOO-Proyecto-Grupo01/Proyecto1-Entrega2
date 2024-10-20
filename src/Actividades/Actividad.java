@@ -19,7 +19,7 @@ public abstract class Actividad {
     protected List<String> respuestasUsuario;
     public String estado;
     public List<Actividad> actividadesPrevia;
-    public List<String> actividadesSeguimiento;
+    public Actividad actividadesSeguimiento;
 
     
     
@@ -35,7 +35,7 @@ public abstract class Actividad {
     
 	public Actividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
-			int resultado, List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento) {
+			int resultado, List<Actividad> actividadesPrevia, Actividad actividadesSeguimiento) {
 		this.actividadID = actividadID;
 		this.descripcion = descripcion;
 		this.objetivo = objetivo;
@@ -181,13 +181,13 @@ public abstract class Actividad {
 
 
 
-	public List<String> getActividadesSeguimiento() {
+	public Actividad getActividadesSeguimiento() {
 		return actividadesSeguimiento;
 	}
 
 
 
-	public void setActividadesSeguimiento(List<String> actividadesSeguimiento) {
+	public void setActividadesSeguimiento(Actividad actividadesSeguimiento) {
 		this.actividadesSeguimiento = actividadesSeguimiento;
 	}
 	

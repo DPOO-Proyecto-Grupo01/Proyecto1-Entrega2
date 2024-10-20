@@ -38,6 +38,10 @@ public class Estudiante extends Usuario {
 	
 	public void inscribirLearningPath(LearningPath learningPath) {
 		learningPathsInscritos.add(learningPath);
+		Profesor profesor = this.profesor;
+		Map<String, LearningPath> mapa = profesor.getLearningPathsCreados();
+		LearningPath learningPathProfesor = mapa.get(learningPath.getLearningPathID());
+		System.out.println(learningPathProfesor.inscripcionLearningPath());
 	}
 	
 	public void completarActividad(Actividad actividad) {
@@ -80,6 +84,8 @@ public class Estudiante extends Usuario {
 			encuesta.setEstado("Exitoso");
 		}
 		
+		String recomendacion = actividad.getActividadesSeguimiento().getActividadID();
+		System.out.println("Se le recomienda realizar la actividad: " + recomendacion);
 	}
 	
 	
@@ -141,5 +147,11 @@ public class Estudiante extends Usuario {
 		Progreso progreso = new Progreso(randomString, this.usuarioID, learningPath, fechaInicio, fechaCompletado, tiempoDedicado, estado);
 		progresoLearningPath.put(learningPath, progreso);
 	}
+	
+	public void inscribirseLearnigPath(LearningPath learningPath) {
+		learningPathsInscritos.add(learningPath);
+		System.out.println();
+	}
+	
 	
 }
