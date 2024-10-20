@@ -12,7 +12,7 @@ public class Tarea extends Actividad {
 	
 	public Tarea(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, 
-			List<String> actividadesPrevia, List<String> actividadesSeguimiento) {
+			List<Actividad> actividadesPrevia, List<String> actividadesSeguimiento) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado, actividadesPrevia, actividadesSeguimiento);
 		
@@ -124,8 +124,19 @@ public class Tarea extends Actividad {
 		return medioEntrega; 
 		
 	}
-	
 
+	public List<String> getPreguntas() {
+		return preguntas;
+	}
+
+	public void setPreguntas(List<String> preguntas) {
+		this.preguntas = preguntas;
+	}
+	
+	
+	public void completarTarea() {
+		System.out.println(this.preguntas);
+	}
 	
 	
 

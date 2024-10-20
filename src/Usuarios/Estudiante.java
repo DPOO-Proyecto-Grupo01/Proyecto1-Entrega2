@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import Actividades.Actividad;
+import Actividades.Encuesta;
+import Actividades.Examen;
+import Actividades.Quiz;
+import Actividades.RecursoEducativo;
 import Actividades.Tarea;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
@@ -36,15 +40,46 @@ public class Estudiante extends Usuario {
 		learningPathsInscritos.add(learningPath);
 	}
 	
-	public void completarActividad(Actividad actividad, List<Actividad> actividadesPrevia) {
+	public void completarActividad(Actividad actividad) {
 		// crea una lista de actividades completadas
 
-		for (Actividad actividadPrevia : actividadesPrevia) {
+		List<Actividad> actividadesPrevias = actividad.getActividadesPrevia();
+		for (Actividad actividadPrevia : actividadesPrevias) {
 			if (actividadPrevia.getEstado() == null) {
 				System.out.println("Tenga cuidado no ha realizado las actividades previas");
 				break;
 			}
 		}
+		
+		if (actividad.getTipoActividad().equals("Tarea")) {
+			Tarea tarea = (Tarea) actividad;
+			tarea.completarTarea();
+			tarea.setEstado("Enviado");
+		}
+		else if(actividad.getTipoActividad().equals("Examen")) {
+            Examen examen = (Examen) actividad;
+            examen.completarExamen();
+		}
+		else if (actividad.getTipoActividad().equals("Recurso Educativo")) {
+			RecursoEducativo recurso = (RecursoEducativo) actividad;
+			recurso.completarRecurso();
+			recurso.setEstado("Enviado");
+		} 
+		else if (actividad.getTipoActividad().equals("Quiz")) {
+			Quiz quiz = (Quiz) actividad;
+			quiz.completarQuiz();
+			if (quiz.isAprobado()) {
+				quiz.setEstado("Exitoso");
+			} else {
+				quiz.setEstado("Fallido");
+			}
+		} 
+		else if (actividad.getTipoActividad().equals("Encuesta")) {
+			Encuesta encuesta = (Encuesta) actividad;
+			encuesta.completarEncuesta();
+			encuesta.setEstado("Exitoso");
+		}
+		
 	}
 	
 	
