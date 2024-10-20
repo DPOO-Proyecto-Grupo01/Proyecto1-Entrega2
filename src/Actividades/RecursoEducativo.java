@@ -19,7 +19,7 @@ public class RecursoEducativo extends Actividad {
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesPrevias, 
 			List<String> actividadesSeguimiento, String tiporecurso, String linkRecusro) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado,actividadesPrevias, actividadesSeguimiento, RECURSOEDUCATIVO);
+				actividadesPrevias, actividadesSeguimiento, RECURSOEDUCATIVO);
 		
 		this.tipo=RECURSOEDUCATIVO;
 		this.tipoRecurso = tiporecurso;

@@ -15,7 +15,7 @@ public class Encuesta extends Actividad {
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesPrevias,
 			List<String> actividadesSeguimiento, List<String> preguntas) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado, actividadesPrevias, actividadesSeguimiento, ENCUESTA);
+				actividadesPrevias, actividadesSeguimiento, ENCUESTA);
 		// TODO Auto-generated constructor stub
 		
 		this.tipo=ENCUESTA;

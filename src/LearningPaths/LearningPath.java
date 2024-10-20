@@ -1,10 +1,12 @@
 package LearningPaths;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import Actividades.Actividad;
+import Actividades.Quiz;
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
 
@@ -45,6 +47,7 @@ public class LearningPath {
 		this.profesorID = profesorID;
 		this.actividadesID = actividadesID;
 		this.intereses = intereses;
+		this.actividades = new ArrayList<>();
 		
 		
 		}

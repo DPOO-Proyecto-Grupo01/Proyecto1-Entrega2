@@ -18,7 +18,7 @@ public class Tarea extends Actividad {
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado,List<String> actividadesPrevias,  
 			List<String> actividadesSeguimiento, List<Pregunta> preguntas, String instrucciones, String estado) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado,actividadesPrevias, actividadesSeguimiento, TAREA);
+				actividadesPrevias, actividadesSeguimiento, TAREA);
 
 		this.estado = estado;
 		this.instrucciones = instrucciones;

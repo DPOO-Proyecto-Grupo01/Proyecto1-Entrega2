@@ -24,11 +24,10 @@ public class Quiz extends Actividad {
 			List<Pregunta> preguntas, double calificacionMinima, String respuestaCorrecta) {
 
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado,actividadesPrevias, actividadesSeguimiento, QUIZ);
+				actividadesPrevias, actividadesSeguimiento, QUIZ);
 		// TODO Auto-generated constructor stub
 
 		this.preguntas = preguntas;
-		this.calificacionMinima = calificacionMinima;
         this.respuestaCorrecta = respuestaCorrecta;
         this.aprobado = false;
 	}

@@ -1,11 +1,16 @@
 package main;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Actividades.Encuesta;
 import Actividades.Actividad;
 import Actividades.Examen;
+import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
@@ -113,8 +118,40 @@ public class Central {
             }
 			
 			
+			learningPaths.add(profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 3, 120, "P106", actividadesID, intereses));
+			System.out.println("Learning Paths creado por el profesor: "+ profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 
+					3, 120, "P106", actividadesID, intereses).getLearningPathID()  );
 			
 			
+			
+			ArrayList<String> actividadesPrevias = new ArrayList<String>();
+			actividadesPrevias.add("A101");
+			
+			ArrayList<String> actividadesSeguimiento = new ArrayList<String>();
+			actividadesSeguimiento.add("A102");
+			
+			ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
+			ArrayList<String> respuestas = new ArrayList<String>();
+			respuestas.add("A");
+			respuestas.add("B");
+			respuestas.add("C");
+			HashMap<String, Object> atributosEspecificos = new HashMap<String, Object >();
+			atributosEspecificos.put("Calificacion Minima", 0.5);
+			atributosEspecificos.put("RespuestaCorrecta", respuestas.get(0));
+			
+			preguntas.add(new Pregunta("Para que es public, private, protected", respuestas));
+			atributosEspecificos.put("preguntas", preguntas);
+			
+			//Ponme la fecha en formato date YYYY-MM-DDTHH:MM:SS
+			String fecha = "2021-12-01";
+			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+			
+			
+			Quiz actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
+			System.out.println("Actividad creada por el profesor: "+ actividadCreada.getActividadID());
+			
+			profesor.CalificacionMinima("A110", 60 );
+			System.out.println("Calificacion minima de la actividad: "+ actividadCreada.getCalificacion());
 			
 			
 			

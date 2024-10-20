@@ -18,7 +18,7 @@ public class Examen extends Actividad{
 			 List<String> actividadesSeguimiento, List<Pregunta> preguntas, double calificacionMinima) {
 
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
-				calificacion, resultado, actividadesPrevias,actividadesSeguimiento, EXAMEN);
+				 actividadesPrevias,actividadesSeguimiento, EXAMEN);
 		this.tipo=EXAMEN;
 		this.preguntas = preguntas;
 		this.calificacionMinima = calificacionMinima;
