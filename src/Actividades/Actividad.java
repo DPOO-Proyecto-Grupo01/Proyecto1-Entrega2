@@ -3,6 +3,7 @@ package Actividades;
 import java.util.Date;
 import java.util.List;
 
+
 public abstract class Actividad {
 
 	protected String actividadID;
@@ -17,13 +18,12 @@ public abstract class Actividad {
     protected int resultado;
     protected String preguntas;
     protected List<String> respuestasUsuario;
-    public String estado;
-    public List<String> actividadesPrevia;
-    public List<String> actividadesSeguimiento;
-    public String tipoActividad;
+	private String estado;
+	private List<String> actividadesPrevias;
+	private List<String> actividadesSeguimiento;
+	private String tipoActividad;
 
-    
-    
+
     
     //TODO: MOVER TODOS LOS STRINGS A UNA CLASE DE CONSTANTES
     public static final String TAREA = "Tarea";
@@ -36,9 +36,7 @@ public abstract class Actividad {
     
 	public Actividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
-
-			int resultado, List<String> actividadesPrevia, List<String> actividadesSeguimiento, String tipoActividad) {
-
+			int resultado, List<String> actividadesPrevias, List<String> actividadesSeguimiento, String tipoActividad) {
 		this.actividadID = actividadID;
 		this.descripcion = descripcion;
 		this.objetivo = objetivo;
@@ -49,9 +47,10 @@ public abstract class Actividad {
 		this.resenas = resenas;
 		this.calificacion = calificacion;
 		this.resultado = resultado;
-		this.actividadesPrevia = actividadesPrevia;
-		this.actividadesSeguimiento = actividadesSeguimiento;
-	}
+		this.setActividadesPrevias(actividadesPrevias);
+		this.setActividadesSeguimiento(actividadesSeguimiento);
+        this.setTipoActividad(tipoActividad);
+    }
 	
 	
 
@@ -166,34 +165,30 @@ public abstract class Actividad {
 
 
 
-	public abstract String getTipoActividad();
+	public String getTipoActividad(){
+		return tipoActividad;
+	};
 	
-	public abstract void agregarContenido(String pregunta, List<String> Opciones);
+	public abstract void agregarContenido(String pregunta, List<String> opciones);
 
 
-
-	public List<String> getActividadesPrevia() {
-		return actividadesPrevia;
+	public List<String> getActividadesPrevias() {
+		return actividadesPrevias;
 	}
 
-
-
-	public void setActividadesPrevia(String actividad) {
-		this.actividadesPrevia.add(actividad);
+	public void setActividadesPrevias(List<String> actividadesPrevias) {
+		this.actividadesPrevias = actividadesPrevias;
 	}
-
-
 
 	public List<String> getActividadesSeguimiento() {
 		return actividadesSeguimiento;
 	}
 
-
-
 	public void setActividadesSeguimiento(List<String> actividadesSeguimiento) {
 		this.actividadesSeguimiento = actividadesSeguimiento;
 	}
-	
-	
-	
+
+	public void setTipoActividad(String tipoActividad) {
+		this.tipoActividad = tipoActividad;
+	}
 }

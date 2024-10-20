@@ -15,13 +15,14 @@ public class RecursoEducativo extends Actividad {
 	
 	public RecursoEducativo(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
 			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesPrevias, 
-			List<String> actividadesSeguimiento,String tipo, String TIPORECURSO, String linkRecusro) {
+			List<String> actividadesSeguimiento, String tiporecurso, String linkRecusro) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado,actividadesPrevias, actividadesSeguimiento, RECURSOEDUCATIVO);
 		
 		this.tipo=RECURSOEDUCATIVO;
-		this.tipoRecurso = TIPORECURSO;
-		
+		this.tipoRecurso = tiporecurso;
+		this.linkRecusro = linkRecusro;
+
 		
 		
 	}

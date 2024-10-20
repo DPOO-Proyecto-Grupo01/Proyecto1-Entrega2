@@ -14,12 +14,8 @@ import Actividades.Tarea;
 
 public interface IpersistenciaActividades {
 	
-	public ArrayList<Quiz> cargarQuizes(String archivo)throws Exception;
-	public ArrayList<Encuesta> cargarEncuestas(String archivo)throws Exception;
-	public ArrayList<Tarea> cargarTareas(String archivo)throws Exception;
-	public ArrayList<Examen> cargarExamenes(String archivo)throws Exception;
-	public ArrayList<RecursoEducativo> cargarRecursosEducativos(String archivo)throws Exception;
-	
+	public ArrayList<Actividad> cargarActividades(String archivo)throws Exception;
+
 	
 	public void salvarActividad(String archivo, String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
