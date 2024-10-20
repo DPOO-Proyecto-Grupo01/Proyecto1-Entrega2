@@ -13,11 +13,15 @@ public class Tarea extends Actividad {
 	private String Instrucciones;
 	private Map<String, List<String>> preguntas;
 	private Collection<List<String>> opciones;
+	private String tipo;
 	
 	public Tarea(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado,List<String> actividadesPrevias,  List<String> actividadesSeguimiento, Map<String, List<String>>preguntas, String Instrucciones ) {
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado,List<String> actividadesPrevias,  
+			List<String> actividadesSeguimiento, Map<String, List<String>>preguntas, String Instrucciones, String tipo, String estado ) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado,actividadesPrevias, actividadesSeguimiento, TAREA);
+		
+		this.tipo=TAREA;
 		this.estado = estado;
 		this.Instrucciones = Instrucciones;
 		this.preguntas = preguntas;

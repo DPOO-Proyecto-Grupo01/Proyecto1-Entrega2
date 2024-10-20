@@ -7,14 +7,16 @@ import java.util.Map;
 public class Encuesta extends Actividad {
 	
 	public List<String> preguntas;
-	
+	private String tipo;
 
 	public Encuesta(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesSeguimiento, List<String> actividadesPrevias, List<String> preguntas) {
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesSeguimiento, 
+			List<String> actividadesPrevias, List<String> preguntas, String tipo) {
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
 				calificacion, resultado, actividadesSeguimiento, actividadesPrevias, ENCUESTA);
 		// TODO Auto-generated constructor stub
 		
+		this.tipo=ENCUESTA;
 		this.preguntas = preguntas;
 		
 	}

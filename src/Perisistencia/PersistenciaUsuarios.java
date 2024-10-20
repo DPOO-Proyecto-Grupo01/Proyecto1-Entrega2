@@ -37,9 +37,12 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 				String contraseña = usuario.get("contrasena").toString();
 				String email = usuario.get("email").toString();
 				String tipoUsuario = usuario.get("tipoUsuario").toString();	
-				Usuario estudiante = new Estudiante(usuarioID1, nombre, contraseña, email,
-				tipoUsuario);
-				estudiantes.add((Estudiante) estudiante);
+				
+				if(tipoUsuario.equals("Estudiante")){
+					Usuario estudiante = new Estudiante(usuarioID1, nombre, contraseña, email,
+							tipoUsuario);
+					estudiantes.add((Estudiante) estudiante);
+				}
 				
 				
 			
@@ -65,9 +68,11 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 				String contraseña = usuario.get("contrasena").toString();
 				String email = usuario.get("email").toString();
 				String tipoUsuario = usuario.get("tipoUsuario").toString();	
-				Usuario profesor = new Profesor(usuarioID1, nombre, contraseña, email,
-				tipoUsuario);
-				profesores.add((Profesor) profesor);
+				if(tipoUsuario.equals("Profesor")){
+					Usuario profesor = new Profesor(usuarioID1, nombre, contraseña, email,
+							tipoUsuario);
+					profesores.add((Profesor) profesor);
+				}
 				
 			}
 		

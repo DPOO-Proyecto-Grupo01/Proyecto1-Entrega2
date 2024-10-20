@@ -6,13 +6,25 @@ import java.util.List;
 import java.util.Map;
 
 import Actividades.Actividad;
+import Actividades.Encuesta;
+import Actividades.Examen;
+import Actividades.Quiz;
+import Actividades.RecursoEducativo;
+import Actividades.Tarea;
 
 public interface IpersistenciaActividades {
 	
-	public ArrayList<Actividad> cargarActividad(String archivo)throws Exception;
+	public ArrayList<Quiz> cargarQuizes(String archivo)throws Exception;
+	public ArrayList<Encuesta> cargarEncuestas(String archivo)throws Exception;
+	public ArrayList<Tarea> cargarTareas(String archivo)throws Exception;
+	public ArrayList<Examen> cargarExamenes(String archivo)throws Exception;
+	public ArrayList<RecursoEducativo> cargarRecursosEducativos(String archivo)throws Exception;
+	
 	
 	public void salvarActividad(String archivo, String actividadID, String descripcion, String objetivo, int nivelDificultad,
 			int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
-			int resultado,List<String>actividadesPrevias , List<String> actividadesSeguimiento, String tipoActividad, Map<String, List<String>> preguntas);
+			int resultado,List<String>actividadesPrevias , List<String> actividadesSeguimiento, 
+			String tipoActividad, Map<String, List<String>> preguntasCerradas, List<String> preguntasAbiertas, 
+			String Instrucciones ,  String estado, String tipoRecurso, double calificacionMinima) throws Exception;
 
 }

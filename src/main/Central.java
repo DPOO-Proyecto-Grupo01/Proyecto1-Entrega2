@@ -48,7 +48,7 @@ public class Central {
 		try {
 			estudiantes=persistenciaUsuarios.cargarEstudiantes(usuarios);
 			profesores=persistenciaUsuarios.cargarProfesores(usuarios);
-			quizes=(List<Quiz>) persistenciaActividades.cargarActividad(actividadesFile).get(0);
+			quizes=persistenciaActividades.cargarQuizes(actividadesFile);
 			learningPaths=persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
 			ArrayList<String> actividadesID = new ArrayList<String>();
 			actividadesID.add("A505");
@@ -58,15 +58,16 @@ public class Central {
 			intereses.add("Programacion");
 			learningPaths.add(new LearningPath("LP105", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses));
 			
-			for (Estudiante e : estudiantes) {
-				System.out.println(e.getNombre());
+			for (Quiz q : quizes) {
+				System.out.println(q.getTipoActividad());
+			}
+			for (Profesor p : profesores) {
+				System.out.println(p.getNombre());
 			}
 			for (LearningPath l : learningPaths) {
 				System.out.println(l.getTitulo());
 			}
-			for (Quiz q : quizes) {
-				System.out.println(q.getDescripcion());
-			}
+			
 			System.out.println("Nuevos");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

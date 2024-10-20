@@ -99,7 +99,8 @@
         "actividadesPrevias": ["A202"],
         "actividadesSeguimiento": [],
         "tipoActividad": "recurso educativo",
-        "tipoRecurso": "video"
+        "tipoRecurso": "video",
+        "linkRecurso": "https://www.ejemplo.com/video-java"
     },
     {
         "actividadID": "A204",
@@ -115,7 +116,8 @@
         "actividadesPrevias": ["A203"],
         "actividadesSeguimiento": [],
         "tipoActividad": "recurso educativo",
-        "tipoRecurso": "sitio web"
+        "tipoRecurso": "sitio web",
+        "linkRecurso": "https://www.ejemplo.com/articulo-estructuras-datos"
     },
     {
         "actividadID": "A205",
@@ -131,7 +133,8 @@
         "actividadesPrevias": ["A204"],
         "actividadesSeguimiento": [],
         "tipoActividad": "recurso educativo",
-        "tipoRecurso": "libro"
+        "tipoRecurso": "libro",
+        "linkRecurso": "https://www.ejemplo.com/libro-programacion"
     },
     {
         "actividadID": "A206",
@@ -147,7 +150,8 @@
         "actividadesPrevias": ["A205"],
         "actividadesSeguimiento": [],
         "tipoActividad": "recurso educativo",
-        "tipoRecurso": "recurso adjunto"
+        "tipoRecurso": "recurso adjunto",
+        "linkRecurso": "https://www.ejemplo.com/pdf-buenas-practicas"
     }
 ]
 
