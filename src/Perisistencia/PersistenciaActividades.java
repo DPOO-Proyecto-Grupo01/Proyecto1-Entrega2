@@ -108,11 +108,27 @@ public class PersistenciaActividades implements IpersistenciaActividades {
         }
         return preguntas;
     }
-
-
-
     @Override
-    public void salvarActividad(String archivo, String actividadID, String descripcion, String objetivo, int nivelDificultad,
+    public void salvarActividad(String archivo, Actividad actividad){
+        String content = null;
+        try {
+            content = new String(Files.readAllBytes(Paths.get(archivo)));
+            // Parse the content to a JSON array
+            if (content.trim().isEmpty())
+                content = "[]";
+            JSONArray jsonArray = new JSONArray(content);
+
+            JSONObject object = actividad.convertToJSONObject();
+            //TODO Lidiar con ACTUALIZAR una actividad que ya fue guardada
+            jsonArray.put(object);
+            Files.write(Paths.get(archivo), jsonArray.toString().getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void VIEJOsalvarActividad(String archivo, String actividadID, String descripcion, String objetivo, int nivelDificultad,
                                 int duracionEsperada, boolean esObligatoria, Date fechaLimite2, String resenas, double calificacion,
                                 int resultado, List<String> actividadesPrevias, List<String> actividadesSeguimiento, String tipoActividad,
                                 Map<String, List<String>> preguntasCerradas, List<String> preguntasAbiertas, String instrucciones,

@@ -1,5 +1,11 @@
 package Actividades;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +39,43 @@ public class Quiz extends Actividad {
 
 	public void setCalificacionMinima(double calificacionMinima) {
 		this.calificacionMinima = calificacionMinima;
+	}
+
+	@Override
+	public JSONObject convertToJSONObject() {
+
+		// Valores genericos de actividad
+		JSONObject newObject = new JSONObject();
+		newObject.put("actividadID", actividadID);
+		newObject.put("descripcion", descripcion);
+		newObject.put("objetivo", objetivo);
+		newObject.put("nivelDificultad", nivelDificultad);
+		newObject.put("duracionEsperada", duracionEsperada);
+		newObject.put("esObligatoria", esObligatoria);
+		newObject.put("fechaLimite", fechaLimite.getTime());
+		newObject.put("resenas", resenas);
+		newObject.put("calificacion", calificacion);
+		newObject.put("resultado", resultado);
+		newObject.put("actividadesPrevias", actividadesPrevias);
+		newObject.put("actividadesSeguimiento", actividadesSeguimiento);
+		newObject.put("tipoActividad", tipoActividad);
+
+		//Valores especificos de la clase
+		JSONArray preguntasArray = new JSONArray();
+		for (Pregunta pregunta : preguntas) {
+			JSONObject preguntaJSON = new JSONObject();
+			preguntaJSON.put("pregunta", actividadID);
+			JSONArray opcionesArray = new JSONArray();
+			opcionesArray.putAll(pregunta.opciones);
+			preguntaJSON.put("opciones", opcionesArray);
+
+			preguntasArray.put(preguntaJSON);
+		}
+		newObject.put("preguntas", preguntasArray);
+		newObject.put("calificacionMinima", calificacionMinima);
+		newObject.put("respuestaCorrecta", respuestaCorrecta);
+		newObject.put("aprobado", aprobado);
+		return newObject;
 	}
 
 	@Override

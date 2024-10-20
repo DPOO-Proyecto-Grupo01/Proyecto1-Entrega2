@@ -67,6 +67,10 @@ public class Central {
 			for (LearningPath l : learningPaths) {
 				System.out.println(l.getTitulo());
 			}
+
+			//Test quiz persistence
+			persistenciaActividades.salvarActividad("actividades.json", actividades.get(1));
+
 			
 			System.out.println("Nuevos");
 		} catch (Exception e) {

@@ -1,5 +1,7 @@
 package Actividades;
 
+import org.json.JSONObject;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +31,12 @@ public class Tarea extends Actividad {
 		this.opciones = preguntas.values();
 		
 	}
-	
+
+	@Override
+	public JSONObject convertToJSONObject() {
+		return null;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}

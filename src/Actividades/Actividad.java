@@ -1,5 +1,8 @@
 package Actividades;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -18,10 +21,10 @@ public abstract class Actividad {
     protected int resultado;
     protected String preguntas;
     protected List<String> respuestasUsuario;
-	private String estado;
-	private List<String> actividadesPrevias;
-	private List<String> actividadesSeguimiento;
-	private String tipoActividad;
+	protected String estado;
+	protected List<String> actividadesPrevias;
+	protected List<String> actividadesSeguimiento;
+	protected String tipoActividad;
 
 
     
@@ -51,7 +54,8 @@ public abstract class Actividad {
 		this.setActividadesSeguimiento(actividadesSeguimiento);
         this.setTipoActividad(tipoActividad);
     }
-	
+
+	public abstract JSONObject convertToJSONObject();
 	
 
 	public String getDescripcion() {

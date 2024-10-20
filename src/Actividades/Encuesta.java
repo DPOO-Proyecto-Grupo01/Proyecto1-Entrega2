@@ -1,5 +1,7 @@
 package Actividades;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +34,12 @@ public class Encuesta extends Actividad {
 
 
 	public static final String ENCUESTA = "Encuesta";
-	
+
+	@Override
+	public JSONObject convertToJSONObject() {
+		return null;
+	}
+
 	@Override
 	public String getTipoActividad() {
 		return ENCUESTA;
