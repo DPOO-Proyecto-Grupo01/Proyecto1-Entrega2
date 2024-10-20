@@ -60,23 +60,31 @@ public class PersistenciaActividades implements IpersistenciaActividades {
 				for (int j = 0; j < actividadesSeguimientoArray.length(); j++) {
 					actividadesSeguimiento.add(actividadesSeguimientoArray.getString(j));
 				}
-				String tipoActividad = actividad.get("tipoActividad").toString();
+				//Preguntas tiene este formato: "preguntas": [
+	            //{
+	            //    "pregunta": "¿Qué método se utiliza para imprimir en consola?",
+	            //    "opciones": ["print()", "console.log()", "System.out.println()", "echo()"]
+	            //}
+	        //]
 				
-				JSONArray preguntasArray = actividad.getJSONArray("preguntas");
-			    Map<String, List<String>> preguntas = new HashMap<>();
-				    for (int j = 0; j < preguntasArray.length(); j++) {
-                    JSONObject pregunta = preguntasArray.getJSONObject(j);
-                    String preguntaID = pregunta.get("preguntaID").toString();
-                    JSONArray opcionesArray = pregunta.getJSONArray("opciones");
-                    List<String> opciones = new ArrayList<>();
-                    for (int k = 0; k < opcionesArray.length(); k++) {
-                        opciones.add(opcionesArray.getString(k));
-                    }
-                    preguntas.put(preguntaID, opciones);
-                }
-				double calificacionQuiz = actividad.getDouble("calificacionMinima");
-				if (tipoActividad.equals("Quiz")) {
-					Quiz quiz = new Quiz(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesPrevias, actividadesSeguimiento, preguntas, calificacionQuiz, tipoActividad);
+				
+				String tipoActividad = actividad.get("tipoActividad").toString();
+				if (tipoActividad.equals("quiz")) {
+					double calificacionQuiz = actividad.getDouble("calificacionMinima");
+					Map<String, List<String>> preguntasArray1 = new HashMap<>();
+					JSONArray preguntasArray = actividad.getJSONArray("preguntas");
+					for (int j = 0; j < preguntasArray.length(); j++) {
+						JSONObject pregunta = preguntasArray.getJSONObject(j);
+						String preguntaID = pregunta.get("pregunta").toString();
+						JSONArray opcionesArray = pregunta.getJSONArray("opciones");
+						List<String> opciones = new ArrayList<>();
+						for (int k = 0; k < opcionesArray.length(); k++) {
+							opciones.add(opcionesArray.getString(k));
+						}
+						preguntasArray1.put(preguntaID, opciones);
+					}
+					
+					Quiz quiz = new Quiz(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesPrevias, actividadesSeguimiento, preguntasArray1, calificacionQuiz, tipoActividad);
 					lista.add(quiz);
 				}
 		}
@@ -122,21 +130,22 @@ public class PersistenciaActividades implements IpersistenciaActividades {
 			}
 			String tipoActividad = actividad.get("tipoActividad").toString();
 			
-			JSONArray preguntasArray = actividad.getJSONArray("preguntas");
-		    Map<String, List<String>> preguntas = new HashMap<>();
-			    for (int j = 0; j < preguntasArray.length(); j++) {
-                JSONObject pregunta = preguntasArray.getJSONObject(j);
-                String preguntaID = pregunta.get("preguntaID").toString();
-                JSONArray opcionesArray = pregunta.getJSONArray("opciones");
-                List<String> opciones = new ArrayList<>();
-                for (int k = 0; k < opcionesArray.length(); k++) {
-                    opciones.add(opcionesArray.getString(k));
-                }
-                preguntas.put(preguntaID, opciones);
-            }
-			double calificacionQuiz = actividad.getDouble("calificacionMinima");
+			
 			
 			if (tipoActividad.equals("Examen")) {
+				JSONArray preguntasArray = actividad.getJSONArray("preguntas");
+			    Map<String, List<String>> preguntas = new HashMap<>();
+				    for (int j = 0; j < preguntasArray.length(); j++) {
+	                JSONObject pregunta = preguntasArray.getJSONObject(j);
+	                String preguntaID = pregunta.get("pregunta").toString();
+	                JSONArray opcionesArray = pregunta.getJSONArray("opciones");
+	                List<String> opciones = new ArrayList<>();
+	                for (int k = 0; k < opcionesArray.length(); k++) {
+	                    opciones.add(opcionesArray.getString(k));
+	                }
+	                preguntas.put(preguntaID, opciones);
+	            }
+				double calificacionQuiz = actividad.getDouble("calificacionMinima");
 				Examen ex = new Examen(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesPrevias, actividadesSeguimiento, preguntas, calificacionQuiz, tipoActividad);
 				lista.add(ex);
 			}
@@ -178,23 +187,24 @@ public class PersistenciaActividades implements IpersistenciaActividades {
 					actividadesSeguimiento.add(actividadesSeguimientoArray.getString(j));
 				}
 				String tipoActividad = actividad.get("tipoActividad").toString();
-				String estado = actividad.get("estado").toString();
-			
-			    JSONArray preguntasArray = actividad.getJSONArray("preguntas");
-			    Map<String, List<String>> preguntas = new HashMap<>();
-				    for (int j = 0; j < preguntasArray.length(); j++) {
-                    JSONObject pregunta = preguntasArray.getJSONObject(j);
-                    String preguntaID = pregunta.get("preguntaID").toString();
-                    JSONArray opcionesArray = pregunta.getJSONArray("opciones");
-                    List<String> opciones = new ArrayList<>();
-                    for (int k = 0; k < opcionesArray.length(); k++) {
-                        opciones.add(opcionesArray.getString(k));
-                    }
-                    preguntas.put(preguntaID, opciones);
-                }
-                	String InstruccionesArray = actividad.get("Instrucciones").toString();
+				
                 	
                 	if (tipoActividad.equals("Tarea")) {
+                		String estado = actividad.get("estado").toString();
+            			
+        			    JSONArray preguntasArray = actividad.getJSONArray("preguntas");
+        			    Map<String, List<String>> preguntas = new HashMap<>();
+        				    for (int j = 0; j < preguntasArray.length(); j++) {
+                            JSONObject pregunta = preguntasArray.getJSONObject(j);
+                            String preguntaID = pregunta.get("preguntaID").toString();
+                            JSONArray opcionesArray = pregunta.getJSONArray("respuestas");
+                            List<String> opciones = new ArrayList<>();
+                            for (int k = 0; k < opcionesArray.length(); k++) {
+                                opciones.add(opcionesArray.getString(k));
+                            }
+                            preguntas.put(preguntaID, opciones);
+                        }
+                        	String InstruccionesArray = actividad.get("Instrucciones").toString();
 	                	Tarea tarea = new Tarea(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas, calificacion, resultado,
 	                			actividadesPrevias, actividadesSeguimiento, preguntas, InstruccionesArray, tipoActividad, estado);
 	                    lista.add(tarea);
@@ -243,12 +253,13 @@ public class PersistenciaActividades implements IpersistenciaActividades {
 				}
 				String tipoActividad = actividad.get("tipoActividad").toString();
 				
-				JSONArray preguntasArray1 = actividad.getJSONArray("preguntas");
-				List<String> preguntas1 = new ArrayList<>();
-				for (int j = 0; j < preguntasArray1.length(); j++) {
-					preguntas1.add(preguntasArray1.getString(j));
-				}
+				
 				if (tipoActividad.equals("Encuesta")) {
+					JSONArray preguntasArray1 = actividad.getJSONArray("preguntas");
+					List<String> preguntas1 = new ArrayList<>();
+					for (int j = 0; j < preguntasArray1.length(); j++) {
+						preguntas1.add(preguntasArray1.getString(j));
+					}
 					Encuesta e = new Encuesta(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas, calificacion, resultado,actividadesPrevias, actividadesSeguimiento, preguntas1, tipoActividad);
 					lista.add(e);
 				}	

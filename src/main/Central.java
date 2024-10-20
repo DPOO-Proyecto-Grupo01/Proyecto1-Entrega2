@@ -25,11 +25,11 @@ public class Central {
 	private List<Progreso> progreso;
 	private static List<Estudiante> estudiantes;
 	private static List<Profesor> profesores;
-	private List<RecursoEducativo> recursosEducativos;
+	private static List<RecursoEducativo> recursosEducativos;
 	private static List<Quiz> quizes;
-	private List<Tarea> tareas;
-	private List<Examen> examenes;
-	private List<Encuesta> encuestas;
+	private static List<Tarea> tareas;
+	private static List<Examen> examenes;
+	private static List<Encuesta> encuestas;
 	private Authenticator authentication;
 	private static PersistenciaUsuarios persistenciaUsuarios;
 	private static PersistenciaLearningPaths persistenciaLearningPaths;
@@ -49,6 +49,11 @@ public class Central {
 			estudiantes=persistenciaUsuarios.cargarEstudiantes(usuarios);
 			profesores=persistenciaUsuarios.cargarProfesores(usuarios);
 			quizes=persistenciaActividades.cargarQuizes(actividadesFile);
+			examenes=persistenciaActividades.cargarExamenes(actividadesFile);
+			encuestas=persistenciaActividades.cargarEncuestas(actividadesFile);
+			tareas=persistenciaActividades.cargarTareas(actividadesFile);
+			recursosEducativos=persistenciaActividades.cargarRecursosEducativos(actividadesFile);
+			
 			learningPaths=persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
 			ArrayList<String> actividadesID = new ArrayList<String>();
 			actividadesID.add("A505");
@@ -61,6 +66,19 @@ public class Central {
 			for (Quiz q : quizes) {
 				System.out.println(q.getTipoActividad());
 			}
+			for (Encuesta e : encuestas) {
+				System.out.println(e.getTipoActividad());
+			}
+			for (Tarea t : tareas) {
+				System.out.println(t.getTipoActividad());
+			}
+			for (Examen e : examenes) {
+				System.out.println(e.getTipoActividad());
+			}
+			for (RecursoEducativo r : recursosEducativos) {
+				System.out.println(r.getTipoActividad());
+			}
+			
 			for (Profesor p : profesores) {
 				System.out.println(p.getNombre());
 			}
