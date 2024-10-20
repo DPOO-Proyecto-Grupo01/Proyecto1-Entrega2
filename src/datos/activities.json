@@ -18,7 +18,7 @@
         "preguntas": [
             {
                 "pregunta": "¿Qué es una variable?",
-                "respuestas": ["Un tipo de dato", "Un valor constante", "Una función", "Ninguna de las anteriores"]
+                "opciones": ["Un tipo de dato", "Un valor constante", "Una función", "Ninguna de las anteriores"]
             }
         ]
     },
@@ -42,7 +42,8 @@
                 "pregunta": "¿Qué método se utiliza para imprimir en consola?",
                 "opciones": ["print()", "console.log()", "System.out.println()", "echo()"]
             }
-        ]
+        ],
+        "respuestaCorrecta": "System.out.println()"
     },
     {
         "actividadID": "A201",
