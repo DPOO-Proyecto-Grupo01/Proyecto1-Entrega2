@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Actividades.Encuesta;
@@ -10,6 +11,7 @@ import Actividades.Tarea;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
+import Perisistencia.PersistenciaLearningPaths;
 import Perisistencia.PersistenciaUsuarios;
 import Usuarios.Authenticator;
 import Usuarios.Estudiante;
@@ -17,7 +19,7 @@ import Usuarios.Profesor;
 
 public class Central {
 	
-	private List<LearningPath> learningPaths;
+	private static List<LearningPath> learningPaths;
 	private List<Feedback> feedback;
 	private List<Progreso> progreso;
 	private static List<Estudiante> estudiantes;
@@ -29,19 +31,32 @@ public class Central {
 	private List<Encuesta> encuestas;
 	private Authenticator authentication;
 	private static PersistenciaUsuarios persistenciaUsuarios;
+	private static PersistenciaLearningPaths persistenciaLearningPaths;
+	private static final String learningPathsFile = "src\\datos\\learning_paths.json";
 	private static final String usuarios ="src\\datos\\users.json";
 	
 	
 	public static void main(String[] args) {
 		
 		persistenciaUsuarios = new PersistenciaUsuarios();
+		persistenciaLearningPaths = new PersistenciaLearningPaths();
 		
 		try {
 			estudiantes=persistenciaUsuarios.cargarEstudiantes(usuarios);
 			profesores=persistenciaUsuarios.cargarProfesores(usuarios);
-			persistenciaUsuarios.salvarEstudiante(usuarios, "123","Juan", "Pepito", "Email", "Estudiante");
+			learningPaths=persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+			ArrayList<String> actividadesID = new ArrayList<String>();
+			actividadesID.add("A505");
+			actividadesID.add("A304");
+			ArrayList<String> intereses = new ArrayList<String>();
+			intereses.add("Java");
+			intereses.add("Programacion");
+			learningPaths.add(new LearningPath("LP105", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses));
 			for (Estudiante e : estudiantes) {
 				System.out.println(e.getNombre());
+			}
+			for (LearningPath l : learningPaths) {
+				System.out.println(l.getTitulo());
 			}
 			System.out.println("Nuevos");
 		} catch (Exception e) {

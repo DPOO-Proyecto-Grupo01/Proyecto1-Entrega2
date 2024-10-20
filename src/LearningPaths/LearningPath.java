@@ -19,10 +19,12 @@ public class LearningPath {
 	private int calificacion;
 	private Date fechaCreacion;
 	private Date fechaModificacion;
+	private List<String> actividadesID;
 	private List<Actividad> actividades;
 	private List<String> intereses; 
 	private List<Feedback> feedback;
 	private Profesor profesor;
+	public String profesorID;
 	public Progreso progreso;
 	public Map<String, Progreso> progresoEstudiante;
 	
@@ -32,15 +34,15 @@ public class LearningPath {
 	
 	
 	public LearningPath(String LearningPathID, String titulo, String descripcion, String objetivos,
-			int nivelDificultad, int duracion, Profesor profesor, List<Actividad> actividades, List<String> intereses) {
+			int nivelDificultad, int duracion, String profesorID, List<String> actividadesID, List<String> intereses) {
 		this.LearningPathID = LearningPathID;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.objetivos = objetivos;
 		this.nivelDificultad = nivelDificultad;
 		this.duracionMinutos = duracion;
-		this.profesor = profesor;
-		this.actividades = actividades;
+		this.profesorID = profesorID;
+		this.actividadesID = actividadesID;
 		this.intereses = intereses;
 		
 		
