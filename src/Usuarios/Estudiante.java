@@ -47,7 +47,7 @@ public class Estudiante extends Usuario {
 	public void completarActividad(Actividad actividad) {
 		// crea una lista de actividades completadas
 
-		List<String> actividadesPrevias = actividad.getActividadesPrevia();
+		List<String> actividadesPrevias = actividad.getActividadesPrevias();
 		for (String actividadPrevia : actividadesPrevias) {
 			if (actividadPrevia.equals(null)) {
 				System.out.println("Tenga cuidado no ha realizado las actividades previas");

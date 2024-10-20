@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Actividades.Encuesta;
+import Actividades.Actividad;
 import Actividades.Examen;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
@@ -19,17 +20,14 @@ import Usuarios.Estudiante;
 import Usuarios.Profesor;
 
 public class Central {
+
+	public static List<LearningPath> learningPaths;
+	public List<Feedback> feedback;
+	public List<Progreso> progreso;
+	public static List<Estudiante> estudiantes;
+	public static List<Profesor> profesores;
+	public static List<Actividad> actividades;
 	
-	private static List<LearningPath> learningPaths;
-	private List<Feedback> feedback;
-	private List<Progreso> progreso;
-	private static List<Estudiante> estudiantes;
-	private static List<Profesor> profesores;
-	private static List<RecursoEducativo> recursosEducativos;
-	private static List<Quiz> quizes;
-	private static List<Tarea> tareas;
-	private static List<Examen> examenes;
-	private static List<Encuesta> encuestas;
 	private Authenticator authentication;
 	private static PersistenciaUsuarios persistenciaUsuarios;
 	private static PersistenciaLearningPaths persistenciaLearningPaths;
@@ -39,21 +37,17 @@ public class Central {
 	private static final String usuarios ="src\\datos\\users.json";
 	
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {		
 		persistenciaActividades = new PersistenciaActividades();
 		persistenciaUsuarios = new PersistenciaUsuarios();
 		persistenciaLearningPaths = new PersistenciaLearningPaths();
 		
 		try {
+			actividades = new ArrayList<Actividad>();
+			
 			estudiantes=persistenciaUsuarios.cargarEstudiantes(usuarios);
 			profesores=persistenciaUsuarios.cargarProfesores(usuarios);
-			quizes=persistenciaActividades.cargarQuizes(actividadesFile);
-			examenes=persistenciaActividades.cargarExamenes(actividadesFile);
-			encuestas=persistenciaActividades.cargarEncuestas(actividadesFile);
-			tareas=persistenciaActividades.cargarTareas(actividadesFile);
-			recursosEducativos=persistenciaActividades.cargarRecursosEducativos(actividadesFile);
-			
+
 			learningPaths=persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
 			ArrayList<String> actividadesID = new ArrayList<String>();
 			actividadesID.add("A505");
@@ -63,20 +57,8 @@ public class Central {
 			intereses.add("Programacion");
 			learningPaths.add(new LearningPath("LP105", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses));
 			
-			for (Quiz q : quizes) {
-				System.out.println(q.getTipoActividad());
-			}
-			for (Encuesta e : encuestas) {
-				System.out.println(e.getTipoActividad());
-			}
-			for (Tarea t : tareas) {
-				System.out.println(t.getTipoActividad());
-			}
-			for (Examen e : examenes) {
-				System.out.println(e.getTipoActividad());
-			}
-			for (RecursoEducativo r : recursosEducativos) {
-				System.out.println(r.getTipoActividad());
+			for (Actividad a: actividades) {
+				System.out.println("ID: "+ a.getActividadID() + ". Tipo: "+ a.getTipoActividad());
 			}
 			
 			for (Profesor p : profesores) {
@@ -94,5 +76,7 @@ public class Central {
 		
 		
 	}
+
+
 
 }
