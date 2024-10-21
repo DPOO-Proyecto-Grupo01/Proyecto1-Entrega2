@@ -83,7 +83,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     if (tipo.equals("Quiz")) {
         double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
         List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
-        String respuestaCorrecta = parametrosEspecificos.get("respuestaCorrecta") != null ? (String) parametrosEspecificos.get("respuestaCorrecta") : "";
+        String respuestaCorrecta = parametrosEspecificos.get("RespuestaCorrecta") != null ? (String) parametrosEspecificos.get("RespuestaCorrecta") : "";
         Quiz quiz = new Quiz(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia,
                 actividadesSeguimiento, preguntas, calificacionMinima, respuestaCorrecta);

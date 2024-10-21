@@ -96,6 +96,7 @@ public class Central {
 			System.out.println("Bienvenido al sistema de aprendizaje de la Universidad de los Andes. Por favor inicie sesión: ");
 			System.out.println("\n");
 			System.out.println("1. Iniciar sesión como Usuario");
+			System.out.println("\n");
 			
 			Estudiante estudiante = new Estudiante( "U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co", "Estudiante");
 			Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
@@ -127,6 +128,7 @@ public class Central {
 			
 			ArrayList<String> actividadesPrevias = new ArrayList<String>();
 			actividadesPrevias.add("A101");
+			actividadesPrevias.add("A103");
 			
 			ArrayList<String> actividadesSeguimiento = new ArrayList<String>();
 			actividadesSeguimiento.add("A102");
@@ -137,7 +139,7 @@ public class Central {
 			respuestas.add("B");
 			respuestas.add("C");
 			HashMap<String, Object> atributosEspecificos = new HashMap<String, Object >();
-			atributosEspecificos.put("Calificacion Minima", 0.5);
+			atributosEspecificos.put("calificacionMinima", 0.5);
 			atributosEspecificos.put("RespuestaCorrecta", respuestas.get(0));
 			
 			preguntas.add(new Pregunta("Para que es public, private, protected", respuestas));
@@ -151,15 +153,13 @@ public class Central {
 			Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
 			System.out.println("Actividad creada por el profesor: "+ actividadCreada.getActividadID());
 			
+			Actividad actividadCreada1= profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
+			Actividad actividadCreada2= profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
+			
 			profesor.CalificacionMinima("A110", 60.1 );
 			System.out.println("Calificacion minima de la actividad: "+ ((Quiz) actividadCreada).getCalificacionMinima());
-			
-			
-			
+		
 			System.out.println("La cantidad de estudiantes inscritos en el learning path es/son "+estudiante.inscribirLearningPath("LP106", "P105")); 
-			//TODO: Revisar si se inscribio correctamente
-			
-			
 			
 			System.out.println("\n");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
@@ -167,8 +167,14 @@ public class Central {
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 		
 			estudiante.completarActividad("A110", "LP106");
+			
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 			
+			ArrayList<String> actividadesID1 = new ArrayList<String>();
+			for(Actividad actividad : estudiante.actividadesDisponibles("LP106")) {
+				actividadesID1.add(actividad.getActividadID());
+			}
+			System.out.println("Todavia debe realizar la actividad: "+ actividadesID1);
 			
 			
 			

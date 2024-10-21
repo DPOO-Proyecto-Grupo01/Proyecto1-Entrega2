@@ -31,6 +31,7 @@ public class Quiz extends Actividad {
 		this.preguntas = preguntas;
         this.respuestaCorrecta = respuestaCorrecta;
         this.aprobado = false;
+        
 	}
 	
 	public void setRespuestaUsuario(String respuesta) {
@@ -96,7 +97,10 @@ public class Quiz extends Actividad {
 	}
 
 	public void completarQuiz() {
-		System.out.println(this.preguntas);
+		for (Pregunta pregunta : preguntas) {
+			System.out.println(pregunta.pregunta);
+			System.out.println(pregunta.opciones);
+		}
 	}
 
 

@@ -58,12 +58,15 @@ public class Estudiante extends Usuario {
         Map<String, Actividad> mapa = learningPath.getActividades();
         Actividad actividad = mapa.get(actividadID);
         List<String> actividadesPrevias = actividad.getActividadesPrevias();
+        ArrayList<String> actividadesPrevias2 = new ArrayList<String>();
         for (String actividadPrevia : actividadesPrevias) {
-            if (actividadPrevia == null) {
-                System.out.println("Tenga cuidado no ha realizado las actividades previas");
-                break;
+        	Actividad act = learningPath.getActividades().get(actividadPrevia);
+            if (act.getEstado()== null ) {
+            	actividadesPrevias2.add(act.getActividadID());
+                
             }
         }
+        System.out.println("Tenga cuidado no ha realizado las actividades previas: " + actividadesPrevias2);
 
         if (actividad.getTipoActividad().equals("Tarea")) {
             Tarea tarea = (Tarea) actividad;
@@ -79,6 +82,7 @@ public class Estudiante extends Usuario {
         } else if (actividad.getTipoActividad().equals("Quiz")) {
             Quiz quiz = (Quiz) actividad;
             quiz.completarQuiz();
+            quiz.setRespuestaUsuario("A");
             if (quiz.isAprobado()) {
                 quiz.setEstado("Exitoso");
             } else {
@@ -122,14 +126,18 @@ public class Estudiante extends Usuario {
 	
 	
 	
-	public List<Actividad> actividadesDisponibles(List<String> actividades, String learningPathID ) {
+	public List<Actividad> actividadesDisponibles(String learningPathID) {
 		// Muestra las actividades disponibles en los Learning Paths inscritos.
+		List<String> actividades = learningPathsInscritos.get(learningPathID).getActividadesID();
+		System.out.println(actividades);
 		List<Actividad> actividadesDisponibles = new ArrayList<>();
+		LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+		Map<String,Actividad> mapa = learningPath.getActividades();
+		System.out.println(mapa);
 		for (String actividadID : actividades) {
-			LearningPath learningPath = learningPathsInscritos.get(learningPathID);
-			Map<String,Actividad> mapa = learningPath.getActividades();
 			Actividad actividad = mapa.get(actividadID);
-			if(actividad.getEstado().equals(null)) {
+			
+			if(actividad.getEstado() == null) {
 				actividadesDisponibles.add(actividad);
 			}
 		}
