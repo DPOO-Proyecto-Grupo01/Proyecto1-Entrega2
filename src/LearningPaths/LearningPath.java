@@ -23,7 +23,7 @@ public class LearningPath {
 	private Date fechaCreacion;
 	private Date fechaModificacion;
 	private List<String> actividadesID;
-	private List<Actividad> actividades;
+	private Map<String,Actividad> actividades= new HashMap<>();
 	private List<String> intereses; 
 	private List<Feedback> feedback;
 	private Profesor profesor;
@@ -49,7 +49,6 @@ public class LearningPath {
 		this.profesorID = profesorID;
 		this.actividadesID = actividadesID;
 		this.intereses = intereses;
-		this.actividades = new ArrayList<>();
 		
 		
 		}
@@ -169,13 +168,13 @@ public class LearningPath {
 		this.intereses = intereses;
 	}
 
-	public List<Actividad> getActividades() {
+	public Map<String,Actividad> getActividades() {
 		return actividades;
 	}
 
 
 	public void setActividades(Actividad actividad) {
-		this.actividades.add(actividad);
+		this.actividades.put(actividad.getActividadID(), actividad);
 	}
 
 	public List<Feedback> getFeedback() {
@@ -200,7 +199,7 @@ public class LearningPath {
 //////////////
 	
 	
-	public List<Actividad> obtenerActividades() {
+	public Map<String,Actividad> obtenerActividades() {
 		return actividades;
 	}
 

@@ -1,5 +1,6 @@
 package Actividades;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public class Encuesta extends Actividad {
 	
-	public List<String> preguntas;
+	public List<String> preguntasAbiertas;
 	private String tipo;
 
 	public Encuesta(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
@@ -19,17 +20,17 @@ public class Encuesta extends Actividad {
 		// TODO Auto-generated constructor stub
 		
 		this.tipo=ENCUESTA;
-		this.preguntas = preguntas;
+		this.preguntasAbiertas = preguntas;
 		
 	}
 	
 	
 	public List<String> getPreguntas() {
-		return preguntas;
+		return preguntasAbiertas;
 	}
 
 	public void setPreguntas(List<String> preguntas) {
-		this.preguntas = preguntas;
+		this.preguntasAbiertas = preguntas;
 	}
 
 
@@ -37,7 +38,25 @@ public class Encuesta extends Actividad {
 
 	@Override
 	public JSONObject convertToJSONObject() {
-		return null;
+		// Valores genericos de actividad
+				JSONObject newObject = new JSONObject();
+				newObject.put("actividadID", actividadID);
+				newObject.put("descripcion", descripcion);
+				newObject.put("objetivo", objetivo);
+				newObject.put("nivelDificultad", nivelDificultad);
+				newObject.put("duracionEsperada", duracionEsperada);
+				newObject.put("esObligatoria", esObligatoria);
+				newObject.put("fechaLimite", fechaLimite.getTime());
+				newObject.put("resenas", resenas);
+				newObject.put("calificacion", calificacion);
+				newObject.put("resultado", resultado);
+				newObject.put("actividadesPrevias", actividadesPrevias);
+				newObject.put("actividadesSeguimiento", actividadesSeguimiento);
+				newObject.put("tipoActividad", tipoActividad);
+
+				
+				newObject.put("preguntasAbiertas", preguntasAbiertas);
+				return newObject;
 	}
 
 	@Override
@@ -47,13 +66,13 @@ public class Encuesta extends Actividad {
 
 	@Override
 	public void agregarContenido(String pregunta, List<String> opciones) {
-		this.preguntas.add(pregunta);
 		
 	}
+
 	
 	public void completarEncuesta() {
 		// Responder la encuesta
-		System.out.println(this.preguntas);
+		System.out.println(this.preguntasAbiertas);
 	}
 
 	

@@ -1,5 +1,6 @@
 package Actividades;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -11,7 +12,6 @@ public class RecursoEducativo extends Actividad {
 	public static final String RECURSOEDUCATIVO = "Recurso Educativo";
 	private String tipoRecurso;
 	private String linkRecusro;
-	private List<String> preguntas;
 	private String tipo;
 	
 	
@@ -26,23 +26,38 @@ public class RecursoEducativo extends Actividad {
 		this.linkRecusro = linkRecusro;
 
 		
-		
 	}
 
 
 	@Override
 	public JSONObject convertToJSONObject() {
-		return null;
+		// Valores genericos de actividad
+		JSONObject newObject = new JSONObject();
+		newObject.put("actividadID", actividadID);
+		newObject.put("descripcion", descripcion);
+		newObject.put("objetivo", objetivo);
+		newObject.put("nivelDificultad", nivelDificultad);
+		newObject.put("duracionEsperada", duracionEsperada);
+		newObject.put("esObligatoria", esObligatoria);
+		newObject.put("fechaLimite", fechaLimite.getTime());
+		newObject.put("resenas", resenas);
+		newObject.put("calificacion", calificacion);
+		newObject.put("resultado", resultado);
+		newObject.put("actividadesPrevias", actividadesPrevias);
+		newObject.put("actividadesSeguimiento", actividadesSeguimiento);
+		newObject.put("tipoActividad", tipoActividad);
+
+		//Valores especificos de la clase
+		newObject.put("tiporecurso", tipoRecurso);
+		newObject.put("linkRecurso", linkRecusro);
+		
+		return newObject;
+
 	}
 
 	@Override
 	public String getTipoActividad() {
 		return RECURSOEDUCATIVO;
-	}
-	
-	@Override
-	public void agregarContenido(String pregunta, List<String> opciones) {
-		preguntas.add(pregunta);
 	}
 
 
@@ -66,6 +81,13 @@ public class RecursoEducativo extends Actividad {
 
 	public void completarRecurso() {
 		System.out.println(this.linkRecusro);
+	}
+
+
+	@Override
+	public void agregarContenido(String pregunta, List<String> opciones) {
+		
+
 	}
 
 	

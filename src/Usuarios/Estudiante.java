@@ -17,7 +17,7 @@ import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 
 public class Estudiante extends Usuario {
-	private List<LearningPath> learningPathsInscritos;
+	private Map<String,LearningPath> learningPathsInscritos = new HashMap<>();
 	private List<String> intereses;
 	private String ProfesorAsignado;
 	public String estudiante = "Estudiante";
@@ -45,13 +45,15 @@ public class Estudiante extends Usuario {
 	public void inscribirLearningPath(String LearningPathID, String profesorID) {
 		Profesor profesor = profesores.get(profesorID);
 		LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
-		learningPathsInscritos.add(learningPath);
+		learningPathsInscritos.put(LearningPathID,learningPath);
 		learningPath.estudiantesInscritos.put(usuarioID, this);
 	}
 	
-	public void completarActividad(Actividad actividad) {
+	public void completarActividad(String actividadID, String learningPathID) {
 		// crea una lista de actividades completadas
-
+		LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+		Map<String,Actividad> mapa = learningPath.getActividades();
+		Actividad actividad = mapa.get(actividadID);
 		List<String> actividadesPrevias = actividad.getActividadesPrevias();
 		for (String actividadPrevia : actividadesPrevias) {
 			if (actividadPrevia.equals(null)) {
@@ -117,12 +119,16 @@ public class Estudiante extends Usuario {
 	
 	
 	
-	public List<Actividad> actividadesDisponibles(List<Actividad> actividades, List<LearningPath> Lista) {
+	public List<Actividad> actividadesDisponibles(List<String> actividades, String learningPathID ) {
 		// Muestra las actividades disponibles en los Learning Paths inscritos.
 		List<Actividad> actividadesDisponibles = new ArrayList<>();
-		for (LearningPath learningPath : Lista) {
-			 actividadesDisponibles.addAll(learningPath.getActividades());
-			
+		for (String actividadID : actividades) {
+			LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+			Map<String,Actividad> mapa = learningPath.getActividades();
+			Actividad actividad = mapa.get(actividadID);
+			if(actividad.getEstado().equals(null)) {
+				actividadesDisponibles.add(actividad);
+			}
 		}
 		return actividadesDisponibles;
 	}
