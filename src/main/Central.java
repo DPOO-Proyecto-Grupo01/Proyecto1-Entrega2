@@ -180,6 +180,13 @@ public class Central {
 			
 			System.out.println("El porcentaje de exito es "+ estudiante.getProgresoLearningPath("LP106")*100+"%");
 			
+			System.out.println("\n");
+			Feedback feedback = estudiante.enviarFeedback("LP106", "Excelente curso", 5, "U105");
+			System.out.println("Feedback del learningPath seleccionado: "+ 
+			                     profesor.revisarFeedback("LP106"));
+			
+			System.out.println("\n");
+			System.out.println("Los detalles del progreso del estudiante son: "+ profesor.verProgresoEstudiante("U105", "LP106"));
 			
 			
 			

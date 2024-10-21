@@ -25,34 +25,21 @@ import static main.Central.actividades;
 
 public class Profesor extends Usuario {
 	
-	public Map<String, List<LearningPath>> RecomendacionesProfesor;
     public Map<String, LearningPath> learningPathsCreados;
     public Map<String, Actividad> mapaActividades;
     public String profesor = "Profesor";
     public Profesor(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
         super(UsuarioID, nombre, contraseña, email, tipoUsuario);
         // TODO Auto-generated constructor stub
-        this.RecomendacionesProfesor = new HashMap<>();
         this.learningPathsCreados = new HashMap<>();
         this.mapaActividades = new HashMap<>();
     }
 
-    
-
+   
     @Override
     public String getTipoUsuario() {
         return this.profesor;
 
-    }
-
-
-    public Map<String, List<LearningPath>> getRecomendacionesProfesor() {
-        return RecomendacionesProfesor;
-    }
-
-
-    public void setRecomendacionesProfesor(Map<String, List<LearningPath>> recomendacionesProfesor) {
-        RecomendacionesProfesor = recomendacionesProfesor;
     }
 
     public Map<String, LearningPath> getLearningPathsCreados() {
@@ -68,9 +55,6 @@ public class Profesor extends Usuario {
     public String getProfesor() {
         return profesor;
     }
-
-
-    
 
 
 public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
@@ -150,12 +134,6 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
         learningPathsCreados.put(LearningPathID, learningPath);
         return learningPath;
     }
-
-
-    public void agregarRecomendacion(Map<String, List<LearningPath>> recomendaciones, String interes, LearningPath learningPath) {
-        List<LearningPath> learningpaths = recomendaciones.get(interes);
-        learningpaths.add(learningPath);
-    }
     
     public void revisarEstadoActividad(String actividadID, String LearningPathID) {
         LearningPath lp = learningPathsCreados.get(LearningPathID);
@@ -180,9 +158,22 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     }
 
     // ver el progreso de un estudiante
-    public Map<String, String> verProgresoEstudiante(String estudianteID, LearningPath learningPath) {
-        Progreso progreso = learningPath.obtenerProgresoEstudiante(estudianteID);
+    public Map<String, String> verProgresoEstudiante(String estudianteID, String learningPathID) {
+        LearningPath lp = learningPathsCreados.get(learningPathID);
+        Progreso progreso = lp.obtenerProgresoEstudiante(estudianteID);
         return progreso.mostrarProgreso();
     }
     
+    public List<Map> revisarFeedback (String learningpathId) {
+    	LearningPath lp = learningPathsCreados.get(learningpathId);
+    	List<Feedback> fb = lp.getFeedback();
+    	List<Map> feedbacks = new ArrayList<>();
+		for (Feedback f : fb) {
+			feedbacks.add(f.mostrarFeedback());
+		}
+    	
+    	return feedbacks;
+    	
+    	
+    }
 }

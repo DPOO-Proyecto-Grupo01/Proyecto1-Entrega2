@@ -1,5 +1,7 @@
 package LearningPaths;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import Actividades.Actividad;
 import Usuarios.Estudiante;
@@ -7,22 +9,20 @@ public class Feedback {
 	
 	private String feedbackID;
 	private String comentario;
-	private double calificacion;
-	private Date fecha;
-	private Estudiante estudiante;
+	private int calificacion;
+	private String estudiante;
 	
 	private LearningPath learningPath;
 
 	
 
-	public Feedback(String feedbackID, String comentario, double calificacion, Date fecha, Estudiante estudiante,
+	public Feedback(String feedbackID, String comentario, int calificacion, String estudianteId,
 		 LearningPath learningPath) {
 		super();
 		this.feedbackID = feedbackID;
 		this.comentario = comentario;
 		this.calificacion = calificacion;
-		this.fecha = fecha;
-		this.estudiante = estudiante;
+		this.estudiante = estudianteId;
 		
 		this.learningPath = learningPath;
 	}
@@ -46,16 +46,9 @@ public class Feedback {
 	public double getCalificacion() {
 		return calificacion;
 	}
-
 	
 
-	public Date getFecha() {
-		return fecha;
-	}
-
-	
-
-	public Estudiante getEstudiante() {
+	public String getEstudiante() {
 		return estudiante;
 	}
 
@@ -64,7 +57,16 @@ public class Feedback {
 		return learningPath;
 	}
 
-	
+	public  Map<String, String > mostrarFeedback() {
+		Map<String, String > map = new HashMap<>();
+		map.put("feedbackID", feedbackID);
+		map.put("ComentarioEstudiante", comentario);
+		map.put("rating", Integer.toString(calificacion));
+		map.put("Estudiante", estudiante);
+		map.put("Learning Path", learningPath.getLearningPathID());
+		
+		return map;
+	}
 }
 
 

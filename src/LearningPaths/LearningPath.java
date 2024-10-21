@@ -24,12 +24,11 @@ public class LearningPath {
 	private Date fechaModificacion;
 	private List<String> actividadesID;
 	public Map<String,Actividad> actividades= new HashMap<>();
-	private List<String> intereses; 
-	private List<Feedback> feedback;
+	private List<Feedback> feedback = new ArrayList<>();
 	private Profesor profesor;
 	public String profesorID;
 	public Progreso progreso;
-	public Map<String, Progreso> progresoEstudiante;
+	public Map<String, Progreso> progresoEstudiante= new HashMap<>();
 	public HashMap<String, Estudiante> estudiantesInscritos = new HashMap<>();
 	
 	
@@ -48,7 +47,6 @@ public class LearningPath {
 		this.duracionMinutos = duracion;
 		this.profesorID = profesorID;
 		this.actividadesID = actividadesID;
-		this.intereses = intereses;
 		
 		
 		}
@@ -65,7 +63,9 @@ public class LearningPath {
 		return progreso;
 	}
 
-
+	public Map<String, Progreso> getProgresoEstudiante() {
+		return progresoEstudiante;
+	}
 
 	public void setProgreso(Progreso progreso) {
 		this.progreso = progreso;
@@ -164,16 +164,6 @@ public class LearningPath {
 	
 
 
-	
-
-	public List<String> getIntereses() {
-		return intereses;
-	}
-
-	public void setIntereses(List<String> intereses) {
-		this.intereses = intereses;
-	}
-
 	public Map<String,Actividad> getActividades() {
 		return actividades;
 	}
@@ -232,9 +222,6 @@ public class LearningPath {
 		
 	}
 
-	public List<Feedback> obtenerFeedback() {
-		return feedback;
-	}
 	
 	public double calcularRating() {
 		double rating = 0;
@@ -245,7 +232,7 @@ public class LearningPath {
 	}
 	public String obtenerDetalles() {
 		return "Titulo: " + titulo + "\n" + "Descripcion: " + descripcion + "\n" + "Objetivos: " + objetivos + "\n" + "Nivel de Dificultad: " + nivelDificultad + "\n" + "Duracion: " + duracionMinutos + "\n" 
-	+ "Calificacion: " + calificacion + "\n" + "Fecha de Creacion: " + fechaCreacion + "\n" + "Fecha de Modificacion: " + fechaModificacion + "\n" + "Intereses: " + intereses + "\n" + "Profesor: " + profesor;
+	+ "Calificacion: " + calificacion + "\n" + "Fecha de Creacion: " + fechaCreacion + "\n" + "Fecha de Modificacion: " + fechaModificacion + "\n" + "Profesor: " + profesor;
 		
 	}
 	

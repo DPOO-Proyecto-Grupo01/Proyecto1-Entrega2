@@ -18,7 +18,6 @@ import LearningPaths.Progreso;
 
 public class Estudiante extends Usuario {
 	private Map<String,LearningPath> learningPathsInscritos = new HashMap<>();
-	private List<String> intereses;
 	public String estudiante = "Estudiante";
 	public HashMap<String,Profesor> profesores = new HashMap<>();
 	private Map<LearningPath, Progreso> progresoLearningPath = new HashMap<>();
@@ -102,25 +101,10 @@ public class Estudiante extends Usuario {
         Progreso progreso = progresoLearningPath.get(learningPath);
         List<Actividad> actividades = learningPath.actividades.values().stream().toList();
         learningPath.actualizarProgreso(progreso, actividades);
+        learningPath.getProgresoEstudiante().put(this.usuarioID, progreso);
+        
         System.out.println("Se le recomienda realizar la actividad: " + actividadSeguimiento);
     }
-	
-	public List<LearningPath> recibirRecomendacion(String profesorID) {
-		//Devuelve una lista de Learning Paths recomendados para el estudiante, basados en sus intereses. Que se le asigne learning oaths de su profesor asignado
-		//crear lista vacia
-		Profesor profesor = profesores.get(profesorID);
-		List<LearningPath> learningPathsRecomendados = new ArrayList<>();
-		for (String interes : intereses) {
-			if (profesor.getRecomendacionesProfesor().containsKey(interes)) {
-				List<LearningPath> learningPaths= profesor.getRecomendacionesProfesor().get(interes);
-				learningPathsRecomendados.addAll(learningPaths);
-			}
-			
-		}
-		return learningPathsRecomendados;
-		
-		
-	}
 	
 	
 	
@@ -155,12 +139,13 @@ public class Estudiante extends Usuario {
 	        }
 	    }
 	 
-	public void enviarFeedback(LearningPath learningPath, String feedback, double calificacion, 
-			String comentario, Date fecha, String feedbackID ) {
+	public Feedback enviarFeedback(String learningPath, String feedback, int calificacion, 
+ String feedbackID ) {
 		// Envia un feedback al profesor del Learning Path
-        Feedback feedbackEstudiante= new Feedback(feedbackID, comentario, calificacion, fecha, this, learningPath);
-        learningPath.getFeedback().add(feedbackEstudiante);
-    
+		LearningPath lp= learningPathsInscritos.get(learningPath);
+        Feedback feedbackEstudiante= new Feedback(feedbackID, feedback, calificacion, this.getNombre(), lp);
+        lp.getFeedback().add(feedbackEstudiante);
+        return feedbackEstudiante;
 		
 	}
 	
