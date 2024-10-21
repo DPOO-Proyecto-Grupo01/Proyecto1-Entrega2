@@ -84,6 +84,7 @@ public class Central {
 			//Test quiz persistence
 			ArrayList<String> actividadesID = new ArrayList<String>();
 			actividadesID.add("A101");
+			actividadesID.add("A103");
 			actividadesID.add("A102");
 			ArrayList<String> intereses = new ArrayList<String>();
 			intereses.add("Java");
@@ -155,6 +156,7 @@ public class Central {
 			
 			Actividad actividadCreada1= profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
 			Actividad actividadCreada2= profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
+			Actividad actividadCreada3= profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
 			
 			profesor.CalificacionMinima("A110", 60.1 );
 			System.out.println("Calificacion minima de la actividad: "+ ((Quiz) actividadCreada).getCalificacionMinima());
@@ -176,6 +178,7 @@ public class Central {
 			}
 			System.out.println("Todavia debe realizar la actividad: "+ actividadesID1);
 			
+			System.out.println("El porcentaje de exito es "+ estudiante.getProgresoLearningPath("LP106")*100+"%");
 			
 			
 			

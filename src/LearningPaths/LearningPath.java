@@ -211,13 +211,17 @@ public class LearningPath {
 
 	public void actualizarProgreso(Progreso progreso, List<Actividad> actividades) {
 		int exitosas = 0;
-		double porcentajeExitosas = 0;
+		
 		for (Actividad actividad : actividades) {
-			if (actividad.getEstado().equals("Exitoso")) {
+			
+			if ( actividad.getEstado() != null && actividad.getEstado().equals("Exitoso") ){
 				exitosas++;
 			}
 		}
-		porcentajeExitosas = exitosas/actividades.size();
+		
+		setProgreso(progreso);
+		double porcentajeExitosas = ((double)exitosas/actividades.size());
+		
 		progreso.setPorcentajeDeExito(porcentajeExitosas);
 	
 		

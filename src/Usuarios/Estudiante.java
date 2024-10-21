@@ -21,7 +21,7 @@ public class Estudiante extends Usuario {
 	private List<String> intereses;
 	public String estudiante = "Estudiante";
 	public HashMap<String,Profesor> profesores = new HashMap<>();
-	private Map<LearningPath, Progreso> progresoLearningPath;
+	private Map<LearningPath, Progreso> progresoLearningPath = new HashMap<>();
 	private HashMap<String, Actividad> actividades = new HashMap<>();
 	
 	public Estudiante(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
@@ -40,12 +40,16 @@ public class Estudiante extends Usuario {
 	}
 	
 	public int inscribirLearningPath(String LearningPathID, String profesorID) {
+		
 		Profesor profesor = profesores.get(profesorID);
 		LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
 		learningPathsInscritos.put(LearningPathID,learningPath);
 		learningPath.estudiantesInscritos.put(usuarioID, this);
 		List<String> actividades = learningPath.getActividadesID();
-		for (String actividadID : actividades) {
+		Progreso progreso = crearProgreso(learningPath, new Date(), new Date(), 0, 0);
+		progresoLearningPath.put(learningPath, progreso);
+		
+		for (String actividadID : actividades) { 
 			Actividad actividad = learningPath.actividades.get(actividadID);
 			this.actividades.put(actividadID, actividad);
 		}
@@ -95,17 +99,11 @@ public class Estudiante extends Usuario {
         }
 
         List<String> actividadSeguimiento =  actividad.getActividadesSeguimiento();
-        
+        Progreso progreso = progresoLearningPath.get(learningPath);
+        List<Actividad> actividades = learningPath.actividades.values().stream().toList();
+        learningPath.actualizarProgreso(progreso, actividades);
         System.out.println("Se le recomienda realizar la actividad: " + actividadSeguimiento);
     }
-
-
-
-	
-	
-	public void verProgresoLearningPath(LearningPath learningPath, Progreso progreso) {
-		progresoLearningPath.put(learningPath, progreso);
-	}
 	
 	public List<LearningPath> recibirRecomendacion(String profesorID) {
 		//Devuelve una lista de Learning Paths recomendados para el estudiante, basados en sus intereses. Que se le asigne learning oaths de su profesor asignado
@@ -129,11 +127,10 @@ public class Estudiante extends Usuario {
 	public List<Actividad> actividadesDisponibles(String learningPathID) {
 		// Muestra las actividades disponibles en los Learning Paths inscritos.
 		List<String> actividades = learningPathsInscritos.get(learningPathID).getActividadesID();
-		System.out.println(actividades);
+		
 		List<Actividad> actividadesDisponibles = new ArrayList<>();
 		LearningPath learningPath = learningPathsInscritos.get(learningPathID);
 		Map<String,Actividad> mapa = learningPath.getActividades();
-		System.out.println(mapa);
 		for (String actividadID : actividades) {
 			Actividad actividad = mapa.get(actividadID);
 			
@@ -147,12 +144,17 @@ public class Estudiante extends Usuario {
 		
 		
 	
-	public double getProgresoLearningPath(LearningPath learningPath) {
-		// Calcula el progreso del estudiante en un Learning Path
-		return learningPath.getProgreso().getPorcentajeDeExito();
-		
-	}
-	
+	 public double getProgresoLearningPath(String learningPathID) {
+	        LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+	        Progreso progreso = learningPath.getProgreso();
+	        if (progreso != null) {
+	            return progreso.getPorcentajeDeExito();
+	        } else {
+	            System.out.println("Progreso no encontrado para el LearningPath: " + learningPathID);
+	            return 0.0;
+	        }
+	    }
+	 
 	public void enviarFeedback(LearningPath learningPath, String feedback, double calificacion, 
 			String comentario, Date fecha, String feedbackID ) {
 		// Envia un feedback al profesor del Learning Path
@@ -162,13 +164,13 @@ public class Estudiante extends Usuario {
 		
 	}
 	
-	public void crearProgreso(LearningPath learningPath, Date fechaInicio, Date fechaCompletado, int tiempoDedicado,
+	public Progreso crearProgreso(LearningPath learningPath, Date fechaInicio, Date fechaCompletado, int tiempoDedicado,
 			double estado) {
 		// Crea un registro de progreso para una actividad
 		int random = (int) (Math.random() * 1000 + 1);
 		String randomString = Integer.toString(random);
 		Progreso progreso = new Progreso(randomString, this.usuarioID, learningPath, fechaInicio, fechaCompletado, tiempoDedicado, estado);
-		progresoLearningPath.put(learningPath, progreso);
+		return progreso;
 	}
 	
 	
