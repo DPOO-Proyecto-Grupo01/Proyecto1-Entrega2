@@ -38,7 +38,7 @@ public class Estudiante extends Usuario {
 		return this.estudiante;
 	}
 	
-	public int inscribirLearningPath(String LearningPathID, String profesorID) {
+	public Map<String, String > inscribirLearningPath(String LearningPathID, String profesorID) {
 		
 		Profesor profesor = profesores.get(profesorID);
 		LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
@@ -47,13 +47,16 @@ public class Estudiante extends Usuario {
 		List<String> actividades = learningPath.getActividadesID();
 		Progreso progreso = crearProgreso(learningPath, new Date(), new Date(), 0, 0);
 		progresoLearningPath.put(learningPath, progreso);
+		Map<String, String > map = new HashMap<>();
+			map.put("Titulo Learning Path", learningPath.getTitulo());
+			map.put("Descripcion learning Path", learningPath.getDescripcion());
+			for (String actividadID : actividades) { 
+				Actividad actividad = learningPath.actividades.get(actividadID);
+				this.actividades.put(actividadID, actividad);
+					map.put("Actividad "+actividad.getActividadID(), actividad.getDescripcion());
+				}
 		
-		for (String actividadID : actividades) { 
-			Actividad actividad = learningPath.actividades.get(actividadID);
-			this.actividades.put(actividadID, actividad);
-		}
-		
-		return learningPath.estudiantesInscritos.size();
+		return map;
 	}
 	
 	public void completarActividad(String actividadID, String learningPathID) {
