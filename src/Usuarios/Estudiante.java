@@ -2,6 +2,7 @@ package Usuarios;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,32 +17,36 @@ import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 
 public class Estudiante extends Usuario {
-	
-	public Estudiante(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
-		super(UsuarioID, nombre, contraseña, email, tipoUsuario);
-        // TODO Auto-generated constructor stub
-    }
-	
-
 	private List<LearningPath> learningPathsInscritos;
 	private List<String> intereses;
 	private String ProfesorAsignado;
 	public String estudiante = "Estudiante";
-	private Profesor profesor;
+	private HashMap<String,Profesor> profesores = new HashMap<>();
 	private Map<LearningPath, Progreso> progresoLearningPath;
-	private List<Actividad> actividadesCompletadas;
+	private HashMap<String, Actividad> actividades = new HashMap<>();
 	
+	public Estudiante(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
+		super(UsuarioID, nombre, contraseña, email, tipoUsuario);
+        
+    }
+	
+
+	
+	
+	public HashMap<String, Actividad> getActividades() {
+		return actividades;
+	}
+
 	@Override
 	public String getTipoUsuario() {
 		return this.estudiante;
 	}
 	
-	public void inscribirLearningPath(LearningPath learningPath) {
+	public void inscribirLearningPath(String LearningPathID, String profesorID) {
+		Profesor profesor = profesores.get(profesorID);
+		LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
 		learningPathsInscritos.add(learningPath);
-		Profesor profesor = this.profesor;
-		Map<String, LearningPath> mapa = profesor.getLearningPathsCreados();
-		LearningPath learningPathProfesor = mapa.get(learningPath.getLearningPathID());
-		System.out.println(learningPathProfesor.inscripcionLearningPath());
+		learningPath.estudiantesInscritos.put(usuarioID, this);
 	}
 	
 	public void completarActividad(Actividad actividad) {
@@ -96,6 +101,7 @@ public class Estudiante extends Usuario {
 	public List<LearningPath> recibirRecomendacion() {
 		//Devuelve una lista de Learning Paths recomendados para el estudiante, basados en sus intereses. Que se le asigne learning oaths de su profesor asignado
 		//crear lista vacia
+		Profesor profesor = profesores.get(ProfesorAsignado);
 		List<LearningPath> learningPathsRecomendados = new ArrayList<>();
 		for (String interes : intereses) {
 			if (profesor.getRecomendacionesProfesor().containsKey(interes)) {
@@ -148,11 +154,7 @@ public class Estudiante extends Usuario {
 		progresoLearningPath.put(learningPath, progreso);
 	}
 	
-	public void inscribirseLearnigPath(LearningPath learningPath) {
-		learningPathsInscritos.add(learningPath);
-		System.out.println();
-		
-	}
+	
 	
 	
 }

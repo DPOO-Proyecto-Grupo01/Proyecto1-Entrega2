@@ -70,8 +70,11 @@ public class Profesor extends Usuario {
     }
 
 
-    public void revisarEstadoActividad(Actividad actividad, String estado) {
-        // Revisa el estado de una actividad
+    public void revisarEstadoActividad(String actividadID, String LearningPathID, String estudianteID) {
+        LearningPath lp = learningPathsCreados.get(LearningPathID);
+        Estudiante estudiante = lp.estudiantesInscritos.get(estudianteID);
+    	HashMap<String, Actividad> actividadesEstudiante = estudiante.getActividades();
+    	Actividad actividad = actividadesEstudiante.get(actividadID);
         if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
             if (actividad.getEstado().equals("Enviado")) {
                 actividad.setEstado("Exitoso");

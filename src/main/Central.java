@@ -98,13 +98,13 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("1. Iniciar sesión como Usuario");
 			
-			Estudiante usuario = new Estudiante( "U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co", "Estudiante");
+			Estudiante estudiante = new Estudiante( "U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co", "Estudiante");
 			Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
-			estudiantes.add(usuario);
+			estudiantes.add(estudiante);
 			profesores.add(profesor);
 			
-			if( usuario.iniciarSesion("U105", "1234") ) {
-                System.out.println("Inicio de sesion exitoso: Estudiante "+ usuario.getUsuarioID());
+			if( estudiante.iniciarSesion("U105", "1234") ) {
+                System.out.println("Inicio de sesion exitoso: Estudiante "+ estudiante.getUsuarioID());
             }
             else {
                 System.out.println("Inicio de sesion fallido: Estudiante");
@@ -147,13 +147,18 @@ public class Central {
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 			
 			
-			Quiz actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
+			Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
 			System.out.println("Actividad creada por el profesor: "+ actividadCreada.getActividadID());
 			
-			profesor.CalificacionMinima("A110", 60 );
-			System.out.println("Calificacion minima de la actividad: "+ actividadCreada.getCalificacion());
+			profesor.CalificacionMinima("A110", 60.1 );
+			System.out.println("Calificacion minima de la actividad: "+ ((Quiz) actividadCreada).getCalificacionMinima());
 			
+			estudiante.inscribirLearningPath("LP106", "P105");
 			
+			System.out.println("\n");
+			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
+			profesor.revisarEstadoActividad("A110", "LP106", "U105");
+			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 			
 			
 			

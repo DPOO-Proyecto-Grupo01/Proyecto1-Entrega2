@@ -2,6 +2,7 @@ package LearningPaths;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class LearningPath {
 	public String profesorID;
 	public Progreso progreso;
 	public Map<String, Progreso> progresoEstudiante;
+	public HashMap<String, Estudiante> estudiantesInscritos = new HashMap<>();
 	
 	
 	
