@@ -19,9 +19,8 @@ import LearningPaths.Progreso;
 public class Estudiante extends Usuario {
 	private Map<String,LearningPath> learningPathsInscritos = new HashMap<>();
 	private List<String> intereses;
-	private String ProfesorAsignado;
 	public String estudiante = "Estudiante";
-	private HashMap<String,Profesor> profesores = new HashMap<>();
+	public HashMap<String,Profesor> profesores = new HashMap<>();
 	private Map<LearningPath, Progreso> progresoLearningPath;
 	private HashMap<String, Actividad> actividades = new HashMap<>();
 	
@@ -31,8 +30,6 @@ public class Estudiante extends Usuario {
     }
 	
 
-	
-	
 	public HashMap<String, Actividad> getActividades() {
 		return actividades;
 	}
@@ -42,68 +39,74 @@ public class Estudiante extends Usuario {
 		return this.estudiante;
 	}
 	
-	public void inscribirLearningPath(String LearningPathID, String profesorID) {
+	public int inscribirLearningPath(String LearningPathID, String profesorID) {
 		Profesor profesor = profesores.get(profesorID);
 		LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
 		learningPathsInscritos.put(LearningPathID,learningPath);
 		learningPath.estudiantesInscritos.put(usuarioID, this);
+		List<String> actividades = learningPath.getActividadesID();
+		for (String actividadID : actividades) {
+			Actividad actividad = learningPath.actividades.get(actividadID);
+			this.actividades.put(actividadID, actividad);
+		}
+		
+		return learningPath.estudiantesInscritos.size();
 	}
 	
 	public void completarActividad(String actividadID, String learningPathID) {
-		// crea una lista de actividades completadas
-		LearningPath learningPath = learningPathsInscritos.get(learningPathID);
-		Map<String,Actividad> mapa = learningPath.getActividades();
-		Actividad actividad = mapa.get(actividadID);
-		List<String> actividadesPrevias = actividad.getActividadesPrevias();
-		for (String actividadPrevia : actividadesPrevias) {
-			if (actividadPrevia.equals(null)) {
-				System.out.println("Tenga cuidado no ha realizado las actividades previas");
-				break;
-			}
-		}
-		
-		if (actividad.getTipoActividad().equals("Tarea")) {
-			Tarea tarea = (Tarea) actividad;
-			tarea.completarTarea();
-			tarea.setEstado("Enviado");
-		}
-		else if(actividad.getTipoActividad().equals("Examen")) {
+        LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+        Map<String, Actividad> mapa = learningPath.getActividades();
+        Actividad actividad = mapa.get(actividadID);
+        List<String> actividadesPrevias = actividad.getActividadesPrevias();
+        for (String actividadPrevia : actividadesPrevias) {
+            if (actividadPrevia == null) {
+                System.out.println("Tenga cuidado no ha realizado las actividades previas");
+                break;
+            }
+        }
+
+        if (actividad.getTipoActividad().equals("Tarea")) {
+            Tarea tarea = (Tarea) actividad;
+            tarea.completarTarea();
+            tarea.setEstado("Enviado");
+        } else if (actividad.getTipoActividad().equals("Examen")) {
             Examen examen = (Examen) actividad;
             examen.completarExamen();
-		}
-		else if (actividad.getTipoActividad().equals("Recurso Educativo")) {
-			RecursoEducativo recurso = (RecursoEducativo) actividad;
-			recurso.completarRecurso();
-			recurso.setEstado("Enviado");
-		} 
-		else if (actividad.getTipoActividad().equals("Quiz")) {
-			Quiz quiz = (Quiz) actividad;
-			quiz.completarQuiz();
-			if (quiz.isAprobado()) {
-				quiz.setEstado("Exitoso");
-			} else {
-				quiz.setEstado("Fallido");
-			}
-		} 
-		else if (actividad.getTipoActividad().equals("Encuesta")) {
-			Encuesta encuesta = (Encuesta) actividad;
-			encuesta.completarEncuesta();
-			encuesta.setEstado("Exitoso");
-		}
-		
-		String recomendacion = ((Actividad) actividad.getActividadesSeguimiento()).getActividadID();
-		System.out.println("Se le recomienda realizar la actividad: " + recomendacion);
-	}
+        } else if (actividad.getTipoActividad().equals("Recurso Educativo")) {
+            RecursoEducativo recurso = (RecursoEducativo) actividad;
+            recurso.completarRecurso();
+            recurso.setEstado("Enviado");
+        } else if (actividad.getTipoActividad().equals("Quiz")) {
+            Quiz quiz = (Quiz) actividad;
+            quiz.completarQuiz();
+            if (quiz.isAprobado()) {
+                quiz.setEstado("Exitoso");
+            } else {
+                quiz.setEstado("Fallido");
+            }
+        } else if (actividad.getTipoActividad().equals("Encuesta")) {
+            Encuesta encuesta = (Encuesta) actividad;
+            encuesta.completarEncuesta();
+            encuesta.setEstado("Exitoso");
+        }
+
+        List<String> actividadSeguimiento =  actividad.getActividadesSeguimiento();
+        
+        System.out.println("Se le recomienda realizar la actividad: " + actividadSeguimiento);
+    }
+
+
+
 	
 	
 	public void verProgresoLearningPath(LearningPath learningPath, Progreso progreso) {
 		progresoLearningPath.put(learningPath, progreso);
 	}
 	
-	public List<LearningPath> recibirRecomendacion() {
+	public List<LearningPath> recibirRecomendacion(String profesorID) {
 		//Devuelve una lista de Learning Paths recomendados para el estudiante, basados en sus intereses. Que se le asigne learning oaths de su profesor asignado
 		//crear lista vacia
-		Profesor profesor = profesores.get(ProfesorAsignado);
+		Profesor profesor = profesores.get(profesorID);
 		List<LearningPath> learningPathsRecomendados = new ArrayList<>();
 		for (String interes : intereses) {
 			if (profesor.getRecomendacionesProfesor().containsKey(interes)) {
@@ -159,6 +162,7 @@ public class Estudiante extends Usuario {
 		Progreso progreso = new Progreso(randomString, this.usuarioID, learningPath, fechaInicio, fechaCompletado, tiempoDedicado, estado);
 		progresoLearningPath.put(learningPath, progreso);
 	}
+	
 	
 	
 	

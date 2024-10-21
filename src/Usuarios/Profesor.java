@@ -70,29 +70,7 @@ public class Profesor extends Usuario {
     }
 
 
-    public void revisarEstadoActividad(String actividadID, String LearningPathID, String estudianteID) {
-        LearningPath lp = learningPathsCreados.get(LearningPathID);
-        Estudiante estudiante = lp.estudiantesInscritos.get(estudianteID);
-    	HashMap<String, Actividad> actividadesEstudiante = estudiante.getActividades();
-    	Actividad actividad = actividadesEstudiante.get(actividadID);
-        if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
-            if (actividad.getEstado().equals("Enviado")) {
-                actividad.setEstado("Exitoso");
-            } else {
-                actividad.setEstado("Fallido");
-            }
-        } else if (actividad.getTipoActividad().equals("RecursoEducativo") || actividad.getTipoActividad().equals("Encuesta")) {
-            actividad.setEstado("Exitoso");
-        } else if (actividad.getTipoActividad().equals("Quiz")) {
-            if (actividad.getCalificacion() >= ((Quiz) actividad).getCalificacionMinima()) {
-                actividad.setEstado("Exitoso");
-            } else {
-                actividad.setEstado("Fallido");
-            }
-
-
-        }
-    }
+    
 
 
 public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
@@ -177,6 +155,28 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     public void agregarRecomendacion(Map<String, List<LearningPath>> recomendaciones, String interes, LearningPath learningPath) {
         List<LearningPath> learningpaths = recomendaciones.get(interes);
         learningpaths.add(learningPath);
+    }
+    
+    public void revisarEstadoActividad(String actividadID, String LearningPathID) {
+        LearningPath lp = learningPathsCreados.get(LearningPathID);
+    	Actividad actividad = lp.actividades.get(actividadID);
+        if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
+            if (actividad.getEstado().equals("Enviado")) {
+                actividad.setEstado("Exitoso");
+            } else {
+                actividad.setEstado("Fallido");
+            }
+        } else if (actividad.getTipoActividad().equals("RecursoEducativo") || actividad.getTipoActividad().equals("Encuesta")) {
+            actividad.setEstado("Exitoso");
+        } else if (actividad.getTipoActividad().equals("Quiz")) {
+            if (actividad.getCalificacion() >= ((Quiz) actividad).getCalificacionMinima()) {
+                actividad.setEstado("Exitoso");
+            } else {
+                actividad.setEstado("Fallido");
+            }
+
+
+        }
     }
 
     // ver el progreso de un estudiante

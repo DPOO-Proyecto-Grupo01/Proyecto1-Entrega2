@@ -15,6 +15,7 @@ public class Quiz extends Actividad {
 	private List<Pregunta> preguntas;
 	private double calificacionMinima;
 	private String respuestaCorrecta;
+	private String respuestaUsuario;
 	public boolean aprobado;
 
 
@@ -30,6 +31,10 @@ public class Quiz extends Actividad {
 		this.preguntas = preguntas;
         this.respuestaCorrecta = respuestaCorrecta;
         this.aprobado = false;
+	}
+	
+	public void setRespuestaUsuario(String respuesta) {
+		this.respuestaUsuario = respuesta;
 	}
 
 	public double getCalificacionMinima() {
@@ -97,7 +102,12 @@ public class Quiz extends Actividad {
 
 
 	public boolean isAprobado() {
-		return aprobado;
+		if (this.respuestaUsuario.equals(this.respuestaCorrecta)) {
+			this.aprobado = true;
+		} else {
+			this.aprobado = false;
+		}
+		return this.aprobado;
 	}
 
 

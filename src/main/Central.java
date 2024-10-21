@@ -55,11 +55,8 @@ public class Central {
 
 			estudiantes=persistenciaUsuarios.cargarEstudiantes(usuarios);
 			profesores=persistenciaUsuarios.cargarProfesores(usuarios);
-
 			learningPaths=persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
 			actividades = persistenciaActividades.cargarActividades(actividadesFile);
-			
-			
 			
 			System.out.println("Actividades: ");
 			for (Actividad a: actividades) {
@@ -81,11 +78,13 @@ public class Central {
 			for (LearningPath l : learningPaths) {
 				System.out.println(l.getTitulo());
 			}
-
+			
+			
+			
 			//Test quiz persistence
 			ArrayList<String> actividadesID = new ArrayList<String>();
-			actividadesID.add("A505");
-			actividadesID.add("A304");
+			actividadesID.add("A101");
+			actividadesID.add("A102");
 			ArrayList<String> intereses = new ArrayList<String>();
 			intereses.add("Java");
 			intereses.add("Programacion");
@@ -102,6 +101,8 @@ public class Central {
 			Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
 			estudiantes.add(estudiante);
 			profesores.add(profesor);
+			estudiante.profesores.put("P105", profesor);
+			
 			
 			if( estudiante.iniciarSesion("U105", "1234") ) {
                 System.out.println("Inicio de sesion exitoso: Estudiante "+ estudiante.getUsuarioID());
@@ -153,13 +154,20 @@ public class Central {
 			profesor.CalificacionMinima("A110", 60.1 );
 			System.out.println("Calificacion minima de la actividad: "+ ((Quiz) actividadCreada).getCalificacionMinima());
 			
-			estudiante.inscribirLearningPath("LP106", "P105");
+			
+			
+			System.out.println("La cantidad de estudiantes inscritos en el learning path es/son "+estudiante.inscribirLearningPath("LP106", "P105")); 
+			//TODO: Revisar si se inscribio correctamente
+			
+			
 			
 			System.out.println("\n");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
-			profesor.revisarEstadoActividad("A110", "LP106", "U105");
+			profesor.revisarEstadoActividad("A110", "LP106");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
-			
+		
+			estudiante.completarActividad("A110", "LP106");
+			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 			
 			
 			
