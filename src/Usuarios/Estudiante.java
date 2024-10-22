@@ -1,5 +1,8 @@
 package Usuarios;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,7 +99,13 @@ public class Estudiante extends Usuario {
             }
         }
         System.out.println("Tenga cuidado no ha realizado las actividades previas: " + actividadesPrevias2);
-
+        
+       Actividad actividadPrevia = learningPath.getActividades().get(actividad.getActividadPrevia());
+       actividad.setFechaLimite(actividadPrevia);
+        LocalDateTime LocaldateTimeNow = LocalDateTime.now();
+        Date fechaInicio = Date.from(LocaldateTimeNow.atZone(ZoneId.systemDefault()).toInstant());
+        actividad.setFechainicio(fechaInicio);
+        
         if (actividad.getTipoActividad().equals("Tarea")) {
             Tarea tarea = (Tarea) actividad;
             tarea.completarTarea();
@@ -122,7 +131,12 @@ public class Estudiante extends Usuario {
             encuesta.completarEncuesta();
             encuesta.setEstado("Exitoso");
         }
-
+        
+        LocalDateTime LocaldateTimeNow2 = LocalDateTime.now();
+        Date fechaFin = Date.from(LocaldateTimeNow2.atZone(ZoneId.systemDefault()).toInstant());
+        actividad.setFechafin(fechaFin);
+        
+        
         List<String> actividadSeguimiento =  actividad.getActividadesSeguimiento();
         Progreso progreso = progresoLearningPath.get(learningPath);
         List<Actividad> actividades = learningPath.actividades.values().stream().toList();
@@ -131,7 +145,6 @@ public class Estudiante extends Usuario {
         
         System.out.println("Se le recomienda realizar la actividad: " + actividadSeguimiento);
     }
-	
 	
 	
 	public List<Actividad> actividadesDisponibles(String learningPathID) {

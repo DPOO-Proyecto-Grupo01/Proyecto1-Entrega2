@@ -154,12 +154,12 @@ public class Central {
 			
 			System.out.println("\n");
 			System.out.println("4.Profesor crea una actividad y la añade al learning Path");
-			Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
+			Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
 			System.out.println("Actividad creada por el profesor: "+ actividadCreada.getActividadID());
 			
-			Actividad actividadCreada1= profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
-			Actividad actividadCreada2= profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
-			Actividad actividadCreada3= profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos );
+			Actividad actividadCreada1= profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos, "A103" );
+			Actividad actividadCreada2= profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos, "A103" );
+			Actividad actividadCreada3= profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos, "A103" );
 			
 			profesor.CalificacionMinima("A110", 60.1 );
 			System.out.println("Calificacion minima de la actividad: "+ ((Quiz) actividadCreada).getCalificacionMinima());
@@ -170,40 +170,41 @@ public class Central {
 			System.out.println(estudiante.obtenerRecomendacion("Java", "P105"));
 			
 			System.out.println("\n");
-			System.out.println("5. El estudiante se inscribe al learning Path deseado");
+			System.out.println("6. El estudiante se inscribe al learning Path deseado");
 			System.out.println(estudiante.inscribirLearningPath("LP106", "P105")); 
 			
 			System.out.println("\n");
-			System.out.println("6.El profesor revisa el estado de una actividad");
+			System.out.println("7.El profesor revisa el estado de una actividad");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 			profesor.revisarEstadoActividad("A110", "LP106");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 		
 			System.out.println("\n");
-			System.out.println("7. El estudiante completa la actividad exitosamente, entonces cambia su estado");
+			System.out.println("8. El estudiante completa la actividad exitosamente, entonces cambia su estado");
+			estudiante.completarActividad("A103", "LP106");
 			estudiante.completarActividad("A110", "LP106");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 			
 			ArrayList<String> actividadesID1 = new ArrayList<String>();
 			System.out.println("\n");
-			System.out.println("8. El estudiante revisa que actividades todavia debe completar");
+			System.out.println("9. El estudiante revisa que actividades todavia debe completar");
 			for(Actividad actividad : estudiante.actividadesDisponibles("LP106")) {
 				actividadesID1.add(actividad.getActividadID());
 			}
 			System.out.println("Todavia debe realizar la actividad: "+ actividadesID1);
 			
 			System.out.println("\n");
-			System.out.println("9. Se revisa el porcentaje de exito del estudiante en el learningPath");
+			System.out.println("10. Se revisa el porcentaje de exito del estudiante en el learningPath");
 			System.out.println("El porcentaje de exito es "+ estudiante.getProgresoLearningPath("LP106")*100+"%");
 			
 			System.out.println("\n");
-			System.out.println("El estudiante agrega feedback y el profesor lo revisa");
+			System.out.println("11.El estudiante agrega feedback y el profesor lo revisa");
 			estudiante.enviarFeedback("LP106", "Excelente curso", 5, "U105");
 			System.out.println("Feedback del learningPath seleccionado: "+ 
 			                     profesor.revisarFeedback("LP106"));
 			
 			System.out.println("\n");
-			System.out.println("10.El profeor revisa el progreso del estudiante");
+			System.out.println("12.El profeor revisa el progreso del estudiante");
 			System.out.println("Los detalles del progreso del estudiante son: "+ profesor.verProgresoEstudiante("U105", "LP106"));
 			
 			

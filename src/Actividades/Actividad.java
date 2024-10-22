@@ -25,10 +25,12 @@ public abstract class Actividad {
 	protected List<String> actividadesPrevias;
 	protected List<String> actividadesSeguimiento;
 	protected String tipoActividad;
+	private Date fechainicio;
+	private Date fechafin;
+	private String actividadPrevia;
 
 
-    
-    //TODO: MOVER TODOS LOS STRINGS A UNA CLASE DE CONSTANTES
+	//TODO: MOVER TODOS LOS STRINGS A UNA CLASE DE CONSTANTES
     public static final String TAREA = "Tarea";
     public static final String EXAMEN = "Examen";
     public static final String RECURSOEDUCATIVO = "Recurso Educativo";
@@ -117,8 +119,16 @@ public abstract class Actividad {
 
 
 
-	public void setFechaLimite(Date fechaLimite) {
-		this.fechaLimite = fechaLimite;
+	public void setFechaLimite(Actividad actividad) {
+		
+		Date inicio = actividad.getFechainicio();
+		if (inicio != null){
+			Date finall = inicio+this.duracionEsperada;
+			this.fechaLimite = finall;
+		}
+		else {
+			this.fechaLimite = null;
+		}
 	}
 
 
@@ -166,12 +176,37 @@ public abstract class Actividad {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	
+    
+    public String getActividadPrevia() {
+		return actividadPrevia;
+	}
 
+	public void setActividadPrevia(String actividadPrevia) {
+		this.actividadPrevia = actividadPrevia;
+	}
 
 
 	public String getTipoActividad(){
 		return tipoActividad;
 	};
+	
+	public Date getFechainicio() {
+		return fechainicio;
+	}
+	
+	public Date getFechafin() {
+		return fechafin;
+	}	
+	
+	public void setFechainicio(Date fechain) {
+		this.fechainicio = fechain;
+	}
+	
+	public void setFechafin(Date fechafin) {
+		this.fechafin = fechafin;
+	}
+	
 	
 	public abstract void agregarContenido(String pregunta, List<String> opciones);
 

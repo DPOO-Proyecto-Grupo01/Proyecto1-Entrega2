@@ -60,7 +60,7 @@ public class Profesor extends Usuario {
 public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
                                int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas,
                                int resultado, int calificacion, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento,
-                               HashMap<String, Object> parametrosEspecificos) {
+                               HashMap<String, Object> parametrosEspecificos, String actividadPrevia) {
     // Crea una actividad
     Actividad actividad = null;
 
@@ -108,6 +108,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
         lp.setActividades(actividad);
     }
     actividades.add(actividad);
+    actividad.setActividadPrevia(actividadPrevia);
     return actividad;
 }
 
