@@ -22,6 +22,7 @@ public class Estudiante extends Usuario {
 	public HashMap<String,Profesor> profesores = new HashMap<>();
 	private Map<LearningPath, Progreso> progresoLearningPath = new HashMap<>();
 	private HashMap<String, Actividad> actividades = new HashMap<>();
+	private String intereses;
 	
 	public Estudiante(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
 		super(UsuarioID, nombre, contraseña, email, tipoUsuario);
@@ -37,6 +38,28 @@ public class Estudiante extends Usuario {
 	public String getTipoUsuario() {
 		return this.estudiante;
 	}
+	
+	public String getIntereses() {
+        return intereses;
+    }
+	
+	public void setIntereses(String intereses) {
+		this.intereses = intereses;
+	}
+	
+	public String obtenerRecomendacion(String intereses, String profesorID) {
+		
+		Profesor profesor = profesores.get(profesorID);
+		List<LearningPath> learningPaths = profesor.getLearningPathsCreados().values().stream().toList();
+		List<String> recomendaciones = new ArrayList<>();
+		for (LearningPath lp : learningPaths) {
+			if (lp.getIntereses().contains(intereses)) {
+				recomendaciones.add(lp.getTitulo());
+			}
+		}
+		return recomendaciones.toString();
+	}
+	
 	
 	public Map<String, String > inscribirLearningPath(String LearningPathID, String profesorID) {
 		

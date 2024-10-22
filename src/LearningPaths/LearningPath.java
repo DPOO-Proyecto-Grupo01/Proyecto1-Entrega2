@@ -23,6 +23,7 @@ public class LearningPath {
 	private Date fechaCreacion;
 	private Date fechaModificacion;
 	private List<String> actividadesID;
+	private List<String> intereses = new ArrayList<>();
 	public Map<String,Actividad> actividades= new HashMap<>();
 	private List<Feedback> feedback = new ArrayList<>();
 	private Profesor profesor;
@@ -47,6 +48,7 @@ public class LearningPath {
 		this.duracionMinutos = duracion;
 		this.profesorID = profesorID;
 		this.actividadesID = actividadesID;
+		this.intereses=intereses;
 		
 		
 		}
@@ -238,6 +240,12 @@ public class LearningPath {
 	
 	public String inscripcionLearningPath() {
 		return "Titulo" + titulo + "Descripcion" + descripcion + "Actividades" + actividades;
+	}
+
+
+
+	public List<String> getIntereses() {
+		return this.intereses;
 	}
 	
 

@@ -165,6 +165,11 @@ public class Central {
 			System.out.println("Calificacion minima de la actividad: "+ ((Quiz) actividadCreada).getCalificacionMinima());
 			
 			System.out.println("\n");
+			System.out.println("5.El estudiante busca recomendaciones para ver a que learning path inscribirse:");
+			System.out.println("Se le recomienda inscribirse a los learning paths:");
+			System.out.println(estudiante.obtenerRecomendacion("Java", "P105"));
+			
+			System.out.println("\n");
 			System.out.println("5. El estudiante se inscribe al learning Path deseado");
 			System.out.println(estudiante.inscribirLearningPath("LP106", "P105")); 
 			
