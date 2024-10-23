@@ -178,7 +178,14 @@ public class Estudiante extends Usuario {
 				}
 			}
 			if (actividadesDisponibles.isEmpty()) {
-                progresoLearningPath.get(learningPath).setEstado("Completado");}
+		        System.out.println("No hay actividades disponibles en el Learning Path: " + learningPathID);
+		        Progreso progreso = progresoLearningPath.get(learningPath);
+		        if (progreso != null) {
+		            progreso.setEstado("Completado");
+		        } else {
+		            System.out.println("Progreso not found for Learning Path: " + learningPathID);
+		        }
+		    }
 			
 			return actividadesDisponibles;
 		}
