@@ -100,10 +100,13 @@ public class Central {
 			System.out.println("\n");
 			
 			Estudiante estudiante = new Estudiante( "U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co", "Estudiante");
+			Estudiante estudiante1 = new Estudiante( "U106", "Maria Perez", "1234", "m.perez@uniandes.edu.co", "Estudiante");
 			Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
 			estudiantes.add(estudiante);
+			estudiantes.add(estudiante1);
 			profesores.add(profesor);
 			estudiante.profesores.put("P105", profesor);
+			estudiante1.profesores.put("P105", profesor);
 			
 			System.out.println("2. Inicio sesion como estudiante");
 			if(estudiante.iniciarSesion("U105", "1234") ) {
@@ -123,9 +126,9 @@ public class Central {
 			
 			System.out.println("\n");
 			System.out.println("4.Profesor crea un learning Path");
-			learningPaths.add(profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 3, 120, "P106", actividadesID, intereses));
+			learningPaths.add(profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses));
 			System.out.println("Learning Paths creado por el profesor: "+ profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 
-					3, 120, "P106", actividadesID, intereses).getLearningPathID()  );
+					3, 120, "P105", actividadesID, intereses).getLearningPathID()  );
 			
 			
 			
@@ -148,7 +151,7 @@ public class Central {
 			preguntas.add(new Pregunta("Para que es public, private, protected", respuestas));
 			atributosEspecificos.put("preguntas", preguntas);
 			
-			//Ponme la fecha en formato date YYYY-MM-DDTHH:MM:SS
+			
 			String fecha = "2021-12-01";
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 			
@@ -172,6 +175,7 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("6. El estudiante se inscribe al learning Path deseado");
 			System.out.println(estudiante.inscribirLearningPath("LP106", "P105")); 
+			estudiante1.inscribirLearningPath("LP106", "P105");
 			
 			System.out.println("\n");
 			System.out.println("7.El profesor revisa el estado de una actividad");
@@ -183,6 +187,9 @@ public class Central {
 			System.out.println("8. El estudiante completa la actividad exitosamente, entonces cambia su estado");
 			estudiante.completarActividad("A103", "LP106");
 			estudiante.completarActividad("A110", "LP106");
+			estudiante.completarActividad("A102", "LP106");
+			estudiante.completarActividad("A101", "LP106");
+			estudiante1.completarActividad("A103", "LP106");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 			
 			ArrayList<String> actividadesID1 = new ArrayList<String>();
@@ -200,12 +207,22 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("11.El estudiante agrega feedback y el profesor lo revisa");
 			estudiante.enviarFeedback("LP106", "Excelente curso", 5, "U105");
+			estudiante1.enviarFeedback("LP106", "Buen curso", 4, "U106");
 			System.out.println("Feedback del learningPath seleccionado: "+ 
 			                     profesor.revisarFeedback("LP106"));
 			
 			System.out.println("\n");
-			System.out.println("12.El profeor revisa el progreso del estudiante");
-			System.out.println("Los detalles del progreso del estudiante son: "+ profesor.verProgresoEstudiante("U105", "LP106"));
+			System.out.println("12.El profesor revisa el rating del learning path");
+			System.out.println("El rating del learning path es: "+ profesor.calcularRating("LP106"));
+			
+			System.out.println("\n");
+			System.out.println("13.El profesor revisa el progreso del learning path del estudiante");
+			System.out.println("Los detalles del progreso del learning path estudiante son: "+ profesor.verProgresoEstudiante("U106", "LP106"));
+			
+			System.out.println("\n");
+			System.out.println("14.El estudiante mira la fecha limite de una actividad");
+			System.out.println("La fecha limite de la actividad es: "+ actividadCreada.getFechaLimite());
+			
 			
 			
 			

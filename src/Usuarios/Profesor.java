@@ -177,4 +177,15 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     	
     	
     }
+    
+	public double calcularRating(String learningpathId) {
+		LearningPath lp = learningPathsCreados.get(learningpathId);
+		List<Feedback> feedback = lp.getFeedback();
+		double rating = 0;
+		for (Feedback f : feedback) {
+			rating += f.getCalificacion();
+		}
+		return rating / feedback.size();
+	}
+
 }

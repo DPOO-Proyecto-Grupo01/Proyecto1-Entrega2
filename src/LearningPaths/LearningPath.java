@@ -201,7 +201,7 @@ public class LearningPath {
 		return actividades;
 	}
 
-	public void actualizarProgreso(Progreso progreso, List<Actividad> actividades) {
+	public double actualizarProgreso(Progreso progreso, List<Actividad> actividades) {
 		int exitosas = 0;
 		
 		for (Actividad actividad : actividades) {
@@ -216,6 +216,7 @@ public class LearningPath {
 		
 		progreso.setPorcentajeDeExito(porcentajeExitosas);
 	
+		return porcentajeExitosas;
 		
 	}
 	
@@ -225,13 +226,8 @@ public class LearningPath {
 	}
 
 	
-	public double calcularRating() {
-		double rating = 0;
-		for (Feedback f : feedback) {
-			rating += f.getCalificacion();
-		}
-		return rating/feedback.size();
-	}
+	
+	
 	public String obtenerDetalles() {
 		return "Titulo: " + titulo + "\n" + "Descripcion: " + descripcion + "\n" + "Objetivos: " + objetivos + "\n" + "Nivel de Dificultad: " + nivelDificultad + "\n" + "Duracion: " + duracionMinutos + "\n" 
 	+ "Calificacion: " + calificacion + "\n" + "Fecha de Creacion: " + fechaCreacion + "\n" + "Fecha de Modificacion: " + fechaModificacion + "\n" + "Profesor: " + profesor;

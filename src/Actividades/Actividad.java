@@ -119,17 +119,19 @@ public abstract class Actividad {
 
 
 
+
 	public void setFechaLimite(Actividad actividad) {
-		
-		Date inicio = actividad.getFechainicio();
-		if (inicio != null){
-			Date finall = inicio+this.duracionEsperada;
-			this.fechaLimite = finall;
-		}
-		else {
-			this.fechaLimite = null;
-		}
+	    Date inicio = actividad.getFechainicio();
+	    if (inicio != null) {
+	        long inicioMillis = inicio.getTime();
+	        long duracionMillis = this.duracionEsperada +2L*60L*60L*1000L;
+	        Date finall = new Date(inicioMillis + duracionMillis);
+	        this.fechaLimite = finall;
+	    } else {
+	        this.fechaLimite = null;
+	    }
 	}
+
 
 
 
@@ -230,4 +232,5 @@ public abstract class Actividad {
 	public void setTipoActividad(String tipoActividad) {
 		this.tipoActividad = tipoActividad;
 	}
+	
 }

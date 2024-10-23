@@ -18,13 +18,13 @@ public class Progreso {
 	    private Date fechaInicio;
 	    private Date fechaCompletado;
 	    private int tiempoDedicado;
-	    private double estado;
+	    private String estado;
 	    public double porcentajeDeExito;
 	
 	    
 	    
 	    public Progreso(String progresoID, String estudianteID, LearningPath learningPath, Date fechaInicio, 
-	    		Date fechaCompletado, int tiempoDedicado, double estado) {
+	    		Date fechaCompletado, int tiempoDedicado, String estado) {
 	    	            this.progresoID = progresoID;
 	    	            this.estudianteID = estudianteID;
 	    	            this.learningPath = learningPath;
@@ -81,8 +81,12 @@ public class Progreso {
 
 
 
-		public double getEstado() {
+		public String getEstado() {
 			return estado;
+		}
+		
+		public void setEstado(String estado) {
+			this.estado = estado;
 		}
 
 
@@ -95,6 +99,9 @@ public class Progreso {
 		public void setPorcentajeDeExito(double porcentajeDeExito) {
 			this.porcentajeDeExito = porcentajeDeExito;
 		}
+		
+		//Hacer una funcion para actualizar progreso
+		
 
 		public  Map<String, String > mostrarProgreso() {
 			Map<String, String > map = new HashMap<>();
@@ -103,7 +110,7 @@ public class Progreso {
 			map.put("Fecha Inicio", fechaInicio.toString());
 			map.put("Fecha Completado", fechaCompletado.toString());
 			map.put("Tiempo Dedicado", Integer.toString(tiempoDedicado));
-			map.put("Estado", Double.toString(estado));
+			map.put("Estado", estado);
 			map.put("Porcentaje de Exito", Double.toString(porcentajeDeExito));
 			
 			return map;
