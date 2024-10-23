@@ -159,6 +159,7 @@ public class Central {
 			System.out.println("4.Profesor crea una actividad y la añade al learning Path");
 			Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
 			System.out.println("Actividad creada por el profesor: "+ actividadCreada.getActividadID());
+			System.out.println("Numero de actividades en el learning Path: "+ profesor.getLearningPathsCreados().get("LP106").getActividades().size());
 			
 			Actividad actividadCreada1= profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos, "A103" );
 			Actividad actividadCreada2= profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos, "A103" );
@@ -187,8 +188,10 @@ public class Central {
 			System.out.println("8. El estudiante completa la actividad exitosamente, entonces cambia su estado");
 			estudiante.completarActividad("A103", "LP106");
 			estudiante.completarActividad("A110", "LP106");
-			estudiante.completarActividad("A102", "LP106");
-			estudiante.completarActividad("A101", "LP106");
+			
+			System.out.println("\n");
+			System.out.println("14.El estudiante mira la fecha limite de una actividad");
+			System.out.println("La fecha limite de la actividad es: "+ actividadCreada.getFechaLimite());
 			estudiante1.completarActividad("A103", "LP106");
 			System.out.println("Estado de la actividad: "+ actividadCreada.getEstado());
 			
@@ -199,6 +202,15 @@ public class Central {
 				actividadesID1.add(actividad.getActividadID());
 			}
 			System.out.println("Todavia debe realizar la actividad: "+ actividadesID1);
+			
+			ArrayList<String> actividadesID2 = new ArrayList<String>();
+			estudiante.completarActividad("A102", "LP106");
+			estudiante.completarActividad("A101", "LP106");
+			for(Actividad actividad : estudiante.actividadesDisponibles("LP106")) {
+				actividadesID2.add(actividad.getActividadID());
+			}
+			
+			System.out.println("Todavia debe realizar la actividad: "+ actividadesID2);
 			
 			System.out.println("\n");
 			System.out.println("10. Se revisa el porcentaje de exito del estudiante en el learningPath");
@@ -219,9 +231,7 @@ public class Central {
 			System.out.println("13.El profesor revisa el progreso del learning path del estudiante");
 			System.out.println("Los detalles del progreso del learning path estudiante son: "+ profesor.verProgresoEstudiante("U106", "LP106"));
 			
-			System.out.println("\n");
-			System.out.println("14.El estudiante mira la fecha limite de una actividad");
-			System.out.println("La fecha limite de la actividad es: "+ actividadCreada.getFechaLimite());
+
 			
 			
 			

@@ -108,8 +108,6 @@ public class Progreso {
 			map.put("ProgresoID", progresoID);
 			map.put("EstudianteID", estudianteID);
 			map.put("Fecha Inicio", fechaInicio.toString());
-			map.put("Fecha Completado", fechaCompletado.toString());
-			map.put("Tiempo Dedicado", Integer.toString(tiempoDedicado));
 			map.put("Estado", estado);
 			map.put("Porcentaje de Exito", Double.toString(porcentajeDeExito));
 			
