@@ -108,6 +108,11 @@ public class Central {
 			estudiante.profesores.put("P105", profesor);
 			estudiante1.profesores.put("P105", profesor);
 			
+			//Añadir a los archivos a estudiantes y profesor
+			persistenciaUsuarios.salvarEstudiante(usuarios, estudiante.getUsuarioID(), estudiante.getNombre(), estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
+			persistenciaUsuarios.salvarEstudiante(usuarios, estudiante1.getUsuarioID(), estudiante1.getNombre(), estudiante1.getContraseña(), estudiante1.getEmail(), estudiante1.getTipoUsuario());
+			persistenciaUsuarios.salvarProfesor(usuarios, profesor.getUsuarioID(), profesor.getNombre(), profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());
+			
 			System.out.println("2. Inicio sesion como estudiante");
 			if(estudiante.iniciarSesion("U105", "1234") ) {
                 System.out.println("Inicio de sesion exitoso: Estudiante "+ estudiante.getUsuarioID());
@@ -130,6 +135,11 @@ public class Central {
 			System.out.println("Learning Paths creado por el profesor: "+ profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java", "Descripcion", "Objetivos", 
 					3, 120, "P105", actividadesID, intereses).getLearningPathID()  );
 			
+			//Quiero extraer el learning path que acabo de crear
+			LearningPath learningPath = profesor.getLearningPathsCreados().get("LP106");
+			//Persistencia de los learning paths en los archivos
+			persistenciaLearningPaths.salvarLearningPath(learningPathsFile, learningPath.getLearningPathID(), learningPath.getTitulo(), learningPath.getDescripcion(), learningPath.getObjetivos(), 
+					learningPath.getNivelDificultad(), learningPath.getDuracionMinutos(), learningPath.getProfesor().getUsuarioID(), learningPath.getActividadesID(), learningPath.getIntereses());
 			
 			
 			ArrayList<String> actividadesPrevias = new ArrayList<String>();
@@ -158,6 +168,11 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("4.Profesor crea una actividad y la añade al learning Path");
 			Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
+			
+			//Persistencia de las actividades en los archivos
+			persistenciaActividades.salvarActividad("actividades.json", actividadCreada);
+			
+			
 			System.out.println("Actividad creada por el profesor: "+ actividadCreada.getActividadID());
 			System.out.println("Numero de actividades en el learning Path: "+ profesor.getLearningPathsCreados().get("LP106").getActividades().size());
 			
@@ -204,7 +219,7 @@ public class Central {
 			System.out.println("Todavia debe realizar la actividad: "+ actividadesID1);
 			
 			ArrayList<String> actividadesID2 = new ArrayList<String>();
-			estudiante.completarActividad("A102", "LP106");
+			
 			estudiante.completarActividad("A101", "LP106");
 			for(Actividad actividad : estudiante.actividadesDisponibles("LP106")) {
 				actividadesID2.add(actividad.getActividadID());
@@ -219,7 +234,7 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("11.El estudiante agrega feedback y el profesor lo revisa");
 			estudiante.enviarFeedback("LP106", "Excelente curso", 5, "U105");
-			estudiante1.enviarFeedback("LP106", "Buen curso", 4, "U106");
+			estudiante1.enviarFeedback("LP106", "Buen curso", 3, "U106");
 			System.out.println("Feedback del learningPath seleccionado: "+ 
 			                     profesor.revisarFeedback("LP106"));
 			
@@ -229,13 +244,7 @@ public class Central {
 			
 			System.out.println("\n");
 			System.out.println("13.El profesor revisa el progreso del learning path del estudiante");
-			System.out.println("Los detalles del progreso del learning path estudiante son: "+ profesor.verProgresoEstudiante("U106", "LP106"));
-			
-
-			
-			
-			
-			
+			System.out.println("Los detalles del progreso del learning path estudiante son: "+ profesor.verProgresoEstudiante("U105", "LP106"));
 			
 			
 		} catch (Exception e) {

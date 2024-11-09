@@ -49,6 +49,7 @@ public class LearningPath {
 		this.profesorID = profesorID;
 		this.actividadesID = actividadesID;
 		this.intereses=intereses;
+	
 		
 		
 		}
@@ -193,6 +194,8 @@ public class LearningPath {
 	public void setProfesor(Profesor profesor) {
 		this.profesor = profesor;
 	}
+	
+	
 
 //////////////
 	

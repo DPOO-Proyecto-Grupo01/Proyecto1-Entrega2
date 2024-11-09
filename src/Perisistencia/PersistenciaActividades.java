@@ -32,7 +32,7 @@ public class PersistenciaActividades implements IpersistenciaActividades {
             int nivelDificultad = actividad.getInt("nivelDificultad");
             int duracionEsperada = actividad.getInt("duracionEsperada");
             boolean esObligatoria = actividad.getBoolean("esObligatoria");
-            // Convertir la fecha de string a date
+            // Convertir la fecha de string a date, si es 
             String fechaLimiteStr = actividad.getString("fechaLimite2");  // Obtener la fecha como cadena
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
             LocalDateTime fechaLimiteD = LocalDateTime.parse(fechaLimiteStr, formatter);  // Parsear la fecha

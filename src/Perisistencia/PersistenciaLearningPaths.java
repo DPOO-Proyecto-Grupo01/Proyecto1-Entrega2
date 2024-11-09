@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import LearningPaths.LearningPath;
+import Usuarios.Profesor;
 
 public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 	
@@ -64,6 +65,7 @@ public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 			content = new String(Files.readAllBytes(Paths.get(archivo)));
 			JSONArray jsonArray = new JSONArray(content);
 	        JSONObject newObject = new JSONObject();
+	        
 	        newObject.put("LearningPathID", LearningPathID);
 	        newObject.put("titulo", titulo);
 	        newObject.put("descripcion", descripcion);
