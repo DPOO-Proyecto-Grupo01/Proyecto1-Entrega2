@@ -139,7 +139,7 @@ public class Central {
 			LearningPath learningPath = profesor.getLearningPathsCreados().get("LP106");
 			//Persistencia de los learning paths en los archivos
 			persistenciaLearningPaths.salvarLearningPath(learningPathsFile, learningPath.getLearningPathID(), learningPath.getTitulo(), learningPath.getDescripcion(), learningPath.getObjetivos(), 
-					learningPath.getNivelDificultad(), learningPath.getDuracionMinutos(), learningPath.getProfesor().getUsuarioID(), learningPath.getActividadesID(), learningPath.getIntereses());
+					learningPath.getNivelDificultad(), learningPath.getDuracionMinutos(), learningPath.getProfesorID(), learningPath.getActividadesID(), learningPath.getIntereses());
 			
 			
 			ArrayList<String> actividadesPrevias = new ArrayList<String>();

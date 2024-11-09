@@ -200,6 +200,12 @@ public class LearningPath {
 //////////////
 	
 	
+	public String getProfesorID() {
+		return profesorID;
+	}
+
+
+
 	public Map<String,Actividad> obtenerActividades() {
 		return actividades;
 	}
