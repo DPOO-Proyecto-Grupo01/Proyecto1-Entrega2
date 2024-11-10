@@ -203,4 +203,5 @@ public class ConsolaProfesor {
     private static void persistData() {
         persistenciaUsuarios.salvarProfesor(usuariosFile, profesorActual.getUsuarioID(), profesorActual.getNombre(), profesorActual.getContraseña(), profesorActual.getEmail(), profesorActual.getTipoUsuario());
     }
+    
 }
