@@ -8,12 +8,9 @@ public class NombreRepetido extends Mensaje {
 		// TODO Auto-generated constructor stub
 	}
 
-	private String nombre;
-	
 	@Override
 	public String getMensaje() {
-		// TODO Auto-generated method stub
-		return "El nombre"+ nombre + "esta repetido";
+		return "El nombre ingresado ya existe";
 	}
 	
 	

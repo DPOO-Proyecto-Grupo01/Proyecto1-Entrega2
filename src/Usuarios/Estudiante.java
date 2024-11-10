@@ -17,6 +17,7 @@ import Actividades.RecursoEducativo;
 import Actividades.Tarea;
 import Exceptions.ActividadNoPertenece;
 import Exceptions.LearningPathNoInscrito;
+import Exceptions.YaSeCompleto;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
@@ -106,11 +107,14 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		
 	
 	
-	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece {
+	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
         LearningPath learningPath = learningPathsInscritos.get(learningPathID);
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadID)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
         }
+		if (learningPath.getActividades().get(actividadID).getEstado() == "Exitoso") {
+			throw new YaSeCompleto("La actividad ya ha sido completada");
+		}
         Map<String, Actividad> mapa = learningPath.getActividades();
         Actividad actividad = mapa.get(actividadID);
         List<String> actividadesPrevias = actividad.getActividadesPrevias();
