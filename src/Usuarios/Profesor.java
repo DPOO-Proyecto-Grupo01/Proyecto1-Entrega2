@@ -13,6 +13,7 @@ import Actividades.Examen;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Exceptions.NombreRepetido;
 import Actividades.Pregunta;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
@@ -102,13 +103,15 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
         actividad = tarea;
     }
     
-    mapaActividades.put(actividadID, actividad);
-    LearningPath lp = learningPathsCreados.get(learningPathID);
-    if (lp != null) {
-        lp.setActividades(actividad);
+    if (actividad != null) {
+        mapaActividades.put(actividadID, actividad);
+        LearningPath lp = learningPathsCreados.get(learningPathID);
+        if (lp != null) {
+            lp.setActividades(actividad);
+        }
+        actividades.add(actividad);
+        actividad.setActividadPrevia(actividadPrevia);
     }
-    actividades.add(actividad);
-    actividad.setActividadPrevia(actividadPrevia);
     return actividad;
 }
 
@@ -130,10 +133,14 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 
 
     public LearningPath crearLearningPath(String LearningPathID, String titulo, String descripcion, String objetivos,
-                                  int nivelDificultad, int duracion, String profesorID, List<String> actividadesID, List<String> intereses) {
-        LearningPath learningPath = new LearningPath(LearningPathID, titulo, descripcion, objetivos, nivelDificultad, duracion, profesorID, actividadesID, intereses);
-        learningPathsCreados.put(LearningPathID, learningPath);
-        return learningPath;
+                                  int nivelDificultad, int duracion, String profesorID, List<String> actividadesID, List<String> intereses) throws NombreRepetido {
+    	if (learningPathsCreados.containsKey(LearningPathID)) {
+    		   throw new NombreRepetido("El nombre del learning path ya existe");
+    	} else {
+	        LearningPath learningPath = new LearningPath(LearningPathID, titulo, descripcion, objetivos, nivelDificultad, duracion, profesorID, actividadesID, intereses);
+	        learningPathsCreados.put(LearningPathID, learningPath);
+	        return learningPath;
+    	}
     }
     
     public void revisarEstadoActividad(String actividadID, String LearningPathID) {
