@@ -9,6 +9,10 @@ public class ActividadNoPertenece extends Mensaje {
 	
 	
 	
+	public ActividadNoPertenece(String string) {
+		super(string);
+	}
+
 	@Override
 	public String getMensaje() {
 		return "La actividad no pertenece a este learning path";

@@ -8,6 +8,11 @@ public class YaSeCompleto extends Mensaje {
 	
 	//Para ello, quiero que el mensaje que salte sea "Ya se completó este learning path o actividad"
 	
+	public YaSeCompleto(String string) {
+		super(string);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String getMensaje() {
 		return "Ya se completó este learning path o actividad";

@@ -15,6 +15,8 @@ import Actividades.Examen;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Exceptions.ActividadNoPertenece;
+import Exceptions.LearningPathNoInscrito;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
@@ -64,29 +66,51 @@ public class Estudiante extends Usuario {
 	}
 	
 	
-	public Map<String, String > inscribirLearningPath(String LearningPathID, String profesorID) {
+
+public Map<String, String> inscribirLearningPath(String LearningPathID, String profesorID) throws LearningPathNoInscrito {
+    try {
+        Profesor profesor = profesores.get(profesorID);
+        if (profesor == null) {
+            throw new LearningPathNoInscrito("Profesor no encontrado: " + profesorID);
+        }
+
+        LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
+        if (learningPath == null) {
+            throw new LearningPathNoInscrito("Learning Path no encontrado: " + LearningPathID);
+        }
+
+        learningPathsInscritos.put(LearningPathID, learningPath);
+        learningPath.estudiantesInscritos.put(usuarioID, this);
+
+        List<String> actividades = learningPath.getActividadesID();
+        Progreso progreso = crearProgreso(learningPath, new Date(), new Date(), 0, "En Progreso");
+        progresoLearningPath.put(learningPath, progreso);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("Titulo Learning Path", learningPath.getTitulo());
+        map.put("Descripcion learning Path", learningPath.getDescripcion());
+
+        for (String actividadID : actividades) {
+            Actividad actividad = learningPath.actividades.get(actividadID);
+            this.actividades.put(actividadID, actividad);
+            map.put("Actividad " + actividad.getActividadID(), actividad.getDescripcion());
+        }
+
+        return map;
+
+    } catch (LearningPathNoInscrito e) {
+        throw e;
+    }
+}
+
 		
-		Profesor profesor = profesores.get(profesorID);
-		LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
-		learningPathsInscritos.put(LearningPathID,learningPath);
-		learningPath.estudiantesInscritos.put(usuarioID, this);
-		List<String> actividades = learningPath.getActividadesID();
-		Progreso progreso = crearProgreso(learningPath, new Date(), new Date(), 0, "En Progreso");
-		progresoLearningPath.put(learningPath, progreso);
-		Map<String, String > map = new HashMap<>();
-			map.put("Titulo Learning Path", learningPath.getTitulo());
-			map.put("Descripcion learning Path", learningPath.getDescripcion());
-			for (String actividadID : actividades) { 
-				Actividad actividad = learningPath.actividades.get(actividadID);
-				this.actividades.put(actividadID, actividad);
-					map.put("Actividad "+actividad.getActividadID(), actividad.getDescripcion());
-				}
-		
-		return map;
-	}
 	
-	public void completarActividad(String actividadID, String learningPathID) {
+	
+	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece {
         LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+        if (learningPath == null || !learningPath.getActividades().containsKey(actividadID)) {
+            throw new ActividadNoPertenece("La actividad no pertenece al learning path");
+        }
         Map<String, Actividad> mapa = learningPath.getActividades();
         Actividad actividad = mapa.get(actividadID);
         List<String> actividadesPrevias = actividad.getActividadesPrevias();

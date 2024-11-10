@@ -14,6 +14,8 @@ import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Exceptions.ActividadNoPertenece;
+import Exceptions.LearningPathNoInscrito;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
@@ -43,7 +45,7 @@ public class Central {
 	private static final String usuarios ="src\\datos\\users.json";
 	
 	
-	public static void main(String[] args) {	
+	public static void main(String[] args) throws ActividadNoPertenece {	
 		
 		
 		System.out.println("Iniciando sesión, por favor espere...");
@@ -245,6 +247,37 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("13.El profesor revisa el progreso del learning path del estudiante");
 			System.out.println("Los detalles del progreso del learning path estudiante son: "+ profesor.verProgresoEstudiante("U105", "LP106"));
+			
+			
+			//Implementar excepciones para manejar errores
+			System.out.println("\n");
+			System.out.println("14. El estudiante intenta inscribirse a un learning path que no existe");
+			try {
+	            System.out.println(estudiante.inscribirLearningPath("LP107", "P105"));
+	        } catch (LearningPathNoInscrito e) {
+	            System.out.println(e.getMensaje());
+	        }  
+			
+			//Hacer una actividad que no es parte de un learning path
+			System.out.println("\n");
+			System.out.println("15. El estudiante intenta completar una actividad que no pertenece al learning path");
+			double calificacionMinima = 0.5;
+			String respuestaCorrecta = "Verdadero";
+			
+			ArrayList<String> opciones = new ArrayList<String>();
+			opciones.add("Verdadero");
+			opciones.add("Falso");
+			
+			ArrayList<Pregunta> preguntas2 = new ArrayList<Pregunta>();
+			preguntas2.add(new Pregunta("¿Es Java un lenguaje de programación?", opciones));
+			
+			Actividad actividad = new Quiz("A112", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, actividadesPrevias, actividadesSeguimiento, preguntas2, calificacionMinima, respuestaCorrecta);
+			try {
+				estudiante.completarActividad("A112", "LP106");
+				System.out.println("Actividad completada");
+			} catch (ActividadNoPertenece e) {
+				System.out.println(e.getMensaje());
+			}
 			
 			
 		} catch (Exception e) {
