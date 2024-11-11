@@ -59,7 +59,7 @@ public class ConsolaEstudiante {
             case 1 -> registrarse();
             case 2 -> IniciarSesion(null);
             default -> System.out.println("Opción inválida.");
-           
+        	}
         }
    
     private static void registrarse() throws NombreRepetido {
@@ -85,7 +85,8 @@ public class ConsolaEstudiante {
 		
 	}
     
-    public static void IniciarSesion(String[] args) throws NombreRepetido {
+    public static void main(String[] args) throws NombreRepetido {
+    	menu1();
         cargarEstudiantes(); 
         if (authenticar()) {
             menu1();

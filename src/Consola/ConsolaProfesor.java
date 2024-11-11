@@ -183,12 +183,15 @@ public class ConsolaProfesor {
 			learningPath = profesorActual.crearLearningPath(
 			    learningPathID, titulo, descripcion, "Objetivos",
 			    3, 120, profesorActual.getUsuarioID(), null, null);
+			
 				System.out.println("Learning Path creado: " + learningPath.getTitulo());
 		} catch (NombreRepetido e) {
 			
 			e.printStackTrace();
 			
 		}
+		
+		
         
         persistData();
     }
