@@ -28,26 +28,36 @@ public class ConsolaProfesor {
     
     public static void main(String[] args) {
         cargarProfesores(); 
-        if (authenticar()) {
-            menu();
-        } else {
-            System.out.println("Usiaro o contraseña incorrectos.");
-        }
+        if (iniciarSesion() == 1) {
+	        if (authenticar()) {
+	            menu();
+	        } else {
+	            System.out.println("Usuario o contraseña incorrectos.");
+	        }
+		} else {
+			
+			//registrarse();
+		}
     }
 
     private static void cargarProfesores() {
         List<Profesor> profesores;
 		try {
 			profesores = persistenciaUsuarios.cargarProfesores(usuariosFile);
-			for (Profesor profesor : profesores) {
-	            if (profesor != null) {
-	                System.out.println("Cargando datos para el profesor: " + profesor.getNombre());
-	            }
-	        }
+            System.out.println("Informacion cargada" );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+    }
+    
+    private static int iniciarSesion() {
+        System.out.println("1. Iniciar Sesion");
+        System.out.println("2. Registrarse");
+        System.out.print("Seleccione una opción: ");
+        int opcion = scanner.nextInt();
+        scanner.nextLine(); 
+        return opcion;
     }
 
     private static boolean authenticar() {
@@ -90,7 +100,7 @@ public class ConsolaProfesor {
         } while (option != 7);
     }
 
-    private static void handleOption(int option) throws NombreRepetido {
+    private static void handleOption(int option) {
         switch (option) {
             case 1 -> crearActividad();
             case 2 -> crearLearningPath();
@@ -103,7 +113,7 @@ public class ConsolaProfesor {
         }
     }
 
-    private static void crearActividad() throws NombreRepetido {
+    private static void crearActividad() {
         System.out.print("Ingrese el ID de la Actividad: ");
         String actividadID = scanner.nextLine();
         System.out.print("Descripción: ");
@@ -145,16 +155,21 @@ public class ConsolaProfesor {
         }
         parametrosEspecificos.put("preguntas", preguntas);
 
-        Actividad actividad = profesorActual.crearActividad(
-            actividadID, descripcion, objetivo, nivelDificultad,
-            duracionEsperada, esObligatoria, new Date(), "", 0, 0,
-            tipo, "LearningPathID", null, null, parametrosEspecificos, "");
-
-        System.out.println("Actividad creada con éxito: " + actividad.getDescripcion());
+        Actividad actividad;
+		try {
+			actividad = profesorActual.crearActividad(
+			    actividadID, descripcion, objetivo, nivelDificultad,
+			    duracionEsperada, esObligatoria, new Date(), "", 0, 0,
+			    tipo, "LearningPathID", null, null, parametrosEspecificos, "");
+				System.out.println("Actividad creada con éxito: " + actividad.getDescripcion());
+		} catch (NombreRepetido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         persistData();
     }
 
-    private static void crearLearningPath() throws NombreRepetido {
+    private static void crearLearningPath() {
         System.out.print("ID de Learning Path: ");
         String learningPathID = scanner.nextLine();
         System.out.print("Título: ");
@@ -163,10 +178,18 @@ public class ConsolaProfesor {
         String descripcion = scanner.nextLine();
        
 
-        LearningPath learningPath = profesorActual.crearLearningPath(
-            learningPathID, titulo, descripcion, "Objetivos",
-            3, 120, profesorActual.getUsuarioID(), null, null);
-        System.out.println("Learning Path creado: " + learningPath.getTitulo());
+        LearningPath learningPath;
+		try {
+			learningPath = profesorActual.crearLearningPath(
+			    learningPathID, titulo, descripcion, "Objetivos",
+			    3, 120, profesorActual.getUsuarioID(), null, null);
+				System.out.println("Learning Path creado: " + learningPath.getTitulo());
+		} catch (NombreRepetido e) {
+			
+			e.printStackTrace();
+			
+		}
+        
         persistData();
     }
 
