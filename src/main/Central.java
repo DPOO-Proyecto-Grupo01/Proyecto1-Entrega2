@@ -17,6 +17,7 @@ import Actividades.Tarea;
 import Exceptions.ActividadNoPertenece;
 import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
+import Exceptions.YaSeCompleto;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
@@ -328,8 +329,36 @@ public class Central {
 						120, "P105", actividadesID21, intereses);
 				System.out.println("Learning Path creado");
 			} catch (NombreRepetido e) {
-				System.out.println(e.getMessage());
+				System.out.println(e.getMensaje());
 			}
+			
+			// Crear una actividad con nombre repetido
+			
+			System.out.println("\n");
+			System.out.println("17. El profesor intenta crear una actividad con un nombre que ya existe");
+			try {
+			Actividad actividadCreada4 = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+					true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento,
+					atributosEspecificos, "A103");
+			if (!actividades.contains(actividadCreada4)) {
+				persistenciaActividades.salvarActividad("actividades.json", actividadCreada4);
+				
+			}
+			System.out.println("Actividad creada por el profesor: " + actividadCreada4.getActividadID());
+		} catch (NombreRepetido e) {
+			System.out.println(e.getMensaje());
+		}
+			
+		// Completar una actividad que ya fue completada
+			System.out.println("\n");
+			System.out.println("18. El estudiante intenta completar una actividad que ya fue completada");
+			try {
+				estudiante.completarActividad("A103", "LP106");
+				System.out.println("Actividad completada");
+			} catch (YaSeCompleto e) {
+				System.out.println(e.getMensaje());
+			}
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

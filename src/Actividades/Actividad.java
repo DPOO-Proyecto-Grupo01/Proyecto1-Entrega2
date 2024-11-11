@@ -232,5 +232,10 @@ public abstract class Actividad {
 	public void setTipoActividad(String tipoActividad) {
 		this.tipoActividad = tipoActividad;
 	}
+
+	public Double getCalificacionMinima() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

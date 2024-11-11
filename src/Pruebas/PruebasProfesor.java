@@ -65,7 +65,7 @@ class PruebasProfesor {
 	
 	/// Test crear Quiz
 	@Test
-	void testCrearQuiz() throws ParseException {
+	void testCrearQuiz() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -97,7 +97,7 @@ class PruebasProfesor {
 	
 	/// Test crear Tarea
 	@Test
-	void testCrearTarea() throws ParseException {
+	void testCrearTarea() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -120,7 +120,7 @@ class PruebasProfesor {
 	
 	/// Test crear Examen
 	@Test
-	void testCrearExamen() throws ParseException {
+	void testCrearExamen() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -147,7 +147,7 @@ class PruebasProfesor {
 	
 	/// Test crear Encuesta
 	@Test
-	void testCrearEncuesta() throws ParseException {
+	void testCrearEncuesta() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -172,7 +172,7 @@ class PruebasProfesor {
 	
 	/// Test crear Recurso Educativo
 	@Test
-	void testCrearRecursoEducativo() throws ParseException {
+	void testCrearRecursoEducativo() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -195,7 +195,7 @@ class PruebasProfesor {
 	
 	/// Test de Calificacion Minima Quiz
 	@Test
-	void testCalificacionMinima() {
+	void testCalificacionMinima() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -228,7 +228,7 @@ class PruebasProfesor {
 	
 	/// Test de Calificacion Minima Examen
 	@Test
-	void testCalificacionMinimaExamen() {
+	void testCalificacionMinimaExamen() throws NombreRepetido, ParseException {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -251,12 +251,12 @@ class PruebasProfesor {
 				true, date, "reseña", 0, 0, "Examen", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
 		profesorPrueba.CalificacionMinima("A_110", 0.5);
-		assertEquals(0.5, profesorPrueba.mapaActividades.get("A_110").getCalificacionMinima())
+		assertEquals(0.5, actividadCreada.getCalificacionMinima());
 	}
 	
 	/// Test de Revisar estado de Quiz
 	@Test
-	void testRevisarEstadoQuiz() throws ParseException {
+	void testRevisarEstadoQuiz() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 	actividadesPrevias.add("A101");
 	actividadesPrevias.add("A103");
@@ -289,7 +289,7 @@ class PruebasProfesor {
 	
 	///Test de Revisar estado de Examen
 	@Test
-	void testRevisarEstadoExamen() throws ParseException {
+	void testRevisarEstadoExamen() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -317,7 +317,7 @@ class PruebasProfesor {
 	
 	///Test de Revisar estado de Tarea
 	@Test
-	void testRevisarEstadoTarea() throws ParseException {
+	void testRevisarEstadoTarea() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -341,7 +341,7 @@ class PruebasProfesor {
 	
 	///Test de Revisar estado de Encuesta
 	@Test
-	void testRevisarEstadoEncuesta() throws ParseException {
+	void testRevisarEstadoEncuesta() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -367,7 +367,7 @@ class PruebasProfesor {
 	
 	///Test de Revisar estado de Recurso Educativo
 	@Test
-	void testRevisarEstadoRecursoEducativo() throws ParseException {
+	void testRevisarEstadoRecursoEducativo() throws ParseException, NombreRepetido {
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");

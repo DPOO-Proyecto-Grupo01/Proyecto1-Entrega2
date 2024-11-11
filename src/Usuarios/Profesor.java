@@ -61,10 +61,14 @@ public class Profesor extends Usuario {
 public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
                                int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas,
                                int resultado, int calificacion, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento,
-                               HashMap<String, Object> parametrosEspecificos, String actividadPrevia) {
+                               HashMap<String, Object> parametrosEspecificos, String actividadPrevia) throws NombreRepetido {
+	if (mapaActividades.containsKey(actividadID)) {
+		    throw new NombreRepetido("El nombre"+ actividadID + "ya");
+	}
+	else {
     // Crea una actividad
     Actividad actividad = null;
-
+    
     if (tipo.equals("Quiz")) {
         double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
         List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
@@ -113,6 +117,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
         actividad.setActividadPrevia(actividadPrevia);
     }
     return actividad;
+	}
 }
 
 
@@ -135,7 +140,8 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     public LearningPath crearLearningPath(String LearningPathID, String titulo, String descripcion, String objetivos,
                                   int nivelDificultad, int duracion, String profesorID, List<String> actividadesID, List<String> intereses) throws NombreRepetido {
     	if (learningPathsCreados.containsKey(LearningPathID)) {
-    		   throw new NombreRepetido("El nombre del learning path ya existe");
+    		   throw new NombreRepetido("El nombre"+ LearningPathID + "ya existe");
+    		   
     	} else {
 	        LearningPath learningPath = new LearningPath(LearningPathID, titulo, descripcion, objetivos, nivelDificultad, duracion, profesorID, actividadesID, intereses);
 	        learningPathsCreados.put(LearningPathID, learningPath);

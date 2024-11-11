@@ -75,7 +75,7 @@ public class Examen extends Actividad{
 		return null;
 	}
 
-	public double getCalificacionMinima() {
+	public Double getCalificacionMinima() {
 		return calificacionMinima;
 	}
 

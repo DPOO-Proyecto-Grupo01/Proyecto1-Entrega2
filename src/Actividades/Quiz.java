@@ -38,7 +38,7 @@ public class Quiz extends Actividad {
 		this.respuestaUsuario = respuesta;
 	}
 
-	public double getCalificacionMinima() {
+	public Double getCalificacionMinima() {
 		return calificacionMinima;
 	}
 

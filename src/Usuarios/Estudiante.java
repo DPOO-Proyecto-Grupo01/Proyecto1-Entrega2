@@ -17,6 +17,7 @@ import Actividades.RecursoEducativo;
 import Actividades.Tarea;
 import Exceptions.ActividadNoPertenece;
 import Exceptions.LearningPathNoInscrito;
+import Exceptions.YaSeCompleto;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
@@ -78,17 +79,18 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         if (learningPath == null) {
             throw new LearningPathNoInscrito("Learning Path no encontrado: " + LearningPathID);
         }
-
-        learningPathsInscritos.put(LearningPathID, learningPath);
+        
+        LearningPath learningPathEstudiante = clonarLearningPath(learningPath, this.usuarioID);
+        learningPathsInscritos.put(learningPathEstudiante.getLearningPathID(), learningPathEstudiante);
         learningPath.estudiantesInscritos.put(usuarioID, this);
 
-        List<String> actividades = learningPath.getActividadesID();
-        Progreso progreso = crearProgreso(learningPath, new Date(), new Date(), 0, "En Progreso");
-        progresoLearningPath.put(learningPath, progreso);
+        List<String> actividades = learningPathEstudiante.getActividadesID();
+        Progreso progreso = crearProgreso(learningPathEstudiante, new Date(), new Date(), 0, "En Progreso");
+        progresoLearningPath.put(learningPathEstudiante, progreso);
 
         Map<String, String> map = new HashMap<>();
-        map.put("Titulo Learning Path", learningPath.getTitulo());
-        map.put("Descripcion learning Path", learningPath.getDescripcion());
+        map.put("Titulo Learning Path", learningPathEstudiante.getTitulo());
+        map.put("Descripcion learning Path", learningPathEstudiante.getDescripcion());
 
         for (String actividadID : actividades) {
             Actividad actividad = learningPath.actividades.get(actividadID);
@@ -99,18 +101,27 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         return map;
 
     } catch (LearningPathNoInscrito e) {
-        throw e;
+        throw e;   
     }
 }
 
+	public LearningPath clonarLearningPath(LearningPath lp, String estudianteID) {
+		LearningPath lpEstudiante = new LearningPath(lp.getLearningPathID()+"_"+estudianteID, lp.getTitulo(), lp.getDescripcion(), lp.getObjetivos(), lp.getNivelDificultad(), lp.getDuracionMinutos(), lp.getProfesorID(), lp.getActividadesID(), lp.getIntereses());
+		lp.inscribirEstudiante(estudianteID, lpEstudiante);
+		return lpEstudiante;
+		
+	}
 		
 	
 	
-	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece {
+	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
         LearningPath learningPath = learningPathsInscritos.get(learningPathID);
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadID)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
         }
+		if (learningPath.getActividades().get(actividadID).getEstado() == "Exitoso") {
+			throw new YaSeCompleto("La actividad ya ha sido completada");
+		}
         Map<String, Actividad> mapa = learningPath.getActividades();
         Actividad actividad = mapa.get(actividadID);
         List<String> actividadesPrevias = actividad.getActividadesPrevias();
@@ -233,6 +244,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		Progreso progreso = new Progreso(randomString, this.usuarioID, learningPath, fechaInicio, fechaCompletado, tiempoDedicado, estado);
 		return progreso;
 	}
+	
 	
 	
 	
