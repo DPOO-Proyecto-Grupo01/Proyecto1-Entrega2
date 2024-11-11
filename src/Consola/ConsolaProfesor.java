@@ -35,7 +35,6 @@ public class ConsolaProfesor {
 	            System.out.println("Usuario o contraseña incorrectos.");
 	        }
 		} else {
-			
 			//registrarse();
 		}
     }

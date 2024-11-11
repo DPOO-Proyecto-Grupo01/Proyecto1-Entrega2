@@ -9,10 +9,8 @@ import java.util.Scanner;
 
 import Actividades.Actividad;
 import Actividades.Pregunta;
-import Exceptions.ActividadNoPertenece;
 import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
-import Exceptions.YaSeCompleto;
 import LearningPaths.LearningPath;
 import Perisistencia.PersistenciaActividades;
 import Perisistencia.PersistenciaLearningPaths;
@@ -63,7 +61,6 @@ public class ConsolaEstudiante {
             default -> System.out.println("Opción inválida.");
         	}
         }
-    }
    
     private static void registrarse() throws NombreRepetido {
     	System.out.println("Ingrese un correo electronico: ");
@@ -96,7 +93,6 @@ public class ConsolaEstudiante {
         } else {
             System.out.println("Usiaro o contraseña incorrectos.");
         }
-        
         
         
     }
@@ -140,7 +136,7 @@ public class ConsolaEstudiante {
         } while (option != 7);
     }
 
-    private static void handleOption2(int option) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+    private static void handleOption2(int option) throws NombreRepetido {
         switch (option) {
             case 1 -> mostrarRecomendacionesYInscribirLearningPath();
             case 2 -> completarActividad();
@@ -153,7 +149,7 @@ public class ConsolaEstudiante {
 
 	}
     
-	private static void mostrarRecomendacionesYInscribirLearningPath() throws LearningPathNoInscrito {
+	private void mostrarRecomendacionesYInscribirLearningPath() throws LearningPathNoInscrito {
 		System.out.print("Ingrese el ID de su profesor: ");
         String profesorID = scanner.nextLine();
         
@@ -167,39 +163,25 @@ public class ConsolaEstudiante {
 		estudianteActual.inscribirLearningPath(learningPathID, profesorID);
 	}
 
-	private static void completarActividad() throws ActividadNoPertenece, YaSeCompleto {
-		System.out.print("Ingrese el ID del Learning Path en el que desea trabajar: ");
-		String learningPathID = scanner.nextLine();
-		System.out.print("Ingrese el ID de la actividad que desea completar: ");
-		String actividadID = scanner.nextLine();
-		
-		estudianteActual.completarActividad(learningPathID, actividadID);
+	private static Object completarActividad() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private static void verProgresoLearningPath() {
-		System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
-		String learningPathID = scanner.nextLine();
-		System.out.println(estudianteActual.getProgresoLearningPath(learningPathID));
-	}
-		
-	private static void verActividadesPorCompletar() {
-		System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
-		String learningPathID = scanner.nextLine();
-		System.out.println(estudianteActual.getProgresoLearningPath(learningPathID));
+	private static Object verProgresoLearningPath() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	private static void enviarFeedback() {
-		System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
-		String learningPathID = scanner.nextLine();
-		System.out.println("Ingrese su feedback: ");
-		String feedback = scanner.nextLine();
-		System.out.println("Ingrese su calificación: ");
-		int calificacion = scanner.nextInt();
-		String feedbackID = "F"+ Integer.toString(contador);
-		
-		estudianteActual.enviarFeedback(learningPathID, feedback, calificacion, feedbackID);
+	private static Object verActividadesPorCompletar() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	private static Object enviarFeedback() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	private static void persistData() {
         persistenciaUsuarios.salvarEstudiante(usuariosFile, estudianteActual.getUsuarioID(), estudianteActual.getNombre(), estudianteActual.getContraseña(), estudianteActual.getEmail(), estudianteActual.getTipoUsuario());
