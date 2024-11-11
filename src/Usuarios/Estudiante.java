@@ -226,14 +226,12 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		}
 
 	 
-	public Feedback enviarFeedback(String learningPath, String feedback, int calificacion, 
+	public void enviarFeedback(String learningPath, String feedback, int calificacion, 
  String feedbackID ) {
 		// Envia un feedback al profesor del Learning Path
 		LearningPath lp= learningPathsInscritos.get(learningPath);
         Feedback feedbackEstudiante= new Feedback(feedbackID, feedback, calificacion, this.getNombre(), lp);
         lp.getFeedback().add(feedbackEstudiante);
-        return feedbackEstudiante;
-		
 	}
 	
 	public Progreso crearProgreso(LearningPath learningPath, Date fechaInicio, Date fechaCompletado, int tiempoDedicado,
