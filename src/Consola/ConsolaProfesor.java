@@ -26,6 +26,7 @@ public class ConsolaProfesor {
     private static final String actividadesFile = "src/datos/activities.json";
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     
+    
     public static void main(String[] args) {
         cargarProfesores(); 
         if (iniciarSesion() == 1) {
@@ -35,7 +36,14 @@ public class ConsolaProfesor {
 	            System.out.println("Usuario o contraseña incorrectos.");
 	        }
 		} else {
-			//registrarse();
+			registrarse();
+			System.out.println("Usuario registrado");
+			System.out.println("Iniciar sesión");
+			if (authenticar()) {
+                menu();
+            } else {
+                System.out.println("Usuario o contraseña incorrectos.");
+            }
 		}
     }
 
@@ -79,6 +87,24 @@ public class ConsolaProfesor {
 		}
      
         return false;
+    }
+    
+    public static void registrarse() {
+    	
+    	
+    	System.out.print("Ingrese su usuario ID: ");
+        String usuarioID = scanner.nextLine();
+        System.out.print("Ingrese su nombre: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese su contraseña: ");
+        String contrasena = scanner.nextLine();
+        System.out.print("Ingrese su email: ");
+        String email = scanner.nextLine();
+        
+    	Profesor profesor = new Profesor(usuarioID, nombre, contrasena, email, "Profesor");
+    	
+    	persistenciaUsuarios.salvarProfesor(usuariosFile, profesor.getUsuarioID(), profesor.getNombre(),
+				profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());	
     }
 
     private static void menu() {
@@ -189,9 +215,7 @@ public class ConsolaProfesor {
 			e.printStackTrace();
 			
 		}
-		
-		
-        
+		 
         persistData();
     }
 
