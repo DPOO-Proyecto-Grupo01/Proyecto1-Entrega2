@@ -82,8 +82,10 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         
         LearningPath learningPathEstudiante = clonarLearningPath(learningPath, this.usuarioID);
 		for (String actividadID : learningPath.getActividadesID()) {
+			//clonar actividades y meterlas en el learning path del estudiante
 			Actividad actividad = learningPath.actividades.get(actividadID);
-			learningPathEstudiante.actividades.put(actividadID, actividad);
+			Actividad actividadEstudiante = clonarActividad(actividad.getTipoActividad(), actividad, this.usuarioID);
+			learningPathEstudiante.actividades.put(actividadEstudiante.getActividadID(), actividad);
 		}
 		learningPathsInscritos.put(learningPath.getLearningPathID(), learningPath);
         learningPathsInscritos.put(learningPathEstudiante.getLearningPathID(), learningPathEstudiante);
@@ -123,13 +125,103 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	}
 	
 	//Metodo para clonar actividades
-	public Actividad clonarActividad(Actividad actividad, String estudianteID) {
-		Actividad actividadEstudiante = new Actividad(actividad.getActividadID() + "_" + estudianteID,
-				actividad.getDescripcion(), actividad.getTipoActividad(), actividad.getFechaLimite(),
-				actividad.getFechainicio(), actividad.getFechafin(), actividad.getEstado(),
-				actividad.getActividadPrevia(), actividad.getActividadesPrevias(),
-				actividad.getActividadesSeguimiento());
-		return actividadEstudiante;
+	public Actividad clonarActividad(String tipoActividad, Actividad actividad, String estudianteID) {
+	    Actividad actividadEstudiante = null;
+
+	    if (tipoActividad.equals("Quiz")) {
+	        Quiz quiz = (Quiz) actividad;
+	        actividadEstudiante = new Quiz(
+	            quiz.getActividadID() + "_" + estudianteID,
+	            quiz.getDescripcion(),
+	            quiz.getObjetivo(),
+	            quiz.getNivelDificultad(),
+	            quiz.getDuracionEsperada(),
+	            quiz.isEsObligatoria(),
+	            quiz.getFechaLimite(),
+	            quiz.getResenas(),
+	            quiz.getResultado(),
+	            quiz.getCalificacion(),
+	            quiz.getActividadesPrevias(),
+	            quiz.getActividadesSeguimiento(),
+	            quiz.getPreguntas(),
+	            quiz.getCalificacionMinima(),
+	            quiz.getRespuestaCorrecta()
+	        );
+	    } else if (tipoActividad.equals("Examen")) {
+	        Examen examen = (Examen) actividad;
+	        actividadEstudiante = new Examen(
+	            examen.getActividadID() + "_" + estudianteID,
+	            examen.getDescripcion(),
+	            examen.getObjetivo(),
+	            examen.getNivelDificultad(),
+	            examen.getDuracionEsperada(),
+	            examen.isEsObligatoria(),
+	            examen.getFechaLimite(),
+	            examen.getResenas(),
+	            examen.getResultado(),
+	            examen.getCalificacion(),
+	            examen.getActividadesPrevias(),
+	            examen.getActividadesSeguimiento(),
+	            examen.getPreguntas(),
+	            examen.getCalificacionMinima()
+	        );
+	    } else if (tipoActividad.equals("Encuesta")) {
+	        Encuesta encuesta = (Encuesta) actividad;
+	        actividadEstudiante = new Encuesta(
+	            encuesta.getActividadID() + "_" + estudianteID,
+	            encuesta.getDescripcion(),
+	            encuesta.getObjetivo(),
+	            encuesta.getNivelDificultad(),
+	            encuesta.getDuracionEsperada(),
+	            encuesta.isEsObligatoria(),
+	            encuesta.getFechaLimite(),
+	            encuesta.getResenas(),
+	            encuesta.getResultado(),
+	            encuesta.getCalificacion(),
+	            encuesta.getActividadesPrevias(),
+	            encuesta.getActividadesSeguimiento(),
+	            encuesta.getPreguntas()
+	        );
+	    } else if (tipoActividad.equals("Recurso Educativo")) {
+	        RecursoEducativo recurso = (RecursoEducativo) actividad;
+	        actividadEstudiante = new RecursoEducativo(
+	            recurso.getActividadID() + "_" + estudianteID,
+	            recurso.getDescripcion(),
+	            recurso.getObjetivo(),
+	            recurso.getNivelDificultad(),
+	            recurso.getDuracionEsperada(),
+	            recurso.isEsObligatoria(),
+	            recurso.getFechaLimite(),
+	            recurso.getResenas(),
+	            recurso.getResultado(),
+	            recurso.getCalificacion(),
+	            recurso.getActividadesPrevias(),
+	            recurso.getActividadesSeguimiento(),
+	            recurso.getTipoRecurso(),
+	            recurso.getLinkRecusro()
+	        );
+	    } else if (tipoActividad.equals("Tarea")) {
+	        Tarea tarea = (Tarea) actividad;
+	        actividadEstudiante = new Tarea(
+	            tarea.getActividadID() + "_" + estudianteID,
+	            tarea.getDescripcion(),
+	            tarea.getObjetivo(),
+	            tarea.getNivelDificultad(),
+	            tarea.getDuracionEsperada(),
+	            tarea.isEsObligatoria(),
+	            tarea.getFechaLimite(),
+	            tarea.getResenas(),
+	            tarea.getResultado(),
+	            tarea.getCalificacion(),
+	            tarea.getActividadesPrevias(),
+	            tarea.getActividadesSeguimiento(),
+	            tarea.getPreguntas(),
+	            tarea.getInstrucciones(),
+	            tarea.getEstado()
+	        );
+	    }
+
+	    return actividadEstudiante;
 	}
 		
 	

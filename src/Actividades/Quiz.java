@@ -21,7 +21,7 @@ public class Quiz extends Actividad {
 
 
 	public Quiz(String actividadID, String descripcion, String objetivo, int nivelDificultad, int duracionEsperada,
-			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, int resultado, List<String> actividadesPrevias ,List<String> actividadesSeguimiento,
+			boolean esObligatoria, Date fechaLimite, String resenas, double calificacion, double resultado, List<String> actividadesPrevias ,List<String> actividadesSeguimiento,
 			List<Pregunta> preguntas, double calificacionMinima, String respuestaCorrecta) {
 
 		super(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas,
@@ -102,8 +102,14 @@ public class Quiz extends Actividad {
 			System.out.println(pregunta.opciones);
 		}
 	}
+	
+	
 
 
+
+	public String getRespuestaCorrecta() {
+		return respuestaCorrecta;
+	}
 
 	public boolean isAprobado() {
 		if (this.respuestaUsuario.equals(this.respuestaCorrecta)) {

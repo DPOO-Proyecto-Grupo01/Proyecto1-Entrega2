@@ -60,7 +60,7 @@ public class Profesor extends Usuario {
 
 public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
                                int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas,
-                               int resultado, int calificacion, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento,
+                               double resultado, int calificacion, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento,
                                HashMap<String, Object> parametrosEspecificos, String actividadPrevia) throws NombreRepetido {
 	if (mapaActividades.containsKey(actividadID)) {
 		    throw new NombreRepetido("El nombre"+ actividadID + "ya");
@@ -148,6 +148,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 	        return learningPath;
     	}
     }
+    
     
     public void revisarEstadoActividad(String actividadID, String LearningPathID) {
         LearningPath lp = learningPathsCreados.get(LearningPathID);

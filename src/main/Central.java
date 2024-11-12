@@ -240,8 +240,9 @@ public class Central {
 
 			System.out.println("\n");
 			System.out.println("8. El estudiante completa la actividad exitosamente, entonces cambia su estado");
-			estudiante.completarActividad("A103", "LP106_U105");
-			estudiante.completarActividad("A110", "LP106_U105");
+			estudiante.completarActividad("A103_U105", "LP106_U105");
+			estudiante.completarActividad("A110_U105", "LP106_U105");
+			estudiante1.completarActividad("A103_U106", "LP106_U106");
 			
 
 			System.out.println("\n");
@@ -355,7 +356,7 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("18. El estudiante intenta completar una actividad que ya fue completada");
 			try {
-				estudiante.completarActividad("A103", "LP106");
+				estudiante.completarActividad("A103_U106", "LP106_U106");
 				System.out.println("Actividad completada");
 			} catch (YaSeCompleto e) {
 				System.out.println(e.getMensaje());
