@@ -29,7 +29,7 @@ public class Estudiante extends Usuario {
 	public Map<LearningPath, Progreso> progresoLearningPath = new HashMap<>();
 	private HashMap<String, Actividad> actividades = new HashMap<>();
 	private String intereses;
-	
+
 	public Estudiante(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
 		super(UsuarioID, nombre, contraseña, email, tipoUsuario);
         
@@ -51,6 +51,10 @@ public class Estudiante extends Usuario {
 	
 	public void setIntereses(String intereses) {
 		this.intereses = intereses;
+	}
+	
+	public Map<String,LearningPath> getLearningPathsInscritos() {
+		return learningPathsInscritos;
 	}
 	
 	public String obtenerRecomendacion(String intereses, String profesorID) {
@@ -85,7 +89,8 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 			//clonar actividades y meterlas en el learning path del estudiante
 			Actividad actividad = learningPath.actividades.get(actividadID);
 			Actividad actividadEstudiante = clonarActividad(actividad.getTipoActividad(), actividad, this.usuarioID);
-			learningPathEstudiante.actividades.put(actividadEstudiante.getActividadID(), actividad);
+			actividadEstudiante.setActividadPrevia(actividad.getActividadPrevia()+"_"+this.usuarioID);
+			learningPathEstudiante.actividades.put(actividadEstudiante.getActividadID(), actividadEstudiante);
 		}
 		learningPathsInscritos.put(learningPath.getLearningPathID(), learningPath);
         learningPathsInscritos.put(learningPathEstudiante.getLearningPathID(), learningPathEstudiante);
@@ -102,7 +107,9 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         map.put("Descripcion learning Path", learningPathEstudiante.getDescripcion());
 
         for (String actividadID : actividades) {
-            Actividad actividad = learningPath.actividades.get(actividadID);
+        	
+            Actividad actividad = learningPathEstudiante.actividades.get(actividadID);
+            System.out.println("Actividad: " + actividad.getActividadID());
             this.actividades.put(actividadID, actividad);
             map.put("Actividad " + actividad.getActividadID(), actividad.getDescripcion());
         }
@@ -115,9 +122,23 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 }
 
 	public LearningPath clonarLearningPath(LearningPath lp, String estudianteID) {
-		LearningPath lpEstudiante = new LearningPath(lp.getLearningPathID()+"_"+estudianteID, lp.getTitulo(), lp.getDescripcion(), lp.getObjetivos(), lp.getNivelDificultad(), lp.getDuracionMinutos(), lp.getProfesorID(), lp.getActividadesID(), lp.getIntereses());
+		List<String>actividadesOriginales=lp.getActividadesID();
+		List<String>actividadesClonadas=new ArrayList<>();
+		
+		for (String actividad : actividadesOriginales) {
+            String actividadClonada = actividad+"_"+estudianteID;
+            actividadesClonadas.add(actividadClonada);
+        }
+		LearningPath lpEstudiante = new LearningPath(lp.getLearningPathID()+"_"+estudianteID, lp.getTitulo(), lp.getDescripcion(), lp.getObjetivos(), lp.getNivelDificultad(), lp.getDuracionMinutos(), lp.getProfesorID(), actividadesClonadas, lp.getIntereses());
 		lp.inscribirEstudiante(estudianteID, lpEstudiante);
 		
+		for (String actividad : lp.getActividades().keySet()) {
+			Actividad actividadOriginal= lp.getActividades().get(actividad);
+			
+			Actividad actividadClonada = clonarActividad(actividadOriginal.getTipoActividad(), actividadOriginal, estudianteID);
+			
+			lpEstudiante.setActividades(actividadClonada);
+		}
 		
 		
 		return lpEstudiante;
@@ -130,6 +151,10 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 
 	    if (tipoActividad.equals("Quiz")) {
 	        Quiz quiz = (Quiz) actividad;
+	        List<String> actividadesPrevias = new ArrayList<>();
+	        for (String actividadPrevia : quiz.getActividadesPrevias()) {
+                actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
+                }
 	        actividadEstudiante = new Quiz(
 	            quiz.getActividadID() + "_" + estudianteID,
 	            quiz.getDescripcion(),
@@ -141,7 +166,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            quiz.getResenas(),
 	            quiz.getResultado(),
 	            quiz.getCalificacion(),
-	            quiz.getActividadesPrevias(),
+	            actividadesPrevias,
 	            quiz.getActividadesSeguimiento(),
 	            quiz.getPreguntas(),
 	            quiz.getCalificacionMinima(),
@@ -149,6 +174,11 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	        );
 	    } else if (tipoActividad.equals("Examen")) {
 	        Examen examen = (Examen) actividad;
+	        List<String> actividadesPrevias = new ArrayList<>();
+	        for (String actividadPrevia : examen.getActividadesPrevias()) {
+                actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
+                	}
+	        
 	        actividadEstudiante = new Examen(
 	            examen.getActividadID() + "_" + estudianteID,
 	            examen.getDescripcion(),
@@ -160,13 +190,17 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            examen.getResenas(),
 	            examen.getResultado(),
 	            examen.getCalificacion(),
-	            examen.getActividadesPrevias(),
+	            actividadesPrevias,
 	            examen.getActividadesSeguimiento(),
 	            examen.getPreguntas(),
 	            examen.getCalificacionMinima()
 	        );
 	    } else if (tipoActividad.equals("Encuesta")) {
 	        Encuesta encuesta = (Encuesta) actividad;
+	        List<String> actividadesPrevias = new ArrayList<>();
+	        for (String actividadPrevia : encuesta.getActividadesPrevias()) {
+                actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
+                }
 	        actividadEstudiante = new Encuesta(
 	            encuesta.getActividadID() + "_" + estudianteID,
 	            encuesta.getDescripcion(),
@@ -184,6 +218,10 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	        );
 	    } else if (tipoActividad.equals("Recurso Educativo")) {
 	        RecursoEducativo recurso = (RecursoEducativo) actividad;
+	        List<String> actividadesPrevias = new ArrayList<>();
+	        for (String actividadPrevia : recurso.getActividadesPrevias()) {
+				actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
+			}
 	        actividadEstudiante = new RecursoEducativo(
 	            recurso.getActividadID() + "_" + estudianteID,
 	            recurso.getDescripcion(),
@@ -195,13 +233,17 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            recurso.getResenas(),
 	            recurso.getResultado(),
 	            recurso.getCalificacion(),
-	            recurso.getActividadesPrevias(),
+	            actividadesPrevias,
 	            recurso.getActividadesSeguimiento(),
 	            recurso.getTipoRecurso(),
 	            recurso.getLinkRecusro()
 	        );
 	    } else if (tipoActividad.equals("Tarea")) {
 	        Tarea tarea = (Tarea) actividad;
+	        List<String> actividadesPrevias = new ArrayList<>();
+	        for (String actividadPrevia : tarea.getActividadesPrevias()) {
+	        	actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
+	        }
 	        actividadEstudiante = new Tarea(
 	            tarea.getActividadID() + "_" + estudianteID,
 	            tarea.getDescripcion(),
@@ -213,7 +255,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            tarea.getResenas(),
 	            tarea.getResultado(),
 	            tarea.getCalificacion(),
-	            tarea.getActividadesPrevias(),
+	            actividadesPrevias,
 	            tarea.getActividadesSeguimiento(),
 	            tarea.getPreguntas(),
 	            tarea.getInstrucciones(),
@@ -228,7 +270,6 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	
 	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
         LearningPath learningPath = learningPathsInscritos.get(learningPathID);
-		
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadID)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
         }
@@ -239,16 +280,18 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         Actividad actividad = mapa.get(actividadID);
         List<String> actividadesPrevias = actividad.getActividadesPrevias();
         ArrayList<String> actividadesPrevias2 = new ArrayList<String>();
+        
         for (String actividadPrevia : actividadesPrevias) {
-        	Actividad act = learningPath.getActividades().get(actividadPrevia);
+        	Actividad act = mapa.get(actividadPrevia);
             if (act.getEstado()== null ) {
             	actividadesPrevias2.add(act.getActividadID());
                 
             }
         }
         System.out.println("Tenga cuidado no ha realizado las actividades previas: " + actividadesPrevias2);
-        
+
         Actividad actividadPrevia = learningPath.getActividades().get(actividad.getActividadPrevia());
+        
        	actividad.setFechaLimite(actividadPrevia);
         LocalDateTime LocaldateTimeNow = LocalDateTime.now();
         Date fechaInicio = Date.from(LocaldateTimeNow.atZone(ZoneId.systemDefault()).toInstant());
@@ -314,6 +357,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	 public List<Actividad> actividadesDisponibles(String learningPathID) {
 			// Muestra las actividades disponibles en los Learning Paths inscritos.
 			List<String> actividades = learningPathsInscritos.get(learningPathID).getActividadesID();
+			System.out.println("Actividades disponibles en el Learning Path: " + actividades);
 			
 			List<Actividad> actividadesDisponibles = new ArrayList<>();
 			LearningPath learningPath = learningPathsInscritos.get(learningPathID);

@@ -246,14 +246,14 @@ public class Central {
 			
 
 			System.out.println("\n");
-			System.out.println("14.El estudiante mira la fecha limite de una actividad");
+			System.out.println("9.El estudiante mira la fecha limite de una actividad");
 			System.out.println("La fecha limite de la actividad es: " + actividadCreada.getFechaLimite());
 			
 			System.out.println("Estado de la actividad: " + actividadCreada.getEstado());
 
 			ArrayList<String> actividadesID1 = new ArrayList<>();
 			System.out.println("\n");
-			System.out.println("9. El estudiante revisa que actividades todavia debe completar");
+			System.out.println("10. El estudiante revisa que actividades todavia debe completar");
 			for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 				actividadesID1.add(actividad.getActividadID());
 			}
@@ -261,7 +261,7 @@ public class Central {
 
 			ArrayList<String> actividadesID2 = new ArrayList<>();
 
-			estudiante.completarActividad("A101", "LP106_U105");
+			estudiante.completarActividad("A101_U105", "LP106_U105");
 			for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 				actividadesID2.add(actividad.getActividadID());
 			}
@@ -356,7 +356,7 @@ public class Central {
 			System.out.println("\n");
 			System.out.println("18. El estudiante intenta completar una actividad que ya fue completada");
 			try {
-				estudiante.completarActividad("A103_U106", "LP106_U106");
+				estudiante.completarActividad("A103_U105", "LP106_U105");
 				System.out.println("Actividad completada");
 			} catch (YaSeCompleto e) {
 				System.out.println(e.getMensaje());
