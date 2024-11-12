@@ -268,7 +268,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		
 	
 	
-	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
+	public Actividad completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
         LearningPath learningPath = learningPathsInscritos.get(learningPathID);
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadID)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
@@ -331,10 +331,12 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         List<String> actividadSeguimiento =  actividad.getActividadesSeguimiento();
         Progreso progreso = progresoLearningPath.get(learningPath);
         List<Actividad> actividades = learningPath.actividades.values().stream().toList();
+        System.out.println("Actividades: " + actividades);
         learningPath.actualizarProgreso(progreso, actividades);
         learningPath.getProgresoEstudiante().put(this.usuarioID, progreso);
         
         System.out.println("Se le recomienda realizar la actividad: " + actividadSeguimiento);
+        return actividad;
     }
 	
 	
