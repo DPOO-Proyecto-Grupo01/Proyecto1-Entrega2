@@ -268,7 +268,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		
 	
 	
-	public void completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
+	public Actividad completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
         LearningPath learningPath = learningPathsInscritos.get(learningPathID);
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadID)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
@@ -292,10 +292,11 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 
         Actividad actividadPrevia = learningPath.getActividades().get(actividad.getActividadPrevia());
         
-       	actividad.setFechaLimite(actividadPrevia);
+        
         LocalDateTime LocaldateTimeNow = LocalDateTime.now();
         Date fechaInicio = Date.from(LocaldateTimeNow.atZone(ZoneId.systemDefault()).toInstant());
         actividad.setFechainicio(fechaInicio);
+        actividad.setFechaLimite(actividad);
         
         if (actividad.getTipoActividad().equals("Tarea")) {
             Tarea tarea = (Tarea) actividad;
@@ -335,6 +336,8 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         learningPath.getProgresoEstudiante().put(this.usuarioID, progreso);
         
         System.out.println("Se le recomienda realizar la actividad: " + actividadSeguimiento);
+        
+		return actividad;
     }
 	
 	
