@@ -174,9 +174,19 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     // ver el progreso de un estudiante
     public Map<String, String> verProgresoEstudiante(String estudianteID, String learningPathID) {
         LearningPath lp = learningPathsCreados.get(learningPathID);
+        if (lp == null) {
+            System.out.println("Learning Path not found: " + learningPathID);
+            return new HashMap<>(); // Return an empty map or handle as needed
+        }
         Progreso progreso = lp.obtenerProgresoEstudiante(estudianteID);
+        if (progreso == null) {
+            System.out.println("Progreso not found for estudianteID: " + estudianteID);
+            return new HashMap<>(); // Return an empty map or handle as needed
+        }
         return progreso.mostrarProgreso();
     }
+    
+    
     
     public List<Map> revisarFeedback (String learningpathId) {
     	LearningPath lp = learningPathsCreados.get(learningpathId);

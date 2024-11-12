@@ -31,7 +31,7 @@ public class LearningPath {
 	public Progreso progreso;
 	public Map<String, Progreso> progresoEstudiante= new HashMap<>();
 	public HashMap<String, Estudiante> estudiantesInscritos = new HashMap<>();
-	public HashMap<String, LearningPath> learningPathsEstudiantes = new HashMap<>();
+	public static HashMap<String, LearningPath> learningPathsEstudiantes = new HashMap<>();
 	
 	
 	
@@ -57,7 +57,11 @@ public class LearningPath {
 	
 		public void inscribirEstudiante(String estudiante, LearningPath learningpath) {
 			learningPathsEstudiantes.put(estudiante, learningpath);
+			
+			
 		}
+		
+		
 	
 	public List<String> getActividadesID() {
 		return actividadesID;
@@ -212,6 +216,13 @@ public class LearningPath {
 	public Map<String,Actividad> obtenerActividades() {
 		return actividades;
 	}
+	
+	
+
+	public static HashMap<String, LearningPath> getLearningPathsEstudiantes() {
+		return learningPathsEstudiantes;
+	}
+
 
 	public double actualizarProgreso(Progreso progreso, List<Actividad> actividades) {
 		int exitosas = 0;

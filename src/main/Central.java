@@ -89,6 +89,7 @@ public class Central {
 			actividadesID.add("A101");
 			actividadesID.add("A103");
 			actividadesID.add("A102");
+			actividadesID.add("A110");
 			ArrayList<String> intereses = new ArrayList<>();
 			intereses.add("Java");
 			intereses.add("Programacion");
@@ -212,7 +213,7 @@ public class Central {
 					"A103");
 			Actividad actividadCreada2 = profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date,
 					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
-					"A103");
+					"A110");
 			Actividad actividadCreada3 = profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date,
 					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
 					"A103");
@@ -239,27 +240,28 @@ public class Central {
 
 			System.out.println("\n");
 			System.out.println("8. El estudiante completa la actividad exitosamente, entonces cambia su estado");
-			estudiante.completarActividad("A103", "LP106");
-			estudiante.completarActividad("A110", "LP106");
+			estudiante.completarActividad("A103", "LP106_U105");
+			estudiante.completarActividad("A110", "LP106_U105");
+			
 
 			System.out.println("\n");
 			System.out.println("14.El estudiante mira la fecha limite de una actividad");
 			System.out.println("La fecha limite de la actividad es: " + actividadCreada.getFechaLimite());
-			estudiante1.completarActividad("A103", "LP106");
+			
 			System.out.println("Estado de la actividad: " + actividadCreada.getEstado());
 
 			ArrayList<String> actividadesID1 = new ArrayList<>();
 			System.out.println("\n");
 			System.out.println("9. El estudiante revisa que actividades todavia debe completar");
-			for (Actividad actividad : estudiante.actividadesDisponibles("LP106")) {
+			for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 				actividadesID1.add(actividad.getActividadID());
 			}
 			System.out.println("Todavia debe realizar la actividad: " + actividadesID1);
 
 			ArrayList<String> actividadesID2 = new ArrayList<>();
 
-			estudiante.completarActividad("A101", "LP106");
-			for (Actividad actividad : estudiante.actividadesDisponibles("LP106")) {
+			estudiante.completarActividad("A101", "LP106_U105");
+			for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 				actividadesID2.add(actividad.getActividadID());
 			}
 
@@ -267,7 +269,7 @@ public class Central {
 
 			System.out.println("\n");
 			System.out.println("10. Se revisa el porcentaje de exito del estudiante en el learningPath");
-			System.out.println("El porcentaje de exito es " + estudiante.getProgresoLearningPath("LP106") * 100 + "%");
+			System.out.println("El porcentaje de exito es " + estudiante.getProgresoLearningPath("LP106_U105") * 100 + "%");
 
 			System.out.println("\n");
 			System.out.println("11.El estudiante agrega feedback y el profesor lo revisa");
@@ -284,7 +286,7 @@ public class Central {
 			System.out.println("Los detalles del progreso del learning path estudiante son: "
 					+ profesor.verProgresoEstudiante("U105", "LP106"));
 
-// Implementar excepciones para manejar errores
+            // Implementar excepciones para manejar errores
 			System.out.println("\n");
 			System.out.println("14. El estudiante intenta inscribirse a un learning path que no existe");
 			try {
@@ -293,7 +295,7 @@ public class Central {
 				System.out.println(e.getMensaje());
 			}
 
-// Hacer una actividad que no es parte de un learning path
+            // Hacer una actividad que no es parte de un learning path
 			System.out.println("\n");
 			System.out.println("15. El estudiante intenta completar una actividad que no pertenece al learning path");
 			double calificacionMinima = 0.5;
