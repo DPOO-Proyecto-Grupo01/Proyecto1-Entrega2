@@ -406,7 +406,9 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	}
 	
 	
-	
+	public void inscribirProfesor(String profesorID) {
+		
+	}
 	
 	
 	

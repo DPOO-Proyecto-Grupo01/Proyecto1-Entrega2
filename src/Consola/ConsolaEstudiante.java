@@ -33,7 +33,7 @@ public class ConsolaEstudiante {
     
     private static int contador = 1;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
         cargarEstudiantes(); 
         if (iniciarSesion() == 1) {
 	        if (authenticar()) {
@@ -66,7 +66,7 @@ public class ConsolaEstudiante {
         return opcion;
     }
 	
-    private static void menu() throws NombreRepetido {
+    private static void menu() throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
         int option;
         do {
             System.out.println("---- Estudiante Interface ----");
@@ -96,6 +96,7 @@ public class ConsolaEstudiante {
 
 	}
 	
+    
    
    
     private static void registrarse() throws NombreRepetido {
@@ -122,7 +123,6 @@ public class ConsolaEstudiante {
 	}
         
         
-    }
 	private static boolean authenticar() {
         System.out.print("UsuarioID: ");
         String usuarioID = scanner.nextLine();
