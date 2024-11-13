@@ -19,7 +19,10 @@ import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Exceptions.ActividadNoPertenece;
+import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
+import Exceptions.YaSeCompleto;
 
 public class ConsolaProfesor {
     
@@ -33,24 +36,33 @@ public class ConsolaProfesor {
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     
     
-    public static void main(String[] args) {
-        cargarProfesores(); 
+    public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+        cargarProfesores();
+        boolean authenticated = false;
+
         if (iniciarSesion() == 1) {
-	        if (authenticar()) {
-	            menu();
-	        } else {
-	            System.out.println("Usuario o contraseña incorrectos.");
-	        }
-		} else {
-			registrarse();
-			System.out.println("Usuario registrado");
-			System.out.println("Iniciar sesión");
-			if (authenticar()) {
-                menu();
-            } else {
-                System.out.println("Usuario o contraseña incorrectos.");
+            while (!authenticated) {
+                if (authenticar()) {
+                    authenticated = true;
+                    menu();
+                } else {
+                    System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
+                }
             }
-		}
+        } else {
+            boolean registered = false;
+            while (!registered) {
+                registrarse();
+                System.out.println("Usuario registrado");
+                System.out.println("Iniciar sesión");
+                if (authenticar()) {
+                    registered = true;
+                    menu();
+                } else {
+                    System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
+                }
+            }
+        }
     }
 
     private static void cargarProfesores() {
@@ -511,5 +523,6 @@ public class ConsolaProfesor {
     private static void persistData() {
         persistenciaUsuarios.salvarProfesor(usuariosFile, profesorActual.getUsuarioID(), profesorActual.getNombre(), profesorActual.getContraseña(), profesorActual.getEmail(), profesorActual.getTipoUsuario());
     }
+    
     
 }
