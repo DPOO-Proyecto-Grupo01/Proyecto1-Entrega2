@@ -34,7 +34,7 @@ public class ConsolaEstudiante {
     private static int contador = 1;
     
     public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
-        cargarEstudiantes(); 
+    	cargarEstudiantes(); 
         if (iniciarSesion() == 1) {
 	        if (authenticar()) {
 	            menu();
@@ -42,7 +42,14 @@ public class ConsolaEstudiante {
 	            System.out.println("Usuario o contraseña incorrectos.");
 	        }
 		} else {
-			///registrarse();
+			registrarse();
+			System.out.println("Usuario registrado");
+			System.out.println("Iniciar sesión");
+			if (authenticar()) {
+                menu();
+            } else {
+                System.out.println("Usuario o contraseña incorrectos.");
+            }
 		}
     }
 
