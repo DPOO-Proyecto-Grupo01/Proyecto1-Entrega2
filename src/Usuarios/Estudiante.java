@@ -344,7 +344,6 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	
 	
 		
-		
 	
 	 public double getProgresoLearningPath(String learningPathID) {
 	        LearningPath learningPath = learningPathsInscritos.get(learningPathID);

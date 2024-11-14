@@ -72,7 +72,7 @@ class EstudianteTest {
 		    if (!actividades.contains(actividades.get(1))) {
 		        persistenciaActividades.salvarActividad("actividades.json", actividades.get(1));
 		    }
-
+		    
 		    Estudiante estudiante = new Estudiante("U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co",
 		            "Estudiante");
 		
@@ -165,6 +165,18 @@ class EstudianteTest {
             }
 		    estudiantePrueba = estudiante;
 		    learningPath = createdLearningPath;
+		    
+		    Examen examen = new Examen("A102", "Examen Descripcion", "Examen Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5);
+		    Encuesta encuesta = new Encuesta("A103", "Encuesta Descripcion", "Encuesta Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+		    RecursoEducativo recurso = new RecursoEducativo("A104", "Recurso Descripcion", "Recurso Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), "Video", "http://recurso.com");
+		    Tarea tarea = new Tarea("A105", "Tarea Descripcion", "Tarea Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "Instrucciones", "Pendiente");
+
+		    learningPath.getActividades().put("A102", examen);
+		    learningPath.getActividades().put("A103", encuesta);
+		    learningPath.getActividades().put("A104", recurso);
+		    learningPath.getActividades().put("A105", tarea);
+
+		    estudiantePrueba.inscribirLearningPath("LP106", "P105");
 		}
 		
 		catch (Exception e) {
@@ -208,9 +220,35 @@ class EstudianteTest {
     }
 
     /// Test completar Tarea
+    @Test
+    void testCompletarTareaActividad() throws Exception {
+        Actividad resultado = estudiantePrueba.completarActividad("A105_U105", "LP106_U105");
+        assertNotNull(resultado, "Activity result should not be null");
+        assertEquals("Enviado", resultado.getEstado());
+    }    
+    
     /// Test completar Encuesta
+    @Test
+    void testCompletarEncuestaActividad() throws Exception {
+        Actividad resultado = estudiantePrueba.completarActividad("A103_U105", "LP106_U105");
+        assertNotNull(resultado, "Activity result should not be null");
+        assertEquals("Exitoso", resultado.getEstado());
+    }
+    
     /// Test completar Examen
+    @Test
+    void testCompletarExamenActividad() throws Exception {
+        Actividad resultado = estudiantePrueba.completarActividad("A102_U105", "LP106_U105");
+        assertNotNull(resultado, "Activity result should not be null");
+        assertEquals(null, resultado.getEstado());
+    }
     /// Test completar Recurso Educativo
+    @Test
+    void testCompletarRecursoEducativoActividad() throws Exception {
+        Actividad resultado = estudiantePrueba.completarActividad("A104_U105", "LP106_U105");
+        assertNotNull(resultado, "Activity result should not be null");
+        assertEquals("Enviado", resultado.getEstado());
+    }
 
     /// Test completar actividad no perteneciente al learning path
     /// Test completar actividad ya completada
@@ -268,7 +306,6 @@ class EstudianteTest {
         assertEquals("A101_U105", actividadesDisponibles.get(0).getActividadID());
     }
     
-  /// test de obtener actividades disponibles de un learning path no inscrito
     
 }
 
