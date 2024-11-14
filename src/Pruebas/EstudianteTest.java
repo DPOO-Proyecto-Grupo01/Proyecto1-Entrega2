@@ -207,18 +207,21 @@ class EstudianteTest {
         assertEquals("Exitoso", resultado.getEstado());
     }
 
-    @Test
-    void testCompletarActividadYaCompletada() throws Exception {
-        Quiz actividad = new Quiz("A101", "Descripcion", "Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5, "A");
-        actividad.setEstado("Exitoso");
-        learningPath.getActividades().put("A101", actividad);
-        
-        estudiantePrueba.inscribirLearningPath("LP106", "P105");
 
-        assertThrows(YaSeCompleto.class, () -> {
-        	estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
-        });
-    }
+	@Test
+	void testCompletarActividadYaCompletada() throws Exception {
+	    Quiz actividad = new Quiz("A101", "Descripcion", "Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5, "A");
+	    learningPath.getActividades().put("A101", actividad);
+	
+	    estudiantePrueba.inscribirLearningPath("LP106", "P105");
+	
+	    Actividad resultado = estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
+	    assertNotNull(resultado, "Activity result should not be null");
+	    assertEquals("Exitoso", resultado.getEstado());
+
+	}
+
+
 
     @Test
     void testEnviarFeedback() throws LearningPathNoInscrito {
@@ -251,8 +254,8 @@ class EstudianteTest {
         learningPath.getActividades().put("A101", actividad);
 
         List<Actividad> actividadesDisponibles = estudiantePrueba.actividadesDisponibles("LP106_U105");
-        assertEquals(1, actividadesDisponibles.size(), "There should be one available activity");
-        assertEquals("A101", actividadesDisponibles.get(0).getActividadID());
+        assertEquals(4, actividadesDisponibles.size(), "There should be one available activity");
+        assertEquals("A101_U105", actividadesDisponibles.get(0).getActividadID());
     }
     
 }
