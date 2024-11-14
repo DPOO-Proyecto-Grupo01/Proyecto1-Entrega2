@@ -118,5 +118,4 @@ class EstudianteTest {
         assertEquals(1, actividadesDisponibles.size(), "There should be one available activity");
         assertEquals("A101", actividadesDisponibles.get(0).getActividadID());
     }
-    
 }	
