@@ -2,6 +2,7 @@ package Pruebas;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.net.Authenticator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,19 +21,170 @@ import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
 import Exceptions.NombreRepetido;
+import LearningPaths.Feedback;
+import LearningPaths.LearningPath;
+import LearningPaths.Progreso;
 import Perisistencia.PersistenciaActividades;
 import Perisistencia.PersistenciaLearningPaths;
 import Perisistencia.PersistenciaUsuarios;
+import Usuarios.Estudiante;
 import Usuarios.Profesor;
 import Usuarios.Usuario;
 
 class PruebasProfesor {
+	
 	private Profesor profesorPrueba;
+	public static List<LearningPath> learningPaths;
+	public List<Feedback> feedback;
+	public List<Progreso> progreso;
+	public static List<Estudiante> estudiantes;
+	public static List<Profesor> profesores;
+	public static List<Actividad> actividades;
+
+	private Authenticator authentication;
+	private static PersistenciaUsuarios persistenciaUsuarios;
+	private static PersistenciaLearningPaths persistenciaLearningPaths;
+	private static PersistenciaActividades persistenciaActividades;
+	private static final String actividadesFile = "src\\datos\\activities.json";
+	private static final String learningPathsFile = "src\\datos\\learning_paths.json";
+	private static final String usuarios = "src\\datos\\users.json";
+
 
 	@BeforeEach
-    void setUp( ) throws Exception{
-		profesorPrueba = new Profesor("P_1", "Ivan", "clave123", "ivan@uniandes.edu.co", "Profesor");
+	public void setUp() throws Exception {
+		
+		// Iniciando sesión, por favor espere...
+		persistenciaActividades = new PersistenciaActividades();
+		persistenciaUsuarios = new PersistenciaUsuarios();
+		persistenciaLearningPaths = new PersistenciaLearningPaths();
+
+		try {
+		    // Cargar datos desde los archivos
+		    estudiantes = persistenciaUsuarios.cargarEstudiantes(usuarios);
+		    profesores = persistenciaUsuarios.cargarProfesores(usuarios);
+		    learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		    actividades = persistenciaActividades.cargarActividades(actividadesFile);
+
+		    // Probar persistencia de quiz
+		    ArrayList<String> actividadesID = new ArrayList<>();
+		    actividadesID.add("A101");
+		    actividadesID.add("A103");
+		    actividadesID.add("A102");
+		    actividadesID.add("A110");
+		    ArrayList<String> intereses = new ArrayList<>();
+		    intereses.add("Java");
+		    intereses.add("Programacion");
+
+		    LearningPath newLearningPath = new LearningPath("LP105", "Aprendiendo a programar en Java", "Descripcion",
+		            "Objetivos", 3, 120, "P105", actividadesID, intereses);
+
+		    if (!learningPaths.contains(newLearningPath)) {
+		        learningPaths.add(newLearningPath);
+		        persistenciaLearningPaths.salvarLearningPath(learningPathsFile, newLearningPath.getLearningPathID(),
+		                newLearningPath.getTitulo(), newLearningPath.getDescripcion(), newLearningPath.getObjetivos(),
+		                newLearningPath.getNivelDificultad(), newLearningPath.getDuracionMinutos(),
+		                newLearningPath.getProfesorID(), newLearningPath.getActividadesID(),
+		                newLearningPath.getIntereses());
+		    }
+
+		    if (!actividades.contains(actividades.get(1))) {
+		        persistenciaActividades.salvarActividad("actividades.json", actividades.get(1));
+		    }
+
+		    Estudiante estudiante = new Estudiante("U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co",
+		            "Estudiante");
+		    Estudiante estudiante1 = new Estudiante("U106", "Maria Perez", "1234", "m.perez@uniandes.edu.co",
+		            "Estudiante");
+		    Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
+
+		    if (!estudiantes.contains(estudiante)) {
+		        estudiantes.add(estudiante);
+		        persistenciaUsuarios.salvarEstudiante(usuarios, estudiante.getUsuarioID(), estudiante.getNombre(),
+		                estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
+		    }
+		    if (!estudiantes.contains(estudiante1)) {
+		        estudiantes.add(estudiante1);
+		        persistenciaUsuarios.salvarEstudiante(usuarios, estudiante1.getUsuarioID(), estudiante1.getNombre(),
+		                estudiante1.getContraseña(), estudiante1.getEmail(), estudiante1.getTipoUsuario());
+		    }
+		    if (!profesores.contains(profesor)) {
+		        profesores.add(profesor);
+		        persistenciaUsuarios.salvarProfesor(usuarios, profesor.getUsuarioID(), profesor.getNombre(),
+		                profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());
+		    }
+
+		    estudiante.profesores.put("P105", profesor);
+		    estudiante1.profesores.put("P105", profesor);
+
+		    LearningPath createdLearningPath = profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java",
+		            "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses);
+		    if (!learningPaths.contains(createdLearningPath)) {
+		        learningPaths.add(createdLearningPath);
+		        persistenciaLearningPaths.salvarLearningPath(learningPathsFile, createdLearningPath.getLearningPathID(),
+		                createdLearningPath.getTitulo(), createdLearningPath.getDescripcion(),
+		                createdLearningPath.getObjetivos(), createdLearningPath.getNivelDificultad(),
+		                createdLearningPath.getDuracionMinutos(), createdLearningPath.getProfesorID(),
+		                createdLearningPath.getActividadesID(), createdLearningPath.getIntereses());
+		    }
+
+		    ArrayList<String> actividadesPrevias = new ArrayList<>();
+		    actividadesPrevias.add("A101");
+		    actividadesPrevias.add("A103");
+
+		    ArrayList<String> actividadesSeguimiento = new ArrayList<>();
+		    actividadesSeguimiento.add("A102");
+
+		    ArrayList<Pregunta> preguntas = new ArrayList<>();
+		    ArrayList<String> respuestas = new ArrayList<>();
+		    respuestas.add("A");
+		    respuestas.add("B");
+		    respuestas.add("C");
+		    HashMap<String, Object> atributosEspecificos = new HashMap<>();
+		    atributosEspecificos.put("calificacionMinima", 0.5);
+		    atributosEspecificos.put("RespuestaCorrecta", respuestas.get(0));
+
+		    preguntas.add(new Pregunta("Para que es public, private, protected", respuestas));
+		    atributosEspecificos.put("preguntas", preguntas);
+
+		    String fecha = "2021-12-01";
+		    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+
+		    Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true,
+		            date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento,
+		            atributosEspecificos, "A103");
+
+		    if (!actividades.contains(actividadCreada)) {
+		        persistenciaActividades.salvarActividad("actividades.json", actividadCreada);
+		    }
+
+		    profesor.CalificacionMinima("A110", 60.1);
+
+		    estudiante.inscribirLearningPath("LP106", "P105");
+		    estudiante1.inscribirLearningPath("LP106", "P105");
+
+		    profesor.revisarEstadoActividad("A110", "LP106");
+
+		    Actividad quiz = estudiante.completarActividad("A103_U105", "LP106_U105");
+		    estudiante.completarActividad("A110_U105", "LP106_U105");
+		    estudiante1.completarActividad("A103_U106", "LP106_U106");
+
+		    ArrayList<String> actividadesID1 = new ArrayList<>();
+		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
+		        actividadesID1.add(actividad.getActividadID());
+		    }
+
+		    estudiante.completarActividad("A101_U105", "LP106_U105");
+		    ArrayList<String> actividadesID2 = new ArrayList<>();
+		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
+		        actividadesID2.add(actividad.getActividadID());
+		    }
+		}
+		catch (Exception e) {
+		    e.printStackTrace();
+		}
 	}
+
+	
 	
 	
 	/// Test de crear LearningPath

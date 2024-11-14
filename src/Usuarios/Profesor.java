@@ -56,6 +56,8 @@ public class Profesor extends Usuario {
     public String getProfesor() {
         return profesor;
     }
+    
+    
 
 
 public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,

@@ -406,7 +406,11 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	}
 	
 	
-	public void inscribirProfesor(String profesorID) {
+	public void inscribirProfesor(Profesor profesor, String profesorID) {
+		//Agregar al mapa del estudiantes el profesor
+		
+	
+		profesores.put(profesorID, profesor);
 		
 	}
 	

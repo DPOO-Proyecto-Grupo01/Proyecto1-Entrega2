@@ -163,9 +163,30 @@ public class ConsolaEstudiante {
 
     
 	private static void mostrarRecomendacionesYInscribirLearningPath() throws LearningPathNoInscrito {
-		System.out.print("Ingrese el ID de su profesor: ");
+		
+		//Imprimir la lista de profesores no repetidos
+		List<Profesor> profesores= new ArrayList<Profesor>();
+		try {
+			profesores = persistenciaUsuarios.cargarProfesores(usuariosFile);
+			System.out.println("Lista de profesores: ");
+			for (Profesor profesor : profesores) {
+				System.out.println(profesor.getUsuarioID());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.print("Ingrese el ID del profesor al que desea inscribir: ");
         String profesorID = scanner.nextLine();
         
+        
+		for (Profesor profesor : profesores) {
+			if (profesor.getUsuarioID().equals(profesorID)) {
+				System.out.println("Profesor encontrado");
+				estudianteActual.inscribirProfesor(profesor, profesorID);
+			}
+		}
+		Profesor profesor = estudianteActual.profesores.get(profesorID);
         String intereses = estudianteActual.getIntereses();
 		String recomendaciones = estudianteActual.obtenerRecomendacion(profesorID, intereses);
 		System.out.println(recomendaciones);
