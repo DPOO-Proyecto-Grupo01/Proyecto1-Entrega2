@@ -177,8 +177,12 @@ class PruebasProfesor {
 		    ArrayList<String> actividadesID2 = new ArrayList<>();
 		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 		        actividadesID2.add(actividad.getActividadID());
+		        
+		        
+		    profesorPrueba=profesor;
 		    }
 		}
+		
 		catch (Exception e) {
 		    e.printStackTrace();
 		}
