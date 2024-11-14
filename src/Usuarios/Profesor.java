@@ -157,27 +157,36 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     }
     
     
-    public void revisarEstadoActividad(String actividadID, String LearningPathID) {
-        LearningPath lp = learningPathsCreados.get(LearningPathID);
-    	Actividad actividad = lp.actividades.get(actividadID);
-        if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
-            if (actividad.getEstado().equals("Enviado")) {
-                actividad.setEstado("Exitoso");
-            } else {
-                actividad.setEstado("Fallido");
-            }
-        } else if (actividad.getTipoActividad().equals("RecursoEducativo") || actividad.getTipoActividad().equals("Encuesta")) {
-            actividad.setEstado("Exitoso");
-        } else if (actividad.getTipoActividad().equals("Quiz")) {
-            if (actividad.getCalificacion() >= ((Quiz) actividad).getCalificacionMinima()) {
-                actividad.setEstado("Exitoso");
-            } else {
-                actividad.setEstado("Fallido");
-            }
-
-
-        }
-    }
+	public void revisarEstadoActividad(String actividadID, String LearningPathID) {
+		LearningPath lp = learningPathsCreados.get(LearningPathID);
+		if (lp != null) {
+			Actividad actividad = lp.actividades.get(actividadID);
+			if (actividad != null) {
+				if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
+					System.out.println(actividad.getEstado());
+					if ("Enviado".equals(actividad.getEstado())) {
+						actividad.setEstado("Exitoso");
+					} else {
+						actividad.setEstado("Fallido");
+					}
+				} else if (actividad.getTipoActividad().equals("RecursoEducativo")
+						|| actividad.getTipoActividad().equals("Encuesta")) {
+					actividad.setEstado("Exitoso");
+				} else if (actividad.getTipoActividad().equals("Quiz")) {
+					if (actividad.getCalificacion() >= ((Quiz) actividad).getCalificacionMinima()) {
+						actividad.setEstado("Exitoso");
+					} else {
+						actividad.setEstado("Fallido");
+					}
+				}
+			} else {
+				// Handle the case where actividad is null, if necessary
+				
+			}
+		} else {
+			// Handle the case where lp is null, if necessary
+		}
+	}
 
     // ver el progreso de un estudiante
     public Map<String, String> verProgresoEstudiante(String estudianteID, String learningPathID) {

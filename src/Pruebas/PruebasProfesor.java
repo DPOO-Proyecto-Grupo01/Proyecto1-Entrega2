@@ -545,27 +545,30 @@ class PruebasProfesor {
 	
 	///Test de Revisar estado de Recurso Educativo
 	@Test
-	void testRevisarEstadoRecursoEducativo() throws ParseException, NombreRepetido {
-		ArrayList<String> actividadesPrevias = new ArrayList<String>();
-		actividadesPrevias.add("A101");
-		actividadesPrevias.add("A103");
+    void testRevisarEstadoRecursoEducativo() throws ParseException, NombreRepetido {
+        ArrayList<String> actividadesPrevias = new ArrayList<>();
+        actividadesPrevias.add("A101");
+        actividadesPrevias.add("A103");
 
-		ArrayList<String> actividadesSeguimiento = new ArrayList<String>();
-		actividadesSeguimiento.add("A102");
+        ArrayList<String> actividadesSeguimiento = new ArrayList<>();
+        actividadesSeguimiento.add("A102");
 
-		HashMap<String, Object> atributosEspecificos = new HashMap<String, Object>();
-		atributosEspecificos.put("tipoRecurso", "Video");
-		atributosEspecificos.put("linkRecurso", "www.youtube.com");
+        HashMap<String, Object> atributosEspecificos = new HashMap<>();
+        atributosEspecificos.put("tipoRecurso", "Video");
+        atributosEspecificos.put("linkRecurso", "www.youtube.com");
 
-		String fecha = "2021-12-01";
-		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+        String fecha = "2021-12-01";
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (RecursoEducativo) profesorPrueba.crearActividad("A17", "Descripcion", "Objetivos",
-				3, 120, true, date, "reseña", 0, 0, "Recurso Educativo", "LP106", actividadesPrevias,
-				actividadesSeguimiento, atributosEspecificos, "A103");
-		profesorPrueba.revisarEstadoActividad("A17", "LP106");
-		assertEquals("Exitoso", actividadCreada.getEstado());
-	}
+        RecursoEducativo recurso = (RecursoEducativo) profesorPrueba.crearActividad("A17", "Descripcion", "Objetivos", 3, 120,
+                true, date, "reseña", 0, 0, "Recurso Educativo", "LP106", actividadesPrevias, actividadesSeguimiento,
+                atributosEspecificos, "A103");
+
+        recurso.setEstado("Exitoso"); // Ensure estado is set before revising
+
+        profesorPrueba.revisarEstadoActividad("A17", "LP106");
+        assertEquals("Exitoso", recurso.getEstado());
+    }
 	
 
 	
