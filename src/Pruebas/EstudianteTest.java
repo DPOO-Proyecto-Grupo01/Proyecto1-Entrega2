@@ -195,7 +195,7 @@ class EstudianteTest {
     }
 
     @Test
-    void testCompletarActividad() throws Exception {
+    void testCompletarActividad() throws ActividadNoPertenece, YaSeCompleto, LearningPathNoInscrito {
         // Ensure activity is added to the learning path
         Quiz actividad = new Quiz("A101", "Descripcion", "Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5, "A");
         learningPath.getActividades().put("A101", actividad);
@@ -207,7 +207,13 @@ class EstudianteTest {
         assertEquals("Exitoso", resultado.getEstado());
     }
 
+    /// Test completar Tarea
+    /// Test completar Encuesta
+    /// Test completar Examen
+    /// Test completar Recurso Educativo
 
+    /// Test completar actividad no perteneciente al learning path
+    /// Test completar actividad ya completada
 	@Test
 	void testCompletarActividadYaCompletada() throws Exception {
 	    Quiz actividad = new Quiz("A101", "Descripcion", "Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5, "A");
@@ -232,6 +238,8 @@ class EstudianteTest {
         assertEquals("Excelente curso", feedback.getComentario());
         assertEquals(5, feedback.getCalificacion());
     }
+    
+    /// test de enviar feedback de un learning path no inscrito
 
     @Test
     void testObtenerRecomendacion() {
@@ -246,6 +254,8 @@ class EstudianteTest {
         System.out.println(progreso);
         assertEquals(0.0, progreso);
     }
+    
+  /// test de obtener progreso de un learning path no inscrito
 
     @Test
     void testActividadesDisponibles() throws LearningPathNoInscrito {
@@ -258,4 +268,7 @@ class EstudianteTest {
         assertEquals("A101_U105", actividadesDisponibles.get(0).getActividadID());
     }
     
+  /// test de obtener actividades disponibles de un learning path no inscrito
+    
 }
+

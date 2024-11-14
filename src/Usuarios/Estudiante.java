@@ -35,6 +35,7 @@ public class Estudiante extends Usuario {
         
     }
 	
+	
 
 	public HashMap<String, Actividad> getActividades() {
 		return actividades;
@@ -78,7 +79,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         if (profesor == null) {
             throw new LearningPathNoInscrito("Profesor no encontrado: " + profesorID);
         }
-
+        
         LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
         if (learningPath == null) {
             throw new LearningPathNoInscrito("Learning Path no encontrado: " + LearningPathID);
