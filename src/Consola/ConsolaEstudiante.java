@@ -230,7 +230,6 @@ public class ConsolaEstudiante {
 		estudianteActual.enviarFeedback(learningPathID, feedback, calificacion, feedbackID);
 	}
 
-
 	private static void persistData() {
         persistenciaUsuarios.salvarEstudiante(usuariosFile, estudianteActual.getUsuarioID(), estudianteActual.getNombre(), estudianteActual.getContraseña(), estudianteActual.getEmail(), estudianteActual.getTipoUsuario());
     }

@@ -345,8 +345,11 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	
 		
 	
-	 public double getProgresoLearningPath(String learningPathID) {
+	 public double getProgresoLearningPath(String learningPathID) throws LearningPathNoInscrito {
 	        LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+	        if (learningPath == null) {
+                throw new LearningPathNoInscrito("Learning Path no inscrito");
+                }
 	        Progreso progreso = learningPath.getProgreso();
 	        
 	        if (progreso != null) {
@@ -388,12 +391,14 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	 
 
 	public void enviarFeedback(String learningPath, String feedback, int calificacion, 
-			String feedbackID ) {
-		// Envia un feedback al profesor del Learning Path
+			String feedbackID ) throws LearningPathNoInscrito{
 		LearningPath lp= learningPathsInscritos.get(learningPath);
+		if(lp==null) {
+            throw new LearningPathNoInscrito("Learning Path no inscrito");
+            }
 		//Imprime la lista de learning paths inscritos
-        Feedback feedbackEstudiante= new Feedback(feedbackID, feedback, calificacion, this.getNombre(), lp);
-        lp.getFeedback().add(feedbackEstudiante);
+		Feedback feedbackEstudiante= new Feedback(feedbackID, feedback, calificacion, this.getNombre(), lp);
+		lp.getFeedback().add(feedbackEstudiante);
 	}
 	
 	public Progreso crearProgreso(LearningPath learningPath, Date fechaInicio, Date fechaCompletado, int tiempoDedicado,
