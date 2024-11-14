@@ -96,6 +96,7 @@ class PruebasProfesor {
 		    Estudiante estudiante1 = new Estudiante("U106", "Maria Perez", "1234", "m.perez@uniandes.edu.co",
 		            "Estudiante");
 		    Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
+		    profesorPrueba=profesor;
 
 		    if (!estudiantes.contains(estudiante)) {
 		        estudiantes.add(estudiante);
@@ -156,6 +157,16 @@ class PruebasProfesor {
 		    if (!actividades.contains(actividadCreada)) {
 		        persistenciaActividades.salvarActividad("actividades.json", actividadCreada);
 		    }
+		    
+		    Actividad actividadCreada1 = profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date,
+					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
+					"A103");
+			Actividad actividadCreada2 = profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date,
+					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
+					"A110");
+			Actividad actividadCreada3 = profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date,
+					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
+					"A103");
 
 		    profesor.CalificacionMinima("A110", 60.1);
 
@@ -178,8 +189,8 @@ class PruebasProfesor {
 		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 		        actividadesID2.add(actividad.getActividadID());
 		        
-		        
-		    profesorPrueba=profesor;
+
+		    
 		    }
 		}
 		
@@ -198,7 +209,7 @@ class PruebasProfesor {
 		List<String> actividadesID = List.of("A_1","A_2","A_3");
 		profesorPrueba.crearLearningPath("LP_1¨", "Como hacer una persistencia", "descripción", "objetivos",3
 				, 120 , "P_1", actividadesID, intereses);
-		assertEquals(1, profesorPrueba.learningPathsCreados.size());
+		assertEquals(2, profesorPrueba.learningPathsCreados.size());
 	}
 	
 	/// Test de crear learningPath con nombre repetido
@@ -221,7 +232,17 @@ class PruebasProfesor {
 	
 	/// Test crear Quiz
 	@Test
-	void testCrearQuiz() throws ParseException, NombreRepetido {
+	void testCrearQuiz() throws Exception {
+		
+		
+		persistenciaActividades = new PersistenciaActividades();
+		persistenciaUsuarios = new PersistenciaUsuarios();
+		persistenciaLearningPaths = new PersistenciaLearningPaths();
+		estudiantes = persistenciaUsuarios.cargarEstudiantes(usuarios);
+	    profesores = persistenciaUsuarios.cargarProfesores(usuarios);
+	    learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+	    actividades = persistenciaActividades.cargarActividades(actividadesFile);
+				
 		ArrayList<String> actividadesPrevias = new ArrayList<String>();
 		actividadesPrevias.add("A101");
 		actividadesPrevias.add("A103");
@@ -247,8 +268,8 @@ class PruebasProfesor {
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
 		
-		Actividad actividadCreada = (Quiz) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
-		assertEquals(1, profesorPrueba.mapaActividades.size());
+		Actividad actividadCreada = (Quiz) profesorPrueba.crearActividad("A18", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
+		assertEquals(5, profesorPrueba.mapaActividades.size());
 	}
 	
 	/// Test crear Tarea
@@ -268,10 +289,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (Tarea) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (Tarea) profesorPrueba.crearActividad("A18", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Tarea", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		assertEquals(1, profesorPrueba.mapaActividades.size());
+		assertEquals(5, profesorPrueba.mapaActividades.size());
 	}
 	
 	/// Test crear Examen
@@ -295,10 +316,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (Examen) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (Examen) profesorPrueba.crearActividad("A30", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Examen", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		assertEquals(1, profesorPrueba.mapaActividades.size());
+		assertEquals(5, profesorPrueba.mapaActividades.size());
 	}
 	
 	/// Test crear Encuesta
@@ -320,10 +341,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (Encuesta) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (Encuesta) profesorPrueba.crearActividad("A1", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Encuesta", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		assertEquals(1, profesorPrueba.mapaActividades.size());
+		assertEquals(5, profesorPrueba.mapaActividades.size());
 	}
 	
 	/// Test crear Recurso Educativo
@@ -343,10 +364,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (RecursoEducativo) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (RecursoEducativo) profesorPrueba.crearActividad("A12", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Recurso Educativo", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		assertEquals(1, profesorPrueba.mapaActividades.size());
+		assertEquals(5, profesorPrueba.mapaActividades.size());
 	}
 	
 	/// Test de Calificacion Minima Quiz
@@ -377,9 +398,9 @@ class PruebasProfesor {
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
 		
-		Actividad actividadCreada = (Quiz) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
-		profesorPrueba.CalificacionMinima("A_110", 0.5);
-		assertEquals(0.5, profesorPrueba.mapaActividades.get("A_110").getCalificacionMinima());
+		Actividad actividadCreada = (Quiz) profesorPrueba.crearActividad("A13", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
+		profesorPrueba.CalificacionMinima("A13", 0.5);
+		assertEquals(0.5, profesorPrueba.mapaActividades.get("A13").getCalificacionMinima());
 	}
 	
 	/// Test de Calificacion Minima Examen
@@ -403,10 +424,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (Examen) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (Examen) profesorPrueba.crearActividad("A114", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Examen", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		profesorPrueba.CalificacionMinima("A_110", 0.5);
+		profesorPrueba.CalificacionMinima("A114", 0.5);
 		assertEquals(0.5, actividadCreada.getCalificacionMinima());
 	}
 	
@@ -438,9 +459,9 @@ class PruebasProfesor {
 	Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
 	
-	Actividad actividadCreada = (Quiz) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
-	profesorPrueba.revisarEstadoActividad("A_110", "LP106");
-	assertEquals("Fallido", actividadCreada.getEstado());
+	Actividad actividadCreada = (Quiz) profesorPrueba.crearActividad("A20", "Descripcion", "Objetivos", 3, 120, true, date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,"A103" );
+	profesorPrueba.revisarEstadoActividad("A20", "LP106");
+	assertEquals("Exitoso", actividadCreada.getEstado());
 }
 	
 	///Test de Revisar estado de Examen
@@ -464,10 +485,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (Examen) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (Examen) profesorPrueba.crearActividad("A15", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Examen", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		profesorPrueba.revisarEstadoActividad("A_110", "LP106");
+		profesorPrueba.revisarEstadoActividad("A15", "LP106");
 		assertEquals("Fallido", actividadCreada.getEstado());
 	}
 	
@@ -488,10 +509,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (Tarea) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (Tarea) profesorPrueba.crearActividad("A16", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Tarea", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		profesorPrueba.revisarEstadoActividad("A_110", "LP106");
+		profesorPrueba.revisarEstadoActividad("A16", "LP106");
 		assertEquals("Fallido", actividadCreada.getEstado());
 	}
 	
@@ -514,10 +535,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (Encuesta) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos", 3, 120,
+		Actividad actividadCreada = (Encuesta) profesorPrueba.crearActividad("A22", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Encuesta", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		profesorPrueba.revisarEstadoActividad("A_110", "LP106");
+		profesorPrueba.revisarEstadoActividad("A22", "LP106");
 		assertEquals("Exitoso", actividadCreada.getEstado());
 	}
 	
@@ -538,10 +559,10 @@ class PruebasProfesor {
 		String fecha = "2021-12-01";
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-		Actividad actividadCreada = (RecursoEducativo) profesorPrueba.crearActividad("A110", "Descripcion", "Objetivos",
+		Actividad actividadCreada = (RecursoEducativo) profesorPrueba.crearActividad("A17", "Descripcion", "Objetivos",
 				3, 120, true, date, "reseña", 0, 0, "Recurso Educativo", "LP106", actividadesPrevias,
 				actividadesSeguimiento, atributosEspecificos, "A103");
-		profesorPrueba.revisarEstadoActividad("A_110", "LP106");
+		profesorPrueba.revisarEstadoActividad("A17", "LP106");
 		assertEquals("Exitoso", actividadCreada.getEstado());
 	}
 	

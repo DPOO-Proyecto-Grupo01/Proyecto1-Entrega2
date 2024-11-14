@@ -103,7 +103,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     } else if (tipo.equals("Tarea")) {
         List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
         String instrucciones = parametrosEspecificos.get("instrucciones") != null ? (String) parametrosEspecificos.get("instrucciones") : "";
-        String estado = parametrosEspecificos.get("estado") != null ? (String) parametrosEspecificos.get("estado") : "";
+        String estado = parametrosEspecificos.get("estado") != null ? (String) parametrosEspecificos.get("estado") : "Pendiente";
         Tarea tarea = new Tarea(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, instrucciones, estado);
         actividad = tarea;
@@ -114,6 +114,11 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
         LearningPath lp = learningPathsCreados.get(learningPathID);
         if (lp != null) {
             lp.setActividades(actividad);
+        }
+        System.out.println("Actividad creada con éxito"+ actividad);
+        
+        if (actividades == null) {
+            actividades = new ArrayList<>();
         }
         actividades.add(actividad);
         actividad.setActividadPrevia(actividadPrevia);
