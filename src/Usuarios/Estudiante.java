@@ -100,8 +100,10 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         List<String> actividades = learningPathEstudiante.getActividadesID();
         Progreso progreso = crearProgreso(learningPathEstudiante, new Date(), new Date(), 0, "En Progreso");
         progresoLearningPath.put(learningPathEstudiante, progreso);
+        learningPathEstudiante.progresoEstudiante.put(this.usuarioID, progreso);
         Progreso progreso2 = crearProgreso(learningPath, new Date(), new Date(), 0, "En Progreso");
         progresoLearningPath.put(learningPath, progreso2);
+        learningPath.progresoEstudiante.put(this.usuarioID, progreso2);
 
         Map<String, String> map = new HashMap<>();
         map.put("Titulo Learning Path", learningPathEstudiante.getTitulo());

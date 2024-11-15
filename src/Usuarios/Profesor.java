@@ -13,6 +13,7 @@ import Actividades.Examen;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
 import Actividades.Pregunta;
 import LearningPaths.Feedback;
@@ -189,13 +190,18 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 	}
 
     // ver el progreso de un estudiante
-    public Map<String, String> verProgresoEstudiante(String estudianteID, String learningPathID) {
+    
+	public Map<String, String> verProgresoEstudiante(String estudianteID, String learningPathID) {
         LearningPath lp = learningPathsCreados.get(learningPathID);
+        System.out.println("Learning Path ID: " + learningPathID);
+        
         if (lp == null) {
             System.out.println("Learning Path not found: " + learningPathID);
             return new HashMap<>(); // Return an empty map or handle as needed
         }
+        System.out.println(lp.getTitulo());
         Progreso progreso = lp.obtenerProgresoEstudiante(estudianteID);
+        
         if (progreso == null) {
             System.out.println("Progreso not found for estudianteID: " + estudianteID);
             return new HashMap<>(); // Return an empty map or handle as needed
