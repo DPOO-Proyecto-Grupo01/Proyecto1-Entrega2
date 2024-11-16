@@ -251,7 +251,20 @@ class EstudianteTest {
     }
 
     /// Test completar actividad no perteneciente al learning path
+    @Test
+	void testCompletarActividadNoPertenece() {
+		assertThrows(ActividadNoPertenece.class, () -> {
+			estudiantePrueba.completarActividad("A111_U105", "LP106_U105");
+		});
+	}
     /// Test completar actividad ya completada
+    @Test 
+        void testCompletarActividadYaSeCompleto() {
+			assertThrows(YaSeCompleto.class, () -> {
+				estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
+				estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
+			});
+    }
 	@Test
 	void testCompletarActividadYaCompletada() throws Exception {
 	    Quiz actividad = new Quiz("A101", "Descripcion", "Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5, "A");
@@ -278,6 +291,12 @@ class EstudianteTest {
     }
     
     /// test de enviar feedback de un learning path no inscrito
+    @Test
+    void testEnviarFeedbackNoInscrito() {
+    	    assertThrows(LearningPathNoInscrito.class, () -> {
+        	estudiantePrueba.enviarFeedback("LP999", "Excelente curso", 5, "FB001");
+			});
+		}
 
     @Test
     void testObtenerRecomendacion() {
@@ -294,6 +313,12 @@ class EstudianteTest {
     }
     
   /// test de obtener progreso de un learning path no inscrito
+    @Test
+    void testGetProgresoLearningPathNoInscrito() {
+	    assertThrows(LearningPathNoInscrito.class, () -> {
+    	estudiantePrueba.getProgresoLearningPath("LP999_U105");
+    	            });
+	            }
 
     @Test
     void testActividadesDisponibles() throws LearningPathNoInscrito {
