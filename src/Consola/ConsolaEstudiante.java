@@ -19,6 +19,7 @@ import Perisistencia.PersistenciaLearningPaths;
 import Perisistencia.PersistenciaUsuarios;
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
+import Usuarios.Usuario;
 
 public class ConsolaEstudiante {
 	
@@ -30,11 +31,19 @@ public class ConsolaEstudiante {
     private static final String usuariosFile = "src/datos/users.json";
     private static final String actividadesFile = "src/datos/activities.json";
     private static final String learningPathsFile = "src/datos/learning_paths.json";
+    private static List<LearningPath> learningPaths;
+    private static Map<String, Profesor> profesores = new HashMap<>();
     
     private static int contador = 1;
     
     public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+    	cargarLearningPaths();
+    	cargarProfesores();
+    	cargarLpProfesoress();
         cargarEstudiantes();
+        for (Profesor profesor : profesores.values()) {
+            System.out.println("el profesor: "+ profesor.getUsuarioID()+"Tiene estos lps: " + profesor.getLearningPathsCreados());
+        }
         boolean authenticated = false;
 
         if (iniciarSesion() == 1) {
@@ -62,6 +71,7 @@ public class ConsolaEstudiante {
         }
     }
 
+
 	private static void cargarEstudiantes() {
         List<Estudiante> estudiantes;
 		try {
@@ -72,6 +82,37 @@ public class ConsolaEstudiante {
 		}
 		
     }
+	
+	public static void cargarLearningPaths() {
+		try {
+			learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	public static void cargarProfesores() {
+		List<Profesor> profesoresLista;
+		try {
+			profesoresLista = persistenciaUsuarios.cargarProfesores(usuariosFile);
+			for (Profesor profesor : profesoresLista) {
+				profesores.put(profesor.getUsuarioID(), profesor);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void cargarLpProfesoress() {
+		try {
+			persistenciaUsuarios.cargarLearningPathsProfesor(learningPaths, profesores);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static int iniciarSesion() {
         System.out.println("1. Iniciar Sesion");
@@ -165,11 +206,10 @@ public class ConsolaEstudiante {
 	private static void mostrarRecomendacionesYInscribirLearningPath() throws LearningPathNoInscrito {
 		
 		//Imprimir la lista de profesores no repetidos
-		List<Profesor> profesores= new ArrayList<Profesor>();
+
 		try {
-			profesores = persistenciaUsuarios.cargarProfesores(usuariosFile);
 			System.out.println("Lista de profesores: ");
-			for (Profesor profesor : profesores) {
+			for (Profesor profesor : profesores.values()) {
 				System.out.println(profesor.getUsuarioID());
 			}
 		} catch (Exception e) {
@@ -178,17 +218,20 @@ public class ConsolaEstudiante {
 		
 		System.out.print("Ingrese el ID del profesor al que desea inscribir: ");
         String profesorID = scanner.nextLine();
+       
         
-        
-		for (Profesor profesor : profesores) {
-			if (profesor.getUsuarioID().equals(profesorID)) {
+		for (String profesor : profesores.keySet()) {
+			if (profesor.equals(profesorID)) {
 				System.out.println("Profesor encontrado");
-				estudianteActual.inscribirProfesor(profesor, profesorID);
+				estudianteActual.inscribirProfesor(profesores.get(profesor), profesorID);
+				break;
 			}
 		}
-		Profesor profesor = estudianteActual.profesores.get(profesorID);
-        String intereses = estudianteActual.getIntereses();
-		String recomendaciones = estudianteActual.obtenerRecomendacion(profesorID, intereses);
+
+        System.out.print("Ingrese su intereses academicos: ");
+        String intereses = scanner.nextLine();
+        estudianteActual.setIntereses(intereses);
+		String recomendaciones = estudianteActual.obtenerRecomendacion(intereses, profesorID);
 		System.out.println(recomendaciones);
 		
 		System.out.print("Ingrese el ID del Learning Path al que desea inscribirse: ");
@@ -206,19 +249,19 @@ public class ConsolaEstudiante {
 		estudianteActual.completarActividad(learningPathID, actividadID);
 	}
 
-	private static void verProgresoLearningPath() {
+	private static void verProgresoLearningPath() throws LearningPathNoInscrito {
 		System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
 		String learningPathID = scanner.nextLine();
 		System.out.println(estudianteActual.getProgresoLearningPath(learningPathID));
 	}
 		
-	private static void verActividadesPorCompletar() {
+	private static void verActividadesPorCompletar() throws LearningPathNoInscrito {
 		System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
 		String learningPathID = scanner.nextLine();
 		System.out.println(estudianteActual.getProgresoLearningPath(learningPathID));
 	}
 
-	private static void enviarFeedback() {
+	private static void enviarFeedback() throws LearningPathNoInscrito {
 		System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
 		String learningPathID = scanner.nextLine();
 		System.out.println("Ingrese su feedback: ");

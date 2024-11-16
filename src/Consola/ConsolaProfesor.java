@@ -123,9 +123,10 @@ public class ConsolaProfesor {
     	
     	persistenciaUsuarios.salvarProfesor(usuariosFile, profesor.getUsuarioID(), profesor.getNombre(),
 				profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());	
+    	profesor.getProfesores().put(usuarioID, profesor);
     }
 
-    private static void menu() {
+    private static void menu() throws NombreRepetido {
         int option;
         do {
             System.out.println("---- Profesor Interface ----");
@@ -143,7 +144,7 @@ public class ConsolaProfesor {
         } while (option != 7);
     }
 
-    private static void handleOption(int option) {
+    private static void handleOption(int option) throws NombreRepetido {
         switch (option) {
             case 1 -> crearActividad();
             case 2 -> crearLearningPath();
@@ -157,7 +158,7 @@ public class ConsolaProfesor {
     }
 
 
-private static void crearActividad() {
+private static void crearActividad() throws NombreRepetido {
     System.out.println("Ingrese el tipo de actividad");
     System.out.println("1. Encuesta");
     System.out.println("2. Examen");
@@ -198,7 +199,7 @@ private static void crearActividad() {
         System.out.print("Reseñas: ");
         String resenas = scanner.nextLine();
         System.out.print("Calificación: ");
-        double calificacion = scanner.nextDouble();
+        int calificacion = scanner.nextInt();
         scanner.nextLine(); // Consume newline
         System.out.print("Resultado: ");
         double resultado = scanner.nextDouble();
@@ -218,11 +219,18 @@ private static void crearActividad() {
         List<String> preguntas = new ArrayList<>();
         String pregunta = scanner.nextLine();
         preguntas.add(pregunta);
+        
+        System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
+        String learningPathID = scanner.nextLine();
+        String tipo = "Encuesta";
+        
+        HashMap<String, Object>parametrosEspecificos = new HashMap<>();
+        parametrosEspecificos.put("Preguntas", preguntas);
 
-        Actividad actividad = new Encuesta(actividadID, descripcion, 
-                objetivo, nivelDificultad, duracionEsperada, esObligatoria, 
-                fecha, resenas, calificacion, resultado, actividadesPrevias, 
-                actividadesSeguimiento, preguntas);
+        Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
+                 duracionEsperada,  esObligatoria,  fecha,  resenas,
+                 resultado,  calificacion,  tipo,  learningPathID, actividadesPrevias, actividadesSeguimiento,
+                parametrosEspecificos, actividadPrevia);
 
         persistenciaActividades.salvarActividad(actividadesFile, actividad);
 

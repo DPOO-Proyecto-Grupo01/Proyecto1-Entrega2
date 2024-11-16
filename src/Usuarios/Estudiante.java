@@ -60,8 +60,11 @@ public class Estudiante extends Usuario {
 	
 	public String obtenerRecomendacion(String intereses, String profesorID) {
 		
+		System.out.println("mapa profesores; "+ profesores);
+		System.out.println(profesorID);
 		Profesor profesor = profesores.get(profesorID);
 		List<LearningPath> learningPaths = profesor.getLearningPathsCreados().values().stream().toList();
+		System.out.println("Learning Paths: " + learningPaths);
 		List<String> recomendaciones = new ArrayList<>();
 		for (LearningPath lp : learningPaths) {
 			if (lp.getIntereses().contains(intereses)) {

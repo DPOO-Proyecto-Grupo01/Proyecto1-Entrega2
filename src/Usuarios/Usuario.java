@@ -1,5 +1,6 @@
 package Usuarios;
 
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Usuario {
@@ -10,6 +11,7 @@ public abstract class Usuario {
 	private String tipoUsuario;
 	public static final String estudiante = "Estudiante";
 	public static final String profesor = "Profesor";
+	private static HashMap<String, Profesor> profesores = new HashMap<>();
 	
 	public Usuario (String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
 		this.usuarioID= UsuarioID;
@@ -18,6 +20,7 @@ public abstract class Usuario {
 		this.contraseña= contraseña;
 		this.tipoUsuario= tipoUsuario;
 	}
+	
 	
 	public String getTipoUsuario1() {
 		return this.tipoUsuario;
@@ -64,7 +67,10 @@ public abstract class Usuario {
 	public void anadirUsuario(List<Usuario> usuarios, Usuario usuario) {
 		usuarios.add(usuario);
     }
-		
+
+	public static HashMap<String, Profesor> getProfesores() {
+		return profesores;
+	}
 	
 	
 	

@@ -16,7 +16,6 @@ import Usuarios.Profesor;
 public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 	
 	public List<LearningPath> cargarLearningPath(String archivo) throws Exception {
-
 	   
 
 	    String jsonCompleto = new String(Files.readAllBytes(new File(archivo).toPath()));

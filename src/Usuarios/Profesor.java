@@ -36,6 +36,7 @@ public class Profesor extends Usuario {
         this.mapaActividades = new HashMap<>();
     }
 
+    
    
     @Override
     public String getTipoUsuario() {
@@ -126,7 +127,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     return actividad;
 	}
 }
-
+ 
 
 
 	public void CalificacionMinima(String actividadID, double calificacionMinima) {

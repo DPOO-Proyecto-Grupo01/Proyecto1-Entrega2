@@ -28,7 +28,7 @@ import Usuarios.Authenticator;
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
 import Usuarios.Usuario;
-
+ 
 public class Central {
 
 	public static List<LearningPath> learningPaths;

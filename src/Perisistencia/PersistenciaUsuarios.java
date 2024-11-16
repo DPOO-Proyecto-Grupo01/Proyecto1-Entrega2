@@ -5,13 +5,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
 
 
 import org.json.JSONObject;
+
+import LearningPaths.LearningPath;
+
 import org.json.JSONArray;
 
 import Usuarios.Estudiante;
@@ -22,6 +27,7 @@ import Usuarios.Usuario;
 
 public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
+    private static PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
 	
 	
 	public ArrayList<Estudiante> cargarEstudiantes(String archivo) throws Exception {
@@ -72,7 +78,9 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 					Usuario profesor = new Profesor(usuarioID1, nombre, contraseña, email,
 							tipoUsuario);
 					profesores.add((Profesor) profesor);
+					profesor.getProfesores().put(usuarioID1, (Profesor) profesor);
 				}
+				
 				
 			}
 		
@@ -137,7 +145,7 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 
             // Add the new object to the JSON array
             jsonArray.put(newObject);
-            
+          
 
             // Write the updated JSON array back to the file
             Files.write(Paths.get(archivo), jsonArray.toString().getBytes());
@@ -150,7 +158,25 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	}
 	
 	
-	
+	public void cargarLearningPathsProfesor(List<LearningPath> learningPaths, Map<String, Profesor> profesoresParametro ) throws Exception {
+		for (Profesor profesor : profesoresParametro.values()) {
+			Map<String, LearningPath> lpProfesorActual = new HashMap<>();
+			
+			for (LearningPath lp : learningPaths) {
+				
+				if (lp.getProfesorID().equals(profesor.getUsuarioID())){
+					System.out.println("El profesor: "+ profesor.getUsuarioID() + " tiene el learning path: "+ lp.getLearningPathID());
+					lpProfesorActual.put(lp.getLearningPathID(),lp);
+				}
+			
+			}
+			
+			profesor.setLearningPathsCreados(lpProfesorActual);
+
+		}
+		
+		
+	}
 	
 
 }
