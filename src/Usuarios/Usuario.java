@@ -11,7 +11,6 @@ public abstract class Usuario {
 	private String tipoUsuario;
 	public static final String estudiante = "Estudiante";
 	public static final String profesor = "Profesor";
-	private static HashMap<String, Profesor> profesores = new HashMap<>();
 	
 	public Usuario (String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
 		this.usuarioID= UsuarioID;
@@ -68,11 +67,6 @@ public abstract class Usuario {
 		usuarios.add(usuario);
     }
 
-	public static HashMap<String, Profesor> getProfesores() {
-		return profesores;
-	}
-	
-	
 	
 	
 	

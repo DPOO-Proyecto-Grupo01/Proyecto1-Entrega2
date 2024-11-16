@@ -78,7 +78,6 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 					Usuario profesor = new Profesor(usuarioID1, nombre, contraseña, email,
 							tipoUsuario);
 					profesores.add((Profesor) profesor);
-					profesor.getProfesores().put(usuarioID1, (Profesor) profesor);
 				}
 				
 				

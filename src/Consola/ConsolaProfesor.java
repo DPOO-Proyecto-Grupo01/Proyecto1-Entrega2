@@ -58,6 +58,7 @@ public class ConsolaProfesor {
                 if (authenticar()) {
                     registered = true;
                     menu();
+                    
                 } else {
                     System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
                 }
@@ -123,7 +124,6 @@ public class ConsolaProfesor {
     	
     	persistenciaUsuarios.salvarProfesor(usuariosFile, profesor.getUsuarioID(), profesor.getNombre(),
 				profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());	
-    	profesor.getProfesores().put(usuarioID, profesor);
     }
 
     private static void menu() throws NombreRepetido {
