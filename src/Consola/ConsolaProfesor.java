@@ -296,6 +296,10 @@ private static void crearActividad() throws NombreRepetido {
         Actividad actividad = new Examen(actividadID, descripcion, objetivo, nivelDificultad, 
                 duracionEsperada, esObligatoria, fecha, resenas, calificacion, resultado, 
                 actividadesPrevias, actividadesSeguimiento, preguntas, calificacionMinima);
+        
+		Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
+				duracionEsperada, esObligatoria, fecha, resenas, resultado, calificacion, tipo, learningPathID,
+				actividadesPrevias, actividadesSeguimiento, parametrosEspecificos, actividadPrevia);
 
         persistenciaActividades.salvarActividad(actividadesFile, actividad);
 
