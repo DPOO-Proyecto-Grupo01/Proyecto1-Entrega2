@@ -129,9 +129,7 @@ class EstudianteTest {
 		            date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento,
 		            atributosEspecificos, "A103");
 
-		    if (!actividades.contains(actividadCreada)) {
-		        persistenciaActividades.salvarActividad("actividades.json", actividadCreada);
-		    }
+		    
 		    
 		    Actividad actividadCreada1 = profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date,
 					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
