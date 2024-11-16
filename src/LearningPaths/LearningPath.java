@@ -244,6 +244,7 @@ public class LearningPath {
 	}
 	
 	public Progreso obtenerProgresoEstudiante(String estudianteID) {
+		System.out.print(progresoEstudiante);
 		return progresoEstudiante.get(estudianteID);
 		
 	}

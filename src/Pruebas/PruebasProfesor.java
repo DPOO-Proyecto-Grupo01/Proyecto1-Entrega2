@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,9 @@ import Usuarios.Usuario;
 class PruebasProfesor {
 	
 	private Profesor profesorPrueba;
+	private Estudiante estudiantePrueba;
+	private Estudiante estudiantePrueba2;
+	private LearningPath learningPathPrueba;
 	public static List<LearningPath> learningPaths;
 	public List<Feedback> feedback;
 	public List<Progreso> progreso;
@@ -98,6 +102,8 @@ class PruebasProfesor {
 		            "Estudiante");
 		    Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
 		    profesorPrueba=profesor;
+		    estudiantePrueba = estudiante;
+		    estudiantePrueba2=estudiante1;
 
 		    if (!estudiantes.contains(estudiante)) {
 		        estudiantes.add(estudiante);
@@ -120,6 +126,7 @@ class PruebasProfesor {
 
 		    LearningPath createdLearningPath = profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java",
 		            "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses);
+		    learningPathPrueba=createdLearningPath;
 		    if (!learningPaths.contains(createdLearningPath)) {
 		        learningPaths.add(createdLearningPath);
 		        persistenciaLearningPaths.salvarLearningPath(learningPathsFile, createdLearningPath.getLearningPathID(),
@@ -189,6 +196,9 @@ class PruebasProfesor {
 		    ArrayList<String> actividadesID2 = new ArrayList<>();
 		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 		        actividadesID2.add(actividad.getActividadID());
+		        
+	        estudiante.enviarFeedback("LP106", "Excelente curso", 5, "U105");
+			estudiante1.enviarFeedback("LP106", "Buen curso", 3, "U106");
 		        
 
 		    
@@ -570,6 +580,39 @@ class PruebasProfesor {
         assertEquals("Exitoso", recurso.getEstado());
     }
 	
+	 @Test
+	    void testVerProgresoEstudiante() {
+		    //Ver progreso del estudiante prueba 
+		 	System.out.println("Este es el progreso del estudiante");
+		 
+	        assertEquals(5, profesorPrueba.verProgresoEstudiante("U105", "LP106").size());
+	        
+	    }
+	 
+	 @Test
+	 void testverProgresoLearningPathNoExistente() {
+	     Map<String, String> progreso = profesorPrueba.verProgresoEstudiante("U105", "LP1");
+	     assertTrue(progreso.isEmpty(), "Expected an empty map for a non-existent Learning Path ID");
+	 }
+	 
+	 @Test
+		void testVerProgresoEstudianteNoExistente() {
+			Map<String, String> progreso = profesorPrueba.verProgresoEstudiante("U1", "LP106");
+			assertTrue(progreso.isEmpty(), "Expected an empty map for a non-existent Student ID");
+		}
+	 
+	 @Test
+	 void testRevisarFeedback() {
+		 
+	     assertEquals(2, profesorPrueba.revisarFeedback("LP106").size());
+	     
+	 }
+	 
+	 @Test
+	 void testCalcularRating() {
+		             assertEquals(4.0, profesorPrueba.calcularRating("LP106"));
+        
+	 }
 
 	
 }
