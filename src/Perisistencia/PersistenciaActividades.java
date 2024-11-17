@@ -125,7 +125,7 @@ public class PersistenciaActividades implements IpersistenciaActividades {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+ 
     }
 
     public void VIEJOsalvarActividad(String archivo, String actividadID, String descripcion, String objetivo, int nivelDificultad,

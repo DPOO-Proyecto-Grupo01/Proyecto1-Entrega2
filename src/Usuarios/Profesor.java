@@ -72,6 +72,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 	else {
     // Crea una actividad
     Actividad actividad = null;
+    System.out.println("Creando Recurso"+tipo);
     
     if (tipo.equals("Quiz")) {
         double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
@@ -96,11 +97,13 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
         actividad = encuesta;
 
     } else if (tipo.equals("Recurso Educativo")) {
+    	System.out.println("Creando recurso educativo");
         String tipoRecurso = parametrosEspecificos.get("tipoRecurso") != null ? (String) parametrosEspecificos.get("tipoRecurso") : "";
         String linkRecurso = parametrosEspecificos.get("linkRecurso") != null ? (String) parametrosEspecificos.get("linkRecurso") : "";
         RecursoEducativo recurso = new RecursoEducativo(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, tipoRecurso, linkRecurso);
         actividad = recurso;
+        System.out.println("Recurso creado con éxito"+ actividad);
 
     } else if (tipo.equals("Tarea")) {
         List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
@@ -113,10 +116,6 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
     
     if (actividad != null) {
         mapaActividades.put(actividadID, actividad);
-        LearningPath lp = learningPathsCreados.get(learningPathID);
-        if (lp != null) {
-            lp.setActividades(actividad);
-        }
         System.out.println("Actividad creada con éxito"+ actividad);
         
         if (actividades == null) {

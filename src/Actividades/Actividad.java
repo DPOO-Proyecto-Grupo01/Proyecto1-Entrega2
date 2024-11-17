@@ -28,7 +28,16 @@ public abstract class Actividad {
 	private Date fechainicio;
 	private Date fechafin;
 	private String actividadPrevia;
+	public String learningPathAlQuePertenece;
 
+
+	public String getLearningPathAlQuePertenece() {
+		return learningPathAlQuePertenece;
+	}
+
+	public void setLearningPathAlQuePertenece(String learningPathAlQuePertenece) {
+		this.learningPathAlQuePertenece = learningPathAlQuePertenece;
+	}
 
 	//TODO: MOVER TODOS LOS STRINGS A UNA CLASE DE CONSTANTES
     public static final String TAREA = "Tarea";

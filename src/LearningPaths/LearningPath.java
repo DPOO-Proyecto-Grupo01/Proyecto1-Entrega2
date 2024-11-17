@@ -34,7 +34,6 @@ public class LearningPath {
 	public static HashMap<String, LearningPath> learningPathsEstudiantes = new HashMap<>();
 	
 	
-	
 //////////////////////
 	
 	
@@ -179,8 +178,8 @@ public class LearningPath {
 	}
 
 
-	public void setActividades(Actividad actividad) {
-		this.actividades.put(actividad.getActividadID(), actividad);
+	public void setActividades(Map<String,Actividad> actividades) {
+		this.actividades=actividades;
 	}
 
 	public List<Feedback> getFeedback() {

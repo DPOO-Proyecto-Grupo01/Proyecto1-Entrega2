@@ -33,16 +33,19 @@ public class ConsolaEstudiante {
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     private static List<LearningPath> learningPaths;
     private static Map<String, Profesor> profesores = new HashMap<>();
+    private static List<Actividad> actividades;
     
     private static int contador = 1;
     
     public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+    	cargarActividades();
     	cargarLearningPaths();
     	cargarProfesores();
     	cargarLpProfesoress();
+    	cargarActividadesLP();
         cargarEstudiantes();
         for (Profesor profesor : profesores.values()) {
-            System.out.println("el profesor: "+ profesor.getUsuarioID()+"Tiene estos lps: " + profesor.getLearningPathsCreados());
+            System.out.println("el profesor: "+ profesor.getUsuarioID()+"Tiene estos lps: " + profesor.getLearningPathsCreados().keySet());
         }
         boolean authenticated = false;
 
@@ -105,9 +108,27 @@ public class ConsolaEstudiante {
 		}
 	}
 	
+	public static void cargarActividades() {
+		try {
+			actividades = persistenciaActividades.cargarActividades(actividadesFile);
+			System.out.println("Actividades cargadas correctamente"+ actividades.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void cargarLpProfesoress() {
 		try {
 			persistenciaUsuarios.cargarLearningPathsProfesor(learningPaths, profesores);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void cargarActividadesLP() {
+		try {
+			persistenciaLearningPaths.cargarActividadesDelLearningPath(actividades,learningPaths);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -246,7 +267,7 @@ public class ConsolaEstudiante {
 		System.out.print("Ingrese el ID de la actividad que desea completar: ");
 		String actividadID = scanner.nextLine();
 		
-		estudianteActual.completarActividad(learningPathID, actividadID);
+		estudianteActual.completarActividad( actividadID, learningPathID);
 	}
 
 	private static void verProgresoLearningPath() throws LearningPathNoInscrito {
@@ -258,7 +279,7 @@ public class ConsolaEstudiante {
 	private static void verActividadesPorCompletar() throws LearningPathNoInscrito {
 		System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
 		String learningPathID = scanner.nextLine();
-		System.out.println(estudianteActual.getProgresoLearningPath(learningPathID));
+		System.out.println(estudianteActual.actividadesDisponibles(learningPathID));
 	}
 
 	private static void enviarFeedback() throws LearningPathNoInscrito {

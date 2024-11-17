@@ -202,9 +202,8 @@ public class ConsolaProfesor {
             int calificacion = scanner.nextInt();
             scanner.nextLine(); // Consume newline
             System.out.print("Resultado: ");
-            double resultado = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
-
+            Double resultado = Double.parseDouble( scanner.nextLine());
+ 
             System.out.print("Actividades previas: ");
             List<String> actividadesPrevias = new ArrayList<>();
             String actividadPrevia = scanner.nextLine();
@@ -267,8 +266,8 @@ public class ConsolaProfesor {
             int calificacion = scanner.nextInt();
             scanner.nextLine(); // Consume newline
             System.out.print("Resultado: ");
-            double resultado = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
+            Double resultado = Double.parseDouble( scanner.nextLine());
+ 
 
             System.out.print("Actividades previas: ");
             List<String> actividadesPrevias = new ArrayList<>();
@@ -332,8 +331,8 @@ public class ConsolaProfesor {
             int calificacion = scanner.nextInt();
             scanner.nextLine(); // Consume newline
             System.out.print("Resultado: ");
-            double resultado = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
+            Double resultado = Double.parseDouble( scanner.nextLine());
+ 
 
             System.out.print("Actividades previas: ");
             List<String> actividadesPrevias = new ArrayList<>();
@@ -397,8 +396,8 @@ public class ConsolaProfesor {
             int calificacion = scanner.nextInt();
             scanner.nextLine(); // Consume newline
             System.out.print("Resultado: ");
-            double resultado = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
+            Double resultado = Double.parseDouble( scanner.nextLine());
+ 
 
             System.out.print("Actividades previas: ");
             List<String> actividadesPrevias = new ArrayList<>();
@@ -410,22 +409,27 @@ public class ConsolaProfesor {
             String actividadSeguimiento = scanner.nextLine();
             actividadesSeguimiento.add(actividadSeguimiento);
 
-            System.out.print("Preguntas: ");
-            List<String> preguntas = new ArrayList<>();
-            String pregunta = scanner.nextLine();
-            preguntas.add(pregunta);
+            System.out.print("Ingrese el  link: ");
+            String link = scanner.nextLine();
+            
+            System.out.print("Ingrese el  tipo de recurso: ");
+            String tipoRec = scanner.nextLine();
+
 
             System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
             String learningPathID = scanner.nextLine();
-            String tipo = "Recurso educativo";
+            String tipo = "Recurso Educativo";
 
             HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-            parametrosEspecificos.put("Preguntas", preguntas);
+            parametrosEspecificos.put("Link", link);
+            parametrosEspecificos.put("Tipo de recurso", tipoRec);
 
             Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
                      duracionEsperada, esObligatoria, fecha, resenas,
                      resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
                     parametrosEspecificos, actividadPrevia);
+            
+            System.out.println("Actividad creada "+ actividad);
 
             persistenciaActividades.salvarActividad(actividadesFile, actividad);
 
@@ -462,8 +466,8 @@ public class ConsolaProfesor {
             int calificacion = scanner.nextInt();
             scanner.nextLine(); // Consume newline
             System.out.print("Resultado: ");
-            double resultado = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
+            Double resultado = Double.parseDouble( scanner.nextLine());
+ 
 
             System.out.print("Actividades previas: ");
             List<String> actividadesPrevias = new ArrayList<>();
@@ -533,6 +537,7 @@ private static void crearLearningPath() {
             titulo, descripcion, objetivos, nivelDificultad, duracion, profesorID,
             actividadesID, intereses);
 }
+ 
 
 
     private static void revisarEstadoActividad() {

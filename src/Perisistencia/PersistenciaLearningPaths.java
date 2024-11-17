@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Actividades.Actividad;
 import LearningPaths.LearningPath;
 import Usuarios.Profesor;
 
@@ -81,6 +84,24 @@ public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 			e.printStackTrace();
 		}  
         
+	}
+	
+	public void cargarActividadesDelLearningPath(List<Actividad> actividades, List<LearningPath> learningpaths) {
+		for (LearningPath lp: learningpaths) {
+			Map<String, Actividad> ActividadeslpActual = new HashMap<>();
+			
+			for (Actividad actividad : actividades) {
+				for (String id : lp.getActividadesID()) {
+					if (actividad.getActividadID().equals(id)) {
+						ActividadeslpActual.put(actividad.getActividadID(), actividad);
+					}
+				}
+			
+			}
+			
+			lp.setActividades(ActividadeslpActual);
+
+		}
 	}
 
 }

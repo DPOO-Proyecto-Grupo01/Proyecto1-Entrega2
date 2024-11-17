@@ -27,8 +27,6 @@ import Usuarios.Usuario;
 
 public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
-    private static PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
-	
 	
 	public ArrayList<Estudiante> cargarEstudiantes(String archivo) throws Exception {
 		
@@ -164,7 +162,6 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 			for (LearningPath lp : learningPaths) {
 				
 				if (lp.getProfesorID().equals(profesor.getUsuarioID())){
-					System.out.println("El profesor: "+ profesor.getUsuarioID() + " tiene el learning path: "+ lp.getLearningPathID());
 					lpProfesorActual.put(lp.getLearningPathID(),lp);
 				}
 			
