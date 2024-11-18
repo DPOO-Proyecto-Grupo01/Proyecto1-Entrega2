@@ -22,8 +22,7 @@ public class Tarea extends Actividad {
 
 		this.estado = estado;
 		this.instrucciones = instrucciones;
-		this.preguntas = preguntas;
-		
+		this.preguntas = preguntas;	
 
 	}
 	
