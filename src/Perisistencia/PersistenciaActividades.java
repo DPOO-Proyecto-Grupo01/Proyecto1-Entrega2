@@ -147,9 +147,9 @@ public class PersistenciaActividades implements IpersistenciaActividades {
             jsonArray.put(object);
             Files.write(Paths.get(archivo), jsonArray.toString().getBytes());
         } catch (IOException e) {
+        	System.out.println("Error al guardar actividad: " + actividad);
             throw new RuntimeException(e);
         }
- 
     }
 
     public void VIEJOsalvarActividad(String archivo, String actividadID, String descripcion, String objetivo, int nivelDificultad,

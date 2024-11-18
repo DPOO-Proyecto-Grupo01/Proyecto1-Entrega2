@@ -34,7 +34,7 @@ public class ConsolaProfesor {
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     
     
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception { 
         cargarProfesores();
         boolean authenticated = false;
         
@@ -771,7 +771,7 @@ public class ConsolaProfesor {
 		        resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
 		        parametrosEspecificos, actividadPrevia);
 		
-		System.out.println("Actividad creada " + actividad);
+
 		
 		persistenciaActividades.salvarActividad(actividadesFile, actividad);
 		
@@ -924,7 +924,6 @@ public class ConsolaProfesor {
                      resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
                     parametrosEspecificos, actividadPrevia);
             
-
             persistenciaActividades.salvarActividad(actividadesFile, actividad);
 
         } else {

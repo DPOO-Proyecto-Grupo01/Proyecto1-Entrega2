@@ -72,11 +72,11 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 	else {
     // Crea una actividad
     Actividad actividad = null;
-    System.out.println("Creando Recurso"+tipo);
     
     if (tipo.equals("Quiz")) {
         double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
-        List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
+        @SuppressWarnings("unchecked")
+		List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
         String respuestaCorrecta = parametrosEspecificos.get("RespuestaCorrecta") != null ? (String) parametrosEspecificos.get("RespuestaCorrecta") : "";
         Quiz quiz = new Quiz(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia,
@@ -85,33 +85,35 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 
     } else if (tipo.equals("Examen")) {
         double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
-        List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
+        @SuppressWarnings("unchecked")
+		List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
         Examen examen = new Examen(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, calificacionMinima);
         actividad = examen;
 
     } else if (tipo.equals("Encuesta")) {
-        List<String> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<String>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
+        @SuppressWarnings("unchecked")
+		List<String> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<String>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
         Encuesta encuesta = new Encuesta(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas);
         actividad = encuesta;
 
     } else if (tipo.equals("Recurso Educativo")) {
-    	System.out.println("Creando recurso educativo");
         String tipoRecurso = parametrosEspecificos.get("tipoRecurso") != null ? (String) parametrosEspecificos.get("tipoRecurso") : "";
         String linkRecurso = parametrosEspecificos.get("linkRecurso") != null ? (String) parametrosEspecificos.get("linkRecurso") : "";
         RecursoEducativo recurso = new RecursoEducativo(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, tipoRecurso, linkRecurso);
         actividad = recurso;
-        System.out.println("Recurso creado con éxito"+ actividad);
-
-    } else if (tipo.equals("Tarea")) {
-        List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
+        
+    } else if (tipo.equals("Tarea")) { 
+        @SuppressWarnings("unchecked")
+		List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
         String instrucciones = parametrosEspecificos.get("instrucciones") != null ? (String) parametrosEspecificos.get("instrucciones") : "";
         String estado = parametrosEspecificos.get("estado") != null ? (String) parametrosEspecificos.get("estado") : "Pendiente";
         Tarea tarea = new Tarea(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
                 esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, instrucciones, estado);
         actividad = tarea;
+
     }
     
     if (actividad != null) {
