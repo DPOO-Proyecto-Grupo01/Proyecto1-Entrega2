@@ -34,13 +34,16 @@ public class PersistenciaActividades implements IpersistenciaActividades {
             boolean esObligatoria = actividad.getBoolean("esObligatoria");
             // Convertir la fecha de string a date, si es 
 
-			String fechaLimite2 = null;
-			if (actividad.has("fechaLimite2")) {
-				fechaLimite2 = actividad.getString("fechaLimite2");
-			} else if (actividad.has("fechaLimite")) {
-				fechaLimite2 = actividad.getString("fechaLimite");
-			}
-
+            String fechaLimite2 = null;
+            if (actividad.has("fechaLimite2") && actividad.get("fechaLimite2") instanceof Number) {
+                fechaLimite2 = String.valueOf(actividad.getLong("fechaLimite2"));
+            } else if (actividad.has("fechaLimite") && actividad.get("fechaLimite") instanceof Number) {
+                fechaLimite2 = String.valueOf(actividad.getLong("fechaLimite"));
+            } else if (actividad.has("fechaLimite2")) {
+                fechaLimite2 = actividad.getString("fechaLimite2");
+            } else if (actividad.has("fechaLimite")) {
+                fechaLimite2 = actividad.getString("fechaLimite");
+            }
 			Date fechaLimite = null;
 			try {
 				

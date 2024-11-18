@@ -291,10 +291,31 @@ public class ConsolaProfesor {
 		String actividadSeguimiento = scanner.nextLine();
 		actividadesSeguimiento.add(actividadSeguimiento);
 		
-		System.out.print("Preguntas: ");
-		List<String> preguntas = new ArrayList<>();
-		String pregunta = scanner.nextLine();
-		preguntas.add(pregunta);
+		System.out.print("Preguntas: \n");
+		
+		List<Pregunta> preguntas = new ArrayList<>();
+		boolean moreQuestions = true;
+		while (moreQuestions) {
+		    System.out.print("Ingrese la pregunta: ");
+		    String preguntaID = scanner.nextLine();
+		    List<String> opciones = new ArrayList<>();
+		    boolean moreOptions = true;
+		    while (moreOptions) {
+		        System.out.print("Ingrese una opción (o 'fin' para terminar): ");
+		        String opcion1 = scanner.nextLine();
+		        if (opcion1.equalsIgnoreCase("fin")) {
+		            moreOptions = false;
+		        } else {
+		            opciones.add(opcion1);
+		        }
+		    }
+		    preguntas.add(new Pregunta(preguntaID, opciones));
+		    System.out.print("¿Desea agregar otra pregunta? (si/no): ");
+		    String respuesta = scanner.nextLine();
+		    if (respuesta.equalsIgnoreCase("no")) {
+		        moreQuestions = false;
+		    }
+		}
 		
 		System.out.print("Estos son los learningPaths disponibles: ");
 		System.out.println("\n");
@@ -302,7 +323,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
-		System.out.print("Learning Path ID: ");
+		System.out.println("\nIngrese el ID del learning Path al que quiere que pertenezca la actividad: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Encuesta";
 		
@@ -423,10 +444,31 @@ public class ConsolaProfesor {
 		String actividadSeguimiento = scanner.nextLine();
 		actividadesSeguimiento.add(actividadSeguimiento);
 		
-		System.out.print("Preguntas: ");
-		List<String> preguntas = new ArrayList<>();
-		String pregunta = scanner.nextLine();
-		preguntas.add(pregunta);
+		System.out.print("Preguntas: \n");
+		
+		List<Pregunta> preguntas = new ArrayList<>();
+		boolean moreQuestions = true;
+		while (moreQuestions) {
+		    System.out.print("Ingrese la pregunta: ");
+		    String preguntaID = scanner.nextLine();
+		    List<String> opciones = new ArrayList<>();
+		    boolean moreOptions = true;
+		    while (moreOptions) {
+		        System.out.print("Ingrese una opción (o 'fin' para terminar): ");
+		        String opcion1 = scanner.nextLine();
+		        if (opcion1.equalsIgnoreCase("fin")) {
+		            moreOptions = false;
+		        } else {
+		            opciones.add(opcion1);
+		        }
+		    }
+		    preguntas.add(new Pregunta(preguntaID, opciones));
+		    System.out.print("¿Desea agregar otra pregunta? (si/no): ");
+		    String respuesta = scanner.nextLine();
+		    if (respuesta.equalsIgnoreCase("no")) {
+		        moreQuestions = false;
+		    }
+		}
 		
 		System.out.print("Estos son los learningPaths disponibles: ");
 		System.out.println("\n");
@@ -434,7 +476,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
-		System.out.print("Learning Path ID: ");
+		System.out.println("\nIngrese el ID del learning Path al que quiere que pertenezca la actividad: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Examen";
 		
@@ -553,10 +595,31 @@ public class ConsolaProfesor {
 		String actividadSeguimiento = scanner.nextLine();
 		actividadesSeguimiento.add(actividadSeguimiento);
 		
-		System.out.print("Preguntas: ");
-		List<String> preguntas = new ArrayList<>();
-		String pregunta = scanner.nextLine();
-		preguntas.add(pregunta);
+		System.out.print("Preguntas: \n");
+		
+		List<Pregunta> preguntas = new ArrayList<>();
+		boolean moreQuestions = true;
+		while (moreQuestions) {
+		    System.out.print("Ingrese la pregunta: ");
+		    String preguntaID = scanner.nextLine();
+		    List<String> opciones = new ArrayList<>();
+		    boolean moreOptions = true;
+		    while (moreOptions) {
+		        System.out.print("Ingrese una opción (o 'fin' para terminar): ");
+		        String opcion1 = scanner.nextLine();
+		        if (opcion1.equalsIgnoreCase("fin")) {
+		            moreOptions = false;
+		        } else {
+		            opciones.add(opcion1);
+		        }
+		    }
+		    preguntas.add(new Pregunta(preguntaID, opciones));
+		    System.out.print("¿Desea agregar otra pregunta? (si/no): ");
+		    String respuesta = scanner.nextLine();
+		    if (respuesta.equalsIgnoreCase("no")) {
+		        moreQuestions = false;
+		    }
+		}
 		
 		System.out.print("Estos son los learningPaths disponibles: ");
 		System.out.println("\n");
@@ -564,7 +627,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
-		System.out.print("Learning Path ID: ");
+		System.out.println("\nIngrese el ID del learning Path al que quiere que pertenezca la actividad: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Quiz";
 		
@@ -695,7 +758,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
-		System.out.print("Learning Path ID: ");
+		System.out.print("\nLearning Path ID: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Recurso Educativo";
 		
@@ -817,10 +880,31 @@ public class ConsolaProfesor {
 		String actividadSeguimiento = scanner.nextLine();
 		actividadesSeguimiento.add(actividadSeguimiento);
 		
-		System.out.print("Preguntas: ");
-		List<String> preguntas = new ArrayList<>();
-		String pregunta = scanner.nextLine();
-		preguntas.add(pregunta);
+		System.out.print("Preguntas: \n");
+		
+		List<Pregunta> preguntas = new ArrayList<>();
+		boolean moreQuestions = true;
+		while (moreQuestions) {
+		    System.out.print("Ingrese la pregunta: ");
+		    String preguntaID = scanner.nextLine();
+		    List<String> opciones = new ArrayList<>();
+		    boolean moreOptions = true;
+		    while (moreOptions) {
+		        System.out.print("Ingrese una opción (o 'fin' para terminar): ");
+		        String opcion1 = scanner.nextLine();
+		        if (opcion1.equalsIgnoreCase("fin")) {
+		            moreOptions = false;
+		        } else {
+		            opciones.add(opcion1);
+		        }
+		    }
+		    preguntas.add(new Pregunta(preguntaID, opciones));
+		    System.out.print("¿Desea agregar otra pregunta? (si/no): ");
+		    String respuesta = scanner.nextLine();
+		    if (respuesta.equalsIgnoreCase("no")) {
+		        moreQuestions = false;
+		    }
+		}
 		
 		System.out.print("Estos son los learningPaths disponibles: ");
 		System.out.println("\n");
@@ -828,7 +912,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
-		System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
+		System.out.println("\nIngrese el ID del learning Path al que quiere que pertenezca la actividad: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Tarea";
 
