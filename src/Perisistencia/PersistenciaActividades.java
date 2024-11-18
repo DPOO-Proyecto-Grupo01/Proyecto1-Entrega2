@@ -41,12 +41,17 @@ public class PersistenciaActividades implements IpersistenciaActividades {
 				fechaLimite2 = actividad.getString("fechaLimite");
 			}
 
-			
+			Date fechaLimite = null;
+			try {
+				
+				long fechaLimiteMillis = Long.parseLong(fechaLimite2);
+				fechaLimite = new Date(fechaLimiteMillis);
+			} catch (NumberFormatException e) {
+				
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-				LocalDateTime fechaLimiteD = LocalDateTime.parse(fechaLimite2, formatter); // Parsear la fecha
-				Date fechaLimite1 = Date.from(fechaLimiteD.atZone(ZoneId.systemDefault()).toInstant());
-			
-			Date fechaLimite = fechaLimite1;
+				LocalDateTime fechaLimiteD = LocalDateTime.parse(fechaLimite2, formatter); 
+				fechaLimite = Date.from(fechaLimiteD.atZone(ZoneId.systemDefault()).toInstant());
+			}
 			
 
             String resenas = actividad.get("resenas").toString();

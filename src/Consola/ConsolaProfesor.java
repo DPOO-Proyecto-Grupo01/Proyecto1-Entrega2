@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.InputMismatchException;
+
 import Usuarios.Profesor;
 import LearningPaths.LearningPath;
 import Actividades.Actividad;
@@ -35,7 +37,8 @@ public class ConsolaProfesor {
     public static void main(String[] args) throws Exception {
         cargarProfesores();
         boolean authenticated = false;
-
+        
+        
         if (iniciarSesion() == 1) {
             while (!authenticated) {
                 if (authenticar()) {
@@ -74,11 +77,21 @@ public class ConsolaProfesor {
     }
     
     private static int iniciarSesion() {
-        System.out.println("1. Iniciar Sesion");
-        System.out.println("2. Registrarse");
-        System.out.print("Seleccione una opción: ");
-        int opcion = scanner.nextInt();
-        scanner.nextLine(); 
+        int opcion = 0;
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                System.out.println("1. Iniciar Sesion");
+                System.out.println("2. Registrarse");
+                System.out.print("Seleccione una opción: ");
+                opcion = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, ingrese un número válido.");
+                scanner.nextLine(); // Clear the invalid input
+            }
+        }
         return opcion;
     }
 
@@ -289,6 +302,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
+		System.out.print("Learning Path ID: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Encuesta";
 		
@@ -420,6 +434,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
+		System.out.print("Learning Path ID: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Examen";
 		
@@ -549,6 +564,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
+		System.out.print("Learning Path ID: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Quiz";
 		
@@ -679,6 +695,7 @@ public class ConsolaProfesor {
 		for (LearningPath learningPath : learningPaths) {
 		    System.out.println(learningPath.getLearningPathID());
 		}
+		System.out.print("Learning Path ID: ");
 		String learningPathID = scanner.nextLine();
 		String tipo = "Recurso Educativo";
 		
@@ -822,6 +839,7 @@ public class ConsolaProfesor {
                      duracionEsperada, esObligatoria, fecha, resenas,
                      resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
                     parametrosEspecificos, actividadPrevia);
+            
 
             persistenciaActividades.salvarActividad(actividadesFile, actividad);
 
