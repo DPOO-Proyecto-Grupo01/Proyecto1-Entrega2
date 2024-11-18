@@ -240,6 +240,7 @@ public class LearningPath {
 	
 		return porcentajeExitosas;
 		
+		
 	}
 	
 	public Progreso obtenerProgresoEstudiante(String estudianteID) {

@@ -19,10 +19,6 @@ import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
-import Exceptions.ActividadNoPertenece;
-import Exceptions.LearningPathNoInscrito;
-import Exceptions.NombreRepetido;
-import Exceptions.YaSeCompleto;
 
 public class ConsolaProfesor {
     
@@ -36,7 +32,7 @@ public class ConsolaProfesor {
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     
     
-    public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+    public static void main(String[] args) throws Exception {
         cargarProfesores();
         boolean authenticated = false;
 
@@ -126,9 +122,10 @@ public class ConsolaProfesor {
 				profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());	
     }
 
-    private static void menu() throws NombreRepetido {
+    private static void menu() throws Exception {
         int option;
         do {
+        	System.out.println("\n");
             System.out.println("---- Profesor Interface ----");
             System.out.println("1. Crear Actividad");
             System.out.println("2. Crear Learning Path");
@@ -137,6 +134,8 @@ public class ConsolaProfesor {
             System.out.println("5. Revisar Feedback");
             System.out.println("6. Calcular Rating");
             System.out.println("7. Salir");
+            System.out.println("---------------------------");
+            System.out.println("\n");
             System.out.print("Seleccione una opción: ");
             option = scanner.nextInt();
             scanner.nextLine(); 
@@ -144,7 +143,7 @@ public class ConsolaProfesor {
         } while (option != 7);
     }
 
-    private static void handleOption(int option) throws NombreRepetido {
+    private static void handleOption(int option) throws Exception {
         switch (option) {
             case 1 -> crearActividad();
             case 2 -> crearLearningPath();
@@ -158,335 +157,663 @@ public class ConsolaProfesor {
     }
 
 
-    private static void crearActividad() throws NombreRepetido {
+    private static void crearActividad() throws Exception {
         System.out.println("Ingrese el tipo de actividad");
         System.out.println("1. Encuesta");
         System.out.println("2. Examen");
         System.out.println("3. Quiz");
         System.out.println("4. Recurso educativo");
         System.out.println("5. Tarea");
+        System.out.println("\n");
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
         if (opcion == 1) {
-            System.out.print("ID de la Actividad: ");
-            String actividadID = scanner.nextLine();
-            System.out.print("Descripción: ");
-            String descripcion = scanner.nextLine();
-            System.out.print("Objetivo: ");
-            String objetivo = scanner.nextLine();
-            System.out.print("Nivel de dificultad: ");
-            int nivelDificultad = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Duración esperada: ");
-            int duracionEsperada = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Es obligatoria: ");
-            boolean esObligatoria = scanner.nextBoolean();
-            scanner.nextLine(); // Consume newline
 
-            System.out.print("Fecha límite: ");
-            String fechaLimite = scanner.nextLine();
-
-            Date fecha = new Date();
-            try {
-                fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            System.out.print("Reseñas: ");
-            String resenas = scanner.nextLine();
-            System.out.print("Calificación: ");
-            int calificacion = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Resultado: ");
-            Double resultado = Double.parseDouble( scanner.nextLine());
- 
-            System.out.print("Actividades previas: ");
-            List<String> actividadesPrevias = new ArrayList<>();
-            String actividadPrevia = scanner.nextLine();
-            actividadesPrevias.add(actividadPrevia);
-
-            System.out.print("Actividades de seguimiento: ");
-            List<String> actividadesSeguimiento = new ArrayList<>();
-            String actividadSeguimiento = scanner.nextLine();
-            actividadesSeguimiento.add(actividadSeguimiento);
-
-            System.out.print("Preguntas: ");
-            List<String> preguntas = new ArrayList<>();
-            String pregunta = scanner.nextLine();
-            preguntas.add(pregunta);
-
-            System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
-            String learningPathID = scanner.nextLine();
-            String tipo = "Encuesta";
-
-            HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-            parametrosEspecificos.put("Preguntas", preguntas);
-
-            Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
-                     duracionEsperada, esObligatoria, fecha, resenas,
-                     resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
-                    parametrosEspecificos, actividadPrevia);
-
-            persistenciaActividades.salvarActividad(actividadesFile, actividad);
-
-        } else if (opcion == 2) {
-            System.out.print("ID de la Actividad: ");
-            String actividadID = scanner.nextLine();
-            System.out.print("Descripción: ");
-            String descripcion = scanner.nextLine();
-            System.out.print("Objetivo: ");
-            String objetivo = scanner.nextLine();
-            System.out.print("Nivel de dificultad: ");
-            int nivelDificultad = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Duración esperada: ");
-            int duracionEsperada = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Es obligatoria: ");
-            boolean esObligatoria = scanner.nextBoolean();
-            scanner.nextLine(); // Consume newline
-
-            System.out.print("Fecha límite: ");
-            String fechaLimite = scanner.nextLine();
-
-            Date fecha = new Date();
-            try {
-                fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            System.out.print("Reseñas: ");
-            String resenas = scanner.nextLine();
-            System.out.print("Calificación: ");
-            int calificacion = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Resultado: ");
-            Double resultado = Double.parseDouble( scanner.nextLine());
- 
-
-            System.out.print("Actividades previas: ");
-            List<String> actividadesPrevias = new ArrayList<>();
-            String actividadPrevia = scanner.nextLine();
-            actividadesPrevias.add(actividadPrevia);
-
-            System.out.print("Actividades de seguimiento: ");
-            List<String> actividadesSeguimiento = new ArrayList<>();
-            String actividadSeguimiento = scanner.nextLine();
-            actividadesSeguimiento.add(actividadSeguimiento);
-
-            System.out.print("Preguntas: ");
-            List<String> preguntas = new ArrayList<>();
-            String pregunta = scanner.nextLine();
-            preguntas.add(pregunta);
-
-            System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
-            String learningPathID = scanner.nextLine();
-            String tipo = "Examen";
-
-            HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-            parametrosEspecificos.put("Preguntas", preguntas);
-
-            Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
-                     duracionEsperada, esObligatoria, fecha, resenas,
-                     resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
-                    parametrosEspecificos, actividadPrevia);
-
-            persistenciaActividades.salvarActividad(actividadesFile, actividad);
-
-        } else if (opcion == 3) {
-            System.out.print("ID de la Actividad: ");
-            String actividadID = scanner.nextLine();
-            System.out.print("Descripción: ");
-            String descripcion = scanner.nextLine();
-            System.out.print("Objetivo: ");
-            String objetivo = scanner.nextLine();
-            System.out.print("Nivel de dificultad: ");
-            int nivelDificultad = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Duración esperada: ");
-            int duracionEsperada = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Es obligatoria: ");
-            boolean esObligatoria = scanner.nextBoolean();
-            scanner.nextLine(); // Consume newline
-
-            System.out.print("Fecha límite: ");
-            String fechaLimite = scanner.nextLine();
-
-            Date fecha = new Date();
-            try {
-                fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            System.out.print("Reseñas: ");
-            String resenas = scanner.nextLine();
-            System.out.print("Calificación: ");
-            int calificacion = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Resultado: ");
-            Double resultado = Double.parseDouble( scanner.nextLine());
- 
-
-            System.out.print("Actividades previas: ");
-            List<String> actividadesPrevias = new ArrayList<>();
-            String actividadPrevia = scanner.nextLine();
-            actividadesPrevias.add(actividadPrevia);
-
-            System.out.print("Actividades de seguimiento: ");
-            List<String> actividadesSeguimiento = new ArrayList<>();
-            String actividadSeguimiento = scanner.nextLine();
-            actividadesSeguimiento.add(actividadSeguimiento);
-
-            System.out.print("Preguntas: ");
-            List<String> preguntas = new ArrayList<>();
-            String pregunta = scanner.nextLine();
-            preguntas.add(pregunta);
-
-            System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
-            String learningPathID = scanner.nextLine();
-            String tipo = "Quiz";
-
-            HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-            parametrosEspecificos.put("Preguntas", preguntas);
-
-            Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
-                     duracionEsperada, esObligatoria, fecha, resenas,
-                     resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
-                    parametrosEspecificos, actividadPrevia);
-
-            persistenciaActividades.salvarActividad(actividadesFile, actividad);
-
-        } else if (opcion == 4) {
-            System.out.print("ID de la Actividad: ");
-            String actividadID = scanner.nextLine();
-            System.out.print("Descripción: ");
-            String descripcion = scanner.nextLine();
-            System.out.print("Objetivo: ");
-            String objetivo = scanner.nextLine();
-            System.out.print("Nivel de dificultad: ");
-            int nivelDificultad = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Duración esperada: ");
-            int duracionEsperada = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Es obligatoria: ");
-            boolean esObligatoria = scanner.nextBoolean();
-            scanner.nextLine(); // Consume newline
-
-            System.out.print("Fecha límite: ");
-            String fechaLimite = scanner.nextLine();
-
-            Date fecha = new Date();
-            try {
-                fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            System.out.print("Reseñas: ");
-            String resenas = scanner.nextLine();
-            System.out.print("Calificación: ");
-            int calificacion = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Resultado: ");
-            Double resultado = Double.parseDouble( scanner.nextLine());
- 
-
-            System.out.print("Actividades previas: ");
-            List<String> actividadesPrevias = new ArrayList<>();
-            String actividadPrevia = scanner.nextLine();
-            actividadesPrevias.add(actividadPrevia);
-
-            System.out.print("Actividades de seguimiento: ");
-            List<String> actividadesSeguimiento = new ArrayList<>();
-            String actividadSeguimiento = scanner.nextLine();
-            actividadesSeguimiento.add(actividadSeguimiento);
-
-            System.out.print("Ingrese el  link: ");
-            String link = scanner.nextLine();
-            
-            System.out.print("Ingrese el  tipo de recurso: ");
-            String tipoRec = scanner.nextLine();
+		System.out.print("ID de la Actividad: ");
+		String actividadID = "";
+		while (actividadID.isEmpty()) {
+		    actividadID = scanner.nextLine();
+		    if (actividadID.isEmpty()) {
+		        System.out.println("Por favor, ingrese un ID de actividad válido.");
+		    }
+		}
+		
+		System.out.print("Descripción: ");
+		String descripcion = "";
+		while (descripcion.isEmpty()) {
+		    descripcion = scanner.nextLine();
+		    if (descripcion.isEmpty()) {
+		        System.out.println("Por favor, ingrese una descripción válida.");
+		    }
+		}
+		
+		System.out.print("Objetivo: ");
+		String objetivo = "";
+		while (objetivo.isEmpty()) {
+		    objetivo = scanner.nextLine();
+		    if (objetivo.isEmpty()) {
+		        System.out.println("Por favor, ingrese un objetivo válido.");
+		    }
+		}
+		
+		int nivelDificultad = -1;
+		while (nivelDificultad < 0 || nivelDificultad > 10) {
+		    System.out.print("Nivel de dificultad, indique un numero entre 0 y 10: ");
+		    try {
+		        nivelDificultad = Integer.parseInt(scanner.nextLine());
+		    } catch (NumberFormatException e) {
+		        System.out.println("Por favor, ingrese un número válido entre 0 y 10.");
+		    }
+		}
+		
+		int duracionEsperada = -1;
+		while (duracionEsperada < 0) {
+		    System.out.print("Duración esperada, indique los minutos esperados: ");
+		    try {
+		        duracionEsperada = Integer.parseInt(scanner.nextLine());
+		    } catch (NumberFormatException e) {
+		        System.out.println("Por favor, ingrese un número válido para la duración esperada.");
+		    }
+		}
+		
+		boolean esObligatoria = false;
+		boolean validInput = false;
+		while (!validInput) {
+		    System.out.print("Es obligatoria, Ingrese True or False: ");
+		    String input = scanner.nextLine();
+		    if (input.equalsIgnoreCase("true") || input.equalsIgnoreCase("false")) {
+		        esObligatoria = Boolean.parseBoolean(input);
+		        validInput = true;
+		    } else {
+		        System.out.println("Por favor, ingrese 'True' o 'False'.");
+		    }
+		}
+		
+		String fechaLimite = "";
+		Date fecha = new Date();
+		long fechaLimiteMillis = 0;
+		while (fechaLimiteMillis == 0) {
+		    System.out.print("Fecha límite - dd/MM/yyyy: ");
+		    fechaLimite = scanner.nextLine();
+		    try {
+		        fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
+		        fechaLimiteMillis = fecha.getTime();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese una fecha válida en el formato dd/MM/yyyy.");
+		    }
+		}
+		
+		System.out.print("Reseñas: ");
+		String resenas = scanner.nextLine();
+		
+		int calificacion = -1;
+		while (calificacion < 0) {
+		    System.out.print("Calificación, ingrese la calificacion esperada: ");
+		    try {
+		        calificacion = Integer.parseInt(scanner.nextLine());
+		    } catch (NumberFormatException e) {
+		        System.out.println("Por favor, ingrese un número válido para la calificación.");
+		    }
+		}
+		
+		Double resultado = null;
+		while (resultado == null) {
+		    System.out.print("Resultado, ingrese el resultado: ");
+		    try {
+		        resultado = Double.parseDouble(scanner.nextLine());
+		    } catch (NumberFormatException e) {
+		        System.out.println("Por favor, ingrese un número válido para el resultado.");
+		    }
+		}
+		
+		System.out.print("Actividades previas, ingrese id separado por coma: ");
+		List<String> actividadesPrevias = new ArrayList<>();
+		String actividadPrevia = scanner.nextLine();
+		actividadesPrevias.add(actividadPrevia);
+		
+		System.out.print("Actividades de seguimiento, ingrese id separado por coma: ");
+		List<String> actividadesSeguimiento = new ArrayList<>();
+		String actividadSeguimiento = scanner.nextLine();
+		actividadesSeguimiento.add(actividadSeguimiento);
+		
+		System.out.print("Preguntas: ");
+		List<String> preguntas = new ArrayList<>();
+		String pregunta = scanner.nextLine();
+		preguntas.add(pregunta);
+		
+		System.out.print("Estos son los learningPaths disponibles: ");
+		System.out.println("\n");
+		List<LearningPath> learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		for (LearningPath learningPath : learningPaths) {
+		    System.out.println(learningPath.getLearningPathID());
+		}
+		String learningPathID = scanner.nextLine();
+		String tipo = "Encuesta";
+		
+		HashMap<String, Object> parametrosEspecificos = new HashMap<>();
+		parametrosEspecificos.put("Preguntas", preguntas);
+		
+		Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
+		        duracionEsperada, esObligatoria, fecha, resenas,
+		        resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
+		        parametrosEspecificos, actividadPrevia);
+		
+		persistenciaActividades.salvarActividad(actividadesFile, actividad);
 
 
-            System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
-            String learningPathID = scanner.nextLine();
-            String tipo = "Recurso Educativo";
 
-            HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-            parametrosEspecificos.put("Link", link);
-            parametrosEspecificos.put("Tipo de recurso", tipoRec);
-
-            Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
-                     duracionEsperada, esObligatoria, fecha, resenas,
-                     resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
-                    parametrosEspecificos, actividadPrevia);
-            
-            System.out.println("Actividad creada "+ actividad);
-
-            persistenciaActividades.salvarActividad(actividadesFile, actividad);
-
-        } else if (opcion == 5) {
-            System.out.print("ID de la Actividad: ");
-            String actividadID = scanner.nextLine();
-            System.out.print("Descripción: ");
-            String descripcion = scanner.nextLine();
-            System.out.print("Objetivo: ");
-            String objetivo = scanner.nextLine();
-            System.out.print("Nivel de dificultad: ");
-            int nivelDificultad = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Duración esperada: ");
-            int duracionEsperada = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Es obligatoria: ");
-            boolean esObligatoria = scanner.nextBoolean();
-            scanner.nextLine(); // Consume newline
-
-            System.out.print("Fecha límite: ");
-            String fechaLimite = scanner.nextLine();
-
-            Date fecha = new Date();
-            try {
-                fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            System.out.print("Reseñas: ");
-            String resenas = scanner.nextLine();
-            System.out.print("Calificación: ");
-            int calificacion = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            System.out.print("Resultado: ");
-            Double resultado = Double.parseDouble( scanner.nextLine());
- 
-
-            System.out.print("Actividades previas: ");
-            List<String> actividadesPrevias = new ArrayList<>();
-            String actividadPrevia = scanner.nextLine();
-            actividadesPrevias.add(actividadPrevia);
-
-            System.out.print("Actividades de seguimiento: ");
-            List<String> actividadesSeguimiento = new ArrayList<>();
-            String actividadSeguimiento = scanner.nextLine();
-            actividadesSeguimiento.add(actividadSeguimiento);
-
-            System.out.print("Preguntas: ");
-            List<String> preguntas = new ArrayList<>();
-            String pregunta = scanner.nextLine();
-            preguntas.add(pregunta);
-
-            System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
-            String learningPathID = scanner.nextLine();
-            String tipo = "Tarea";
+		} else if (opcion == 2) {
+		    String actividadID = "";
+		    while (actividadID.isEmpty()) {
+		        System.out.print("ID de la Actividad: ");
+		        actividadID = scanner.nextLine();
+		    }
+		String descripcion = "";
+		while (descripcion.isEmpty()) {
+		    System.out.print("Descripción: ");
+		    descripcion = scanner.nextLine();
+		}
+		
+		String objetivo = "";
+		while (objetivo.isEmpty()) {
+		    System.out.print("Objetivo: ");
+		    objetivo = scanner.nextLine();
+		}
+		
+		int nivelDificultad = -1;
+		while (nivelDificultad < 0 || nivelDificultad > 10) {
+		    System.out.print("Nivel de dificultad, indique un numero entre 0 y 10: ");
+		    try {
+		        nivelDificultad = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		int duracionEsperada = -1;
+		while (duracionEsperada < 0) {
+		    System.out.print("Duración esperada, indique los minutos esperados: ");
+		    try {
+		        duracionEsperada = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		boolean esObligatoria = false;
+		boolean validInput = false;
+		while (!validInput) {
+		    System.out.print("Es obligatoria, Ingrese True or False: ");
+		    try {
+		        esObligatoria = scanner.nextBoolean();
+		        validInput = true;
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese True o False.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		String fechaLimite = "";
+		Date fecha = new Date();
+		long fechaLimiteMillis = 0;
+		while (fechaLimiteMillis == 0) {
+		    System.out.print("Fecha límite: ");
+		    fechaLimite = scanner.nextLine();
+		    try {
+		        fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
+		        fechaLimiteMillis = fecha.getTime();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese una fecha válida en el formato dd/MM/yyyy.");
+		    }
+		}
+		
+		System.out.print("Reseñas: ");
+		String resenas = scanner.nextLine();
+		
+		int calificacion = -1;
+		while (calificacion < 0) {
+		    System.out.print("Calificación: ");
+		    try {
+		        calificacion = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		Double resultado = null;
+		while (resultado == null) {
+		    System.out.print("Resultado: ");
+		    try {
+		        resultado = Double.parseDouble(scanner.nextLine());
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		    }
+		}
+		
+		System.out.print("Actividades previas: ");
+		List<String> actividadesPrevias = new ArrayList<>();
+		String actividadPrevia = scanner.nextLine();
+		actividadesPrevias.add(actividadPrevia);
+		
+		System.out.print("Actividades de seguimiento: ");
+		List<String> actividadesSeguimiento = new ArrayList<>();
+		String actividadSeguimiento = scanner.nextLine();
+		actividadesSeguimiento.add(actividadSeguimiento);
+		
+		System.out.print("Preguntas: ");
+		List<String> preguntas = new ArrayList<>();
+		String pregunta = scanner.nextLine();
+		preguntas.add(pregunta);
+		
+		System.out.print("Estos son los learningPaths disponibles: ");
+		System.out.println("\n");
+		List<LearningPath> learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		for (LearningPath learningPath : learningPaths) {
+		    System.out.println(learningPath.getLearningPathID());
+		}
+		String learningPathID = scanner.nextLine();
+		String tipo = "Examen";
+		
+		HashMap<String, Object> parametrosEspecificos = new HashMap<>();
+		parametrosEspecificos.put("Preguntas", preguntas);
+		
+		Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
+		        duracionEsperada, esObligatoria, fecha, resenas,
+		        resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
+		        parametrosEspecificos, actividadPrevia);
+		
+		persistenciaActividades.salvarActividad(actividadesFile, actividad);
+		
+		} else if (opcion == 3) {
+		    String actividadID = "";
+		    while (actividadID.isEmpty()) {
+		        System.out.print("ID de la Actividad: ");
+		        actividadID = scanner.nextLine();
+		    }
+		String descripcion = "";
+		while (descripcion.isEmpty()) {
+		    System.out.print("Descripción: ");
+		    descripcion = scanner.nextLine();
+		}
+		
+		String objetivo = "";
+		while (objetivo.isEmpty()) {
+		    System.out.print("Objetivo: ");
+		    objetivo = scanner.nextLine();
+		}
+		
+		int nivelDificultad = -1;
+		while (nivelDificultad < 0 || nivelDificultad > 10) {
+		    System.out.print("Nivel de dificultad, indique un numero entre 0 y 10: ");
+		    try {
+		        nivelDificultad = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		int duracionEsperada = -1;
+		while (duracionEsperada < 0) {
+		    System.out.print("Duración esperada, indique los minutos esperados: ");
+		    try {
+		        duracionEsperada = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		boolean esObligatoria = false;
+		boolean validInput = false;
+		while (!validInput) {
+		    System.out.print("Es obligatoria, Ingrese True or False: ");
+		    try {
+		        esObligatoria = scanner.nextBoolean();
+		        validInput = true;
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese True o False.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		String fechaLimite = "";
+		Date fecha = new Date();
+		long fechaLimiteMillis = 0;
+		while (fechaLimiteMillis == 0) {
+		    System.out.print("Fecha límite: ");
+		    fechaLimite = scanner.nextLine();
+		    try {
+		        fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
+		        fechaLimiteMillis = fecha.getTime();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese una fecha válida en el formato dd/MM/yyyy.");
+		    }
+		}
+		
+		System.out.print("Reseñas: ");
+		String resenas = scanner.nextLine();
+		
+		int calificacion = -1;
+		while (calificacion < 0) {
+		    System.out.print("Calificación: ");
+		    try {
+		        calificacion = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		Double resultado = null;
+		while (resultado == null) {
+		    System.out.print("Resultado: ");
+		    try {
+		        resultado = Double.parseDouble(scanner.nextLine());
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		    }
+		}
+		
+		System.out.print("Actividades previas: ");
+		List<String> actividadesPrevias = new ArrayList<>();
+		String actividadPrevia = scanner.nextLine();
+		actividadesPrevias.add(actividadPrevia);
+		
+		System.out.print("Actividades de seguimiento: ");
+		List<String> actividadesSeguimiento = new ArrayList<>();
+		String actividadSeguimiento = scanner.nextLine();
+		actividadesSeguimiento.add(actividadSeguimiento);
+		
+		System.out.print("Preguntas: ");
+		List<String> preguntas = new ArrayList<>();
+		String pregunta = scanner.nextLine();
+		preguntas.add(pregunta);
+		
+		System.out.print("Estos son los learningPaths disponibles: ");
+		System.out.println("\n");
+		List<LearningPath> learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		for (LearningPath learningPath : learningPaths) {
+		    System.out.println(learningPath.getLearningPathID());
+		}
+		String learningPathID = scanner.nextLine();
+		String tipo = "Quiz";
+		
+		HashMap<String, Object> parametrosEspecificos = new HashMap<>();
+		parametrosEspecificos.put("Preguntas", preguntas);
+		
+		Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
+		        duracionEsperada, esObligatoria, fecha, resenas,
+		        resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
+		        parametrosEspecificos, actividadPrevia);
+		
+		persistenciaActividades.salvarActividad(actividadesFile, actividad);
+		
+		} else if (opcion == 4) {
+		    String actividadID = "";
+		    while (actividadID.isEmpty()) {
+		        System.out.print("ID de la Actividad: ");
+		        actividadID = scanner.nextLine();
+		    }
+		String descripcion = "";
+		while (descripcion.isEmpty()) {
+		    System.out.print("Descripción: ");
+		    descripcion = scanner.nextLine();
+		}
+		
+		String objetivo = "";
+		while (objetivo.isEmpty()) {
+		    System.out.print("Objetivo: ");
+		    objetivo = scanner.nextLine();
+		}
+		
+		int nivelDificultad = -1;
+		while (nivelDificultad < 0 || nivelDificultad > 10) {
+		    System.out.print("Nivel de dificultad, indique un numero entre 0 y 10: ");
+		    try {
+		        nivelDificultad = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		int duracionEsperada = -1;
+		while (duracionEsperada < 0) {
+		    System.out.print("Duración esperada, indique los minutos esperados: ");
+		    try {
+		        duracionEsperada = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		boolean esObligatoria = false;
+		boolean validInput = false;
+		while (!validInput) {
+		    System.out.print("Es obligatoria, Ingrese True or False: ");
+		    try {
+		        esObligatoria = scanner.nextBoolean();
+		        validInput = true;
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese True o False.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		String fechaLimite = "";
+		Date fecha = new Date();
+		long fechaLimiteMillis = 0;
+		while (fechaLimiteMillis == 0) {
+		    System.out.print("Fecha límite: ");
+		    fechaLimite = scanner.nextLine();
+		    try {
+		        fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
+		        fechaLimiteMillis = fecha.getTime();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese una fecha válida en el formato dd/MM/yyyy.");
+		    }
+		}
+		
+		System.out.print("Reseñas: ");
+		String resenas = scanner.nextLine();
+		
+		int calificacion = -1;
+		while (calificacion < 0) {
+		    System.out.print("Calificación: ");
+		    try {
+		        calificacion = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		Double resultado = null;
+		while (resultado == null) {
+		    System.out.print("Resultado: ");
+		    try {
+		        resultado = Double.parseDouble(scanner.nextLine());
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		    }
+		}
+		
+		System.out.print("Actividades previas: ");
+		List<String> actividadesPrevias = new ArrayList<>();
+		String actividadPrevia = scanner.nextLine();
+		actividadesPrevias.add(actividadPrevia);
+		
+		System.out.print("Actividades de seguimiento: ");
+		List<String> actividadesSeguimiento = new ArrayList<>();
+		String actividadSeguimiento = scanner.nextLine();
+		actividadesSeguimiento.add(actividadSeguimiento);
+		
+		System.out.print("Ingrese el link: ");
+		String link = scanner.nextLine();
+		
+		System.out.print("Ingrese el tipo de recurso: ");
+		String tipoRec = scanner.nextLine();
+		
+		System.out.print("Estos son los learningPaths disponibles: ");
+		System.out.println("\n");
+		List<LearningPath> learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		for (LearningPath learningPath : learningPaths) {
+		    System.out.println(learningPath.getLearningPathID());
+		}
+		String learningPathID = scanner.nextLine();
+		String tipo = "Recurso Educativo";
+		
+		HashMap<String, Object> parametrosEspecificos = new HashMap<>();
+		parametrosEspecificos.put("Link", link);
+		parametrosEspecificos.put("Tipo de recurso", tipoRec);
+		
+		Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
+		        duracionEsperada, esObligatoria, fecha, resenas,
+		        resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
+		        parametrosEspecificos, actividadPrevia);
+		
+		System.out.println("Actividad creada " + actividad);
+		
+		persistenciaActividades.salvarActividad(actividadesFile, actividad);
+		
+		} else if (opcion == 5) {
+		    String actividadID = "";
+		    while (actividadID.isEmpty()) {
+		        System.out.print("ID de la Actividad: ");
+		        actividadID = scanner.nextLine();
+		    }
+		String descripcion = "";
+		while (descripcion.isEmpty()) {
+		    System.out.print("Descripción: ");
+		    descripcion = scanner.nextLine();
+		}
+		
+		String objetivo = "";
+		while (objetivo.isEmpty()) {
+		    System.out.print("Objetivo: ");
+		    objetivo = scanner.nextLine();
+		}
+		
+		int nivelDificultad = -1;
+		while (nivelDificultad < 0 || nivelDificultad > 10) {
+		    System.out.print("Nivel de dificultad, indique un numero entre 0 y 10: ");
+		    try {
+		        nivelDificultad = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		int duracionEsperada = -1;
+		while (duracionEsperada < 0) {
+		    System.out.print("Duración esperada, indique los minutos esperados: ");
+		    try {
+		        duracionEsperada = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		boolean esObligatoria = false;
+		boolean validInput = false;
+		while (!validInput) {
+		    System.out.print("Es obligatoria, Ingrese True or False: ");
+		    try {
+		        esObligatoria = scanner.nextBoolean();
+		        validInput = true;
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese True o False.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		String fechaLimite = "";
+		Date fecha = new Date();
+		long fechaLimiteMillis = 0;
+		while (fechaLimiteMillis == 0) {
+		    System.out.print("Fecha límite: ");
+		    fechaLimite = scanner.nextLine();
+		    try {
+		        fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimite);
+		        fechaLimiteMillis = fecha.getTime();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese una fecha válida en el formato dd/MM/yyyy.");
+		    }
+		}
+		
+		System.out.print("Reseñas: ");
+		String resenas = scanner.nextLine();
+		
+		int calificacion = -1;
+		while (calificacion < 0) {
+		    System.out.print("Calificación: ");
+		    try {
+		        calificacion = scanner.nextInt();
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		        scanner.nextLine(); // Consume newline
+		    }
+		}
+		scanner.nextLine(); // Consume newline
+		
+		Double resultado = null;
+		while (resultado == null) {
+		    System.out.print("Resultado: ");
+		    try {
+		        resultado = Double.parseDouble(scanner.nextLine());
+		    } catch (Exception e) {
+		        System.out.println("Por favor, ingrese un número válido.");
+		    }
+		}
+		
+		System.out.print("Actividades previas: ");
+		List<String> actividadesPrevias = new ArrayList<>();
+		String actividadPrevia = scanner.nextLine();
+		actividadesPrevias.add(actividadPrevia);
+		
+		System.out.print("Actividades de seguimiento: ");
+		List<String> actividadesSeguimiento = new ArrayList<>();
+		String actividadSeguimiento = scanner.nextLine();
+		actividadesSeguimiento.add(actividadSeguimiento);
+		
+		System.out.print("Preguntas: ");
+		List<String> preguntas = new ArrayList<>();
+		String pregunta = scanner.nextLine();
+		preguntas.add(pregunta);
+		
+		System.out.print("Estos son los learningPaths disponibles: ");
+		System.out.println("\n");
+		List<LearningPath> learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		for (LearningPath learningPath : learningPaths) {
+		    System.out.println(learningPath.getLearningPathID());
+		}
+		System.out.println("Ingrese el ID del learning Path al que quiere que pertenezca la actividad: ");
+		String learningPathID = scanner.nextLine();
+		String tipo = "Tarea";
 
             HashMap<String, Object> parametrosEspecificos = new HashMap<>();
             parametrosEspecificos.put("Preguntas", preguntas);
@@ -514,13 +841,13 @@ private static void crearLearningPath() {
     String descripcion = scanner.nextLine();
     System.out.print("Ingrese los objetivos del Learning Path: ");
     String objetivos = scanner.nextLine();
-    System.out.print("Ingrese el nivel de dificultad del Learning Path: ");
+    System.out.print("Ingrese el nivel de dificultad del Learning Path, un numero del 1 al 10: ");
     int nivelDificultad = scanner.nextInt();
     scanner.nextLine(); // Consume newline
-    System.out.print("Ingrese la duración del Learning Path: ");
+    System.out.print("Ingrese la duración del Learning Path, en minutos sin decmal: ");
     int duracion = scanner.nextInt();
     scanner.nextLine(); // Consume newline
-    System.out.print("Ingrese el id del profesor: ");
+    System.out.print("Ingrese su id: ");
     String profesorID = scanner.nextLine();
 
     List<String> actividadesID = new ArrayList<>();
@@ -541,6 +868,7 @@ private static void crearLearningPath() {
 
 
     private static void revisarEstadoActividad() {
+    	System.out.println("\n");
         System.out.print("ID de la Actividad: ");
         String actividadID = scanner.nextLine();
         System.out.print("ID del Learning Path: ");
@@ -549,6 +877,7 @@ private static void crearLearningPath() {
     }
 
     private static void verProgresoEstudiante() {
+    	System.out.println("\n");
         System.out.print("ID del Estudiante: ");
         String estudianteID = scanner.nextLine();
         System.out.print("ID del Learning Path: ");
@@ -558,6 +887,7 @@ private static void crearLearningPath() {
     }
 
     private static void revisarFeedback() {
+    	System.out.println("\n");
         System.out.print("ID del Learning Path: ");
         String learningPathID = scanner.nextLine();
         List<Map> feedbacks = profesorActual.revisarFeedback(learningPathID);
@@ -565,6 +895,7 @@ private static void crearLearningPath() {
     }
 
     private static void calcularRating() {
+    	System.out.println("\n");
         System.out.print("ID del Learning Path: ");
         String learningPathID = scanner.nextLine();
         double rating = profesorActual.calcularRating(learningPathID);
@@ -572,6 +903,7 @@ private static void crearLearningPath() {
     }
 
     private static void persistData() {
+    	
         persistenciaUsuarios.salvarProfesor(usuariosFile, profesorActual.getUsuarioID(), profesorActual.getNombre(), profesorActual.getContraseña(), profesorActual.getEmail(), profesorActual.getTipoUsuario());
     }
     

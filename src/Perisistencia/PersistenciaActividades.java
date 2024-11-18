@@ -33,10 +33,21 @@ public class PersistenciaActividades implements IpersistenciaActividades {
             int duracionEsperada = actividad.getInt("duracionEsperada");
             boolean esObligatoria = actividad.getBoolean("esObligatoria");
             // Convertir la fecha de string a date, si es 
-            String fechaLimiteStr = actividad.getString("fechaLimite2");  // Obtener la fecha como cadena
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-            LocalDateTime fechaLimiteD = LocalDateTime.parse(fechaLimiteStr, formatter);  // Parsear la fecha
-            Date fechaLimite = Date.from(fechaLimiteD.atZone(ZoneId.systemDefault()).toInstant());
+
+			String fechaLimite2 = null;
+			if (actividad.has("fechaLimite2")) {
+				fechaLimite2 = actividad.getString("fechaLimite2");
+			} else if (actividad.has("fechaLimite")) {
+				fechaLimite2 = actividad.getString("fechaLimite");
+			}
+
+			
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+				LocalDateTime fechaLimiteD = LocalDateTime.parse(fechaLimite2, formatter); // Parsear la fecha
+				Date fechaLimite1 = Date.from(fechaLimiteD.atZone(ZoneId.systemDefault()).toInstant());
+			
+			Date fechaLimite = fechaLimite1;
+			
 
             String resenas = actividad.get("resenas").toString();
             double calificacion = actividad.getDouble("calificacion");
@@ -80,7 +91,12 @@ public class PersistenciaActividades implements IpersistenciaActividades {
                 Encuesta e = new Encuesta(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesPrevias, actividadesSeguimiento, preguntas1);
                 lista.add(e);
             } else if (tipoActividad.equalsIgnoreCase("recurso educativo")){
-                String tipoRecurso = actividad.get("tipoRecurso").toString();
+            	String tipoRecurso = null;
+            	if (actividad.has("tipoRecurso")) {
+            	    tipoRecurso = actividad.getString("tipoRecurso");
+            	} else if (actividad.has("tiporecurso")) {
+            	    tipoRecurso = actividad.getString("tiporecurso");
+            	}
                 String linkRecurso = actividad.get("linkRecurso").toString();
                 RecursoEducativo r = new RecursoEducativo(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria,
                         fechaLimite, resenas, calificacion, resultado, actividadesPrevias, actividadesSeguimiento, tipoRecurso, linkRecurso);
