@@ -254,11 +254,12 @@ class EstudianteTest {
         Actividad resultado = estudiantePrueba.completarActividad("A102", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals(null, resultado.getEstado());
+        
     }
     /// Test completar Recurso Educativo
     @Test
     void testCompletarRecursoEducativoActividad() throws Exception {
-        Actividad resultado = estudiantePrueba.completarActividad("A204", "LP106");
+        Actividad resultado = estudiantePrueba.completarActividad("A203", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals("Enviado", resultado.getEstado());
     }
