@@ -91,8 +91,9 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         Map<String,Actividad> actividadesLPE= new HashMap<>();
 
 		for (String actividadID : learningPath.getActividadesID()) {
-			//clonar actividades y meterlas en el learning path del estudiante
+			System.out.println("ActividadID: " + actividadID);
 			Actividad actividad = learningPath.actividades.get(actividadID);
+			System.out.println("Actividad: " + actividad);
 			Actividad actividadEstudiante = clonarActividad(actividad.getTipoActividad(), actividad, this.usuarioID);
 			actividadEstudiante.setActividadPrevia(actividad.getActividadPrevia()+"_"+this.usuarioID);
 			actividadesLPE.put(actividadEstudiante.getActividadID(), actividadEstudiante);
@@ -286,7 +287,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadIDEstudiante)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
         }
-		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado() == "Enviado") {
+		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado() == "Exitoso") {
 			throw new YaSeCompleto("La actividad ya ha sido completada");
 		}
         Map<String, Actividad> mapa = learningPath.getActividades();

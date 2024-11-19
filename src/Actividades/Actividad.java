@@ -200,7 +200,7 @@ public abstract class Actividad {
 
 	public String getTipoActividad(){
 		return tipoActividad;
-	};
+	}
 	
 	public Date getFechainicio() {
 		return fechainicio;

@@ -98,7 +98,7 @@ public class PersistenciaActividades implements IpersistenciaActividades {
                 }
                 Encuesta e = new Encuesta(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada, esObligatoria, fechaLimite, resenas, calificacion, resultado, actividadesPrevias, actividadesSeguimiento, preguntas1);
                 lista.add(e);
-            } else if (tipoActividad.equalsIgnoreCase("recurso educativo")){
+            } else if (tipoActividad.equalsIgnoreCase("RecursoEducativo")){
             	String tipoRecurso = null;
             	if (actividad.has("tipoRecurso")) {
             	    tipoRecurso = actividad.getString("tipoRecurso");

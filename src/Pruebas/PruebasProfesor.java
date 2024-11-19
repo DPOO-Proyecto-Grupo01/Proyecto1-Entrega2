@@ -39,7 +39,7 @@ class PruebasProfesor {
 	private Profesor profesorPrueba;
 	private Estudiante estudiantePrueba;
 	private Estudiante estudiantePrueba2;
-	private LearningPath learningPathPrueba;
+	private LearningPath learningPath;
 	public static List<LearningPath> learningPaths;
 	public List<Feedback> feedback;
 	public List<Progreso> progreso;
@@ -58,152 +58,148 @@ class PruebasProfesor {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-	    // Iniciando sesión, por favor espere...
-	    persistenciaActividades = new PersistenciaActividades();
-	    persistenciaUsuarios = new PersistenciaUsuarios();
-	    persistenciaLearningPaths = new PersistenciaLearningPaths();
+		
+		// Iniciando sesión, por favor espere...
+		persistenciaActividades = new PersistenciaActividades();
+		persistenciaUsuarios = new PersistenciaUsuarios();
+		persistenciaLearningPaths = new PersistenciaLearningPaths();
 
-	    try {
-	        // Cargar datos desde los archivos
-	        estudiantes = persistenciaUsuarios.cargarEstudiantes(usuarios);
-	        profesores = persistenciaUsuarios.cargarProfesores(usuarios);
-	        learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
-	        actividades = persistenciaActividades.cargarActividades(actividadesFile);
+		try {
+		    // Cargar datos desde los archivos
+		    estudiantes = persistenciaUsuarios.cargarEstudiantes(usuarios);
+		    profesores = persistenciaUsuarios.cargarProfesores(usuarios);
+		    learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+		    actividades = persistenciaActividades.cargarActividades(actividadesFile);
+		    persistenciaLearningPaths.cargarActividadesDelLearningPath(actividades, learningPaths);
+		    
+		    // Probar persistencia de quiz
+		    ArrayList<String> actividadesID = new ArrayList<>();
+		    actividadesID.add("A101");
+		    actividadesID.add("A103");
+		    actividadesID.add("A102");
+		    actividadesID.add("A110");
 
-	        // Probar persistencia de quiz
-	        ArrayList<String> actividadesID = new ArrayList<>();
-	        actividadesID.add("A101");
-	        actividadesID.add("A103");
-	        actividadesID.add("A102");
-	        actividadesID.add("A110");
-	        ArrayList<String> intereses = new ArrayList<>();
-	        intereses.add("Java");
-	        intereses.add("Programacion");
-	        
-	        LearningPath newLearningPath = new LearningPath("LP105", "Aprendiendo a programar en Java", "Descripcion",
-	                "Objetivos", 3, 120, "P105", actividadesID, intereses);
+		    ArrayList<String> intereses = new ArrayList<>();
+		    intereses.add("Java");
+		    intereses.add("Programacion");
 
-	        if (!learningPaths.contains(newLearningPath)) {
-	            learningPaths.add(newLearningPath);
-	            persistenciaLearningPaths.salvarLearningPath(learningPathsFile, newLearningPath.getLearningPathID(),
-	                    newLearningPath.getTitulo(), newLearningPath.getDescripcion(), newLearningPath.getObjetivos(),
-	                    newLearningPath.getNivelDificultad(), newLearningPath.getDuracionMinutos(),
-	                    newLearningPath.getProfesorID(), newLearningPath.getActividadesID(),
-	                    newLearningPath.getIntereses());
-	        }
+		    if (!actividades.contains(actividades.get(1))) {
+		        persistenciaActividades.salvarActividad("actividades.json", actividades.get(1));
+		    }
+		    
+		    Estudiante estudiante = new Estudiante("U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co",
+		            "Estudiante");
+		
+		    Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
 
-	        if (!actividades.contains(actividades.get(1))) {
-	            persistenciaActividades.salvarActividad("actividades.json", actividades.get(1));
-	        }
 
-	        Estudiante estudiante = new Estudiante("U105", "Juan Perez", "1234", "J.perez@uniandes.edu.co",
-	                "Estudiante");
-	        Estudiante estudiante1 = new Estudiante("U106", "Maria Perez", "1234", "m.perez@uniandes.edu.co",
-	                "Estudiante");
-	        Profesor profesor = new Profesor("P105", "Carlos Perez", "1234", "C.perez@uniandes.edu.co", "Profesor");
-	        profesorPrueba = profesor;
-	        estudiantePrueba = estudiante;
-	        estudiantePrueba2 = estudiante1;
+		    if (!estudiantes.contains(estudiante)) {
+		        estudiantes.add(estudiante);
+		        persistenciaUsuarios.salvarEstudiante(usuarios, estudiante.getUsuarioID(), estudiante.getNombre(),
+		                estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
+		    }
+		    if (!profesores.contains(profesor)) {
+		        profesores.add(profesor);
+		        persistenciaUsuarios.salvarProfesor(usuarios, profesor.getUsuarioID(), profesor.getNombre(),
+		                profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());
+		    }
 
-	        if (!estudiantes.contains(estudiante)) {
-	            estudiantes.add(estudiante);
-	            persistenciaUsuarios.salvarEstudiante(usuarios, estudiante.getUsuarioID(), estudiante.getNombre(),
-	                    estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
-	        }
-	        if (!estudiantes.contains(estudiante1)) {
-	            estudiantes.add(estudiante1);
-	            persistenciaUsuarios.salvarEstudiante(usuarios, estudiante1.getUsuarioID(), estudiante1.getNombre(),
-	                    estudiante1.getContraseña(), estudiante1.getEmail(), estudiante1.getTipoUsuario());
-	        }
-	        if (!profesores.contains(profesor)) {
-	            profesores.add(profesor);
-	            persistenciaUsuarios.salvarProfesor(usuarios, profesor.getUsuarioID(), profesor.getNombre(),
-	                    profesor.getContraseña(), profesor.getEmail(), profesor.getTipoUsuario());
-	        }
+		    estudiante.profesores.put("P105", profesor);
 
-	        estudiante.profesores.put("P105", profesor);
-	        estudiante1.profesores.put("P105", profesor);
+		    LearningPath createdLearningPath = profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java",
+		            "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses);
+		    if (!learningPaths.contains(createdLearningPath)) {
+		        learningPaths.add(createdLearningPath);
+		        persistenciaLearningPaths.salvarLearningPath(learningPathsFile, createdLearningPath.getLearningPathID(),
+		                createdLearningPath.getTitulo(), createdLearningPath.getDescripcion(),
+		                createdLearningPath.getObjetivos(), createdLearningPath.getNivelDificultad(),
+		                createdLearningPath.getDuracionMinutos(), createdLearningPath.getProfesorID(),
+		                createdLearningPath.getActividadesID(), createdLearningPath.getIntereses());
+		    }
+		    createdLearningPath.actividades.put("A101", actividades.get(0));
+		    createdLearningPath.actividades.put("A103", actividades.get(2));
+		    createdLearningPath.actividades.put("A102", actividades.get(1));
+		    createdLearningPath.actividades.put("A110", actividades.get(3));
 
-	        LearningPath createdLearningPath = profesor.crearLearningPath("LP106", "Aprendiendo a programar en Java",
-	                "Descripcion", "Objetivos", 3, 120, "P105", actividadesID, intereses);
-	        learningPathPrueba = createdLearningPath;
-	        if (!learningPaths.contains(createdLearningPath)) {
-	            learningPaths.add(createdLearningPath);
-	            persistenciaLearningPaths.salvarLearningPath(learningPathsFile, createdLearningPath.getLearningPathID(),
-	                    createdLearningPath.getTitulo(), createdLearningPath.getDescripcion(),
-	                    createdLearningPath.getObjetivos(), createdLearningPath.getNivelDificultad(),
-	                    createdLearningPath.getDuracionMinutos(), createdLearningPath.getProfesorID(),
-	                    createdLearningPath.getActividadesID(), createdLearningPath.getIntereses());
-	        }
+		    ArrayList<String> actividadesPrevias = new ArrayList<>();
+		    actividadesPrevias.add("A101");
+		    actividadesPrevias.add("A103");
 
-	        ArrayList<String> actividadesPrevias = new ArrayList<>();
-	        actividadesPrevias.add("A101");
-	        actividadesPrevias.add("A103");
+		    ArrayList<String> actividadesSeguimiento = new ArrayList<>();
+		    actividadesSeguimiento.add("A102");
 
-	        ArrayList<String> actividadesSeguimiento = new ArrayList<>();
-	        actividadesSeguimiento.add("A102");
+		    ArrayList<Pregunta> preguntas = new ArrayList<>();
+		    ArrayList<String> respuestas = new ArrayList<>();
+		    respuestas.add("A");
+		    respuestas.add("B");
+		    respuestas.add("C");
+		    HashMap<String, Object> atributosEspecificos = new HashMap<>();
+		    atributosEspecificos.put("calificacionMinima", 0.5);
+		    atributosEspecificos.put("RespuestaCorrecta", respuestas.get(0));
 
-	        ArrayList<Pregunta> preguntas = new ArrayList<>();
-	        ArrayList<String> respuestas = new ArrayList<>();
-	        respuestas.add("A");
-	        respuestas.add("B");
-	        respuestas.add("C");
-	        HashMap<String, Object> atributosEspecificos = new HashMap<>();
-	        atributosEspecificos.put("calificacionMinima", 0.5);
-	        atributosEspecificos.put("RespuestaCorrecta", respuestas.get(0));
+		    preguntas.add(new Pregunta("Para que es public, private, protected", respuestas));
+		    atributosEspecificos.put("Preguntas", preguntas);
 
-	        preguntas.add(new Pregunta("Para que es public, private, protected", respuestas));
-	        atributosEspecificos.put("preguntas", preguntas);
+		    String fecha = "2021-12-01";
+		    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
-	        String fecha = "2021-12-01";
-	        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+		    Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true,
+		            date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento,
+		            atributosEspecificos, "A103");
 
-	        Actividad actividadCreada = (Quiz) profesor.crearActividad("A110", "Descripcion", "Objetivos", 3, 120, true,
-	                date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento,
-	                atributosEspecificos, "A103");
+		    
+		    
+		    Actividad actividadCreada1 = profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date,
+					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
+					"A103");
+			Actividad actividadCreada2 = profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date,
+					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
+					"A110");
+			Actividad actividadCreada3 = profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date,
+					"reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
+					"A103");
 
-	        
+		    profesor.CalificacionMinima("A110", 60.1);
 
-	        Actividad actividadCreada1 = profesor.crearActividad("A101", "Descripcion", "Objetivos", 3, 120, true, date,
-	                "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
-	                "A103");
-	        Actividad actividadCreada2 = profesor.crearActividad("A103", "Descripcion", "Objetivos", 3, 120, true, date,
-	                "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
-	                "A110");
-	        Actividad actividadCreada3 = profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date,
-	                "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
-	                "A103");
+		    estudiante.inscribirLearningPath("LP106", "P105");
 
-	        profesor.CalificacionMinima("A110", 60.1);
+		    profesor.revisarEstadoActividad("A110", "LP106");
 
-	        estudiante.inscribirLearningPath("LP106", "P105");
-	        estudiante1.inscribirLearningPath("LP106", "P105");
+		    Actividad quiz = estudiante.completarActividad("A103", "LP106");
 
-	        profesor.revisarEstadoActividad("A110", "LP106");
+		    ArrayList<String> actividadesID1 = new ArrayList<>();
+		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
+		        actividadesID1.add(actividad.getActividadID());
+		    }
 
-	        Actividad quiz = estudiante.completarActividad("A103_U105", "LP106_U105");
-	        estudiante.completarActividad("A110_U105", "LP106_U105");
-	        estudiante1.completarActividad("A103_U106", "LP106_U106");
+		    estudiante.completarActividad("A101", "LP106");
+		    ArrayList<String> actividadesID2 = new ArrayList<>();
+		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
+		        actividadesID2.add(actividad.getActividadID());
+		       
+            }
+		    estudiantePrueba = estudiante;
+		    profesorPrueba = profesor;
+		    learningPath = createdLearningPath;
+		    
+		    Examen examen = new Examen("A102", "Examen Descripcion", "Examen Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5);
+		    Encuesta encuesta = new Encuesta("A103", "Encuesta Descripcion", "Encuesta Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+		    RecursoEducativo recurso = new RecursoEducativo("A104", "Recurso Descripcion", "Recurso Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), "Video", "http://recurso.com");
+		    Tarea tarea = new Tarea("A105", "Tarea Descripcion", "Tarea Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "Instrucciones", "Pendiente");
 
-	        ArrayList<String> actividadesID1 = new ArrayList<>();
-	        for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
-	            actividadesID1.add(actividad.getActividadID());
-	        }
+		    learningPath.getActividades().put("A102", examen);
+		    learningPath.getActividades().put("A103", encuesta);
+		    learningPath.actividades.put("A104", recurso);
+		    learningPath.actividades.put("A105", tarea);
+		
 
-	        estudiante.completarActividad("A101_U105", "LP106_U105");
-	        ArrayList<String> actividadesID2 = new ArrayList<>();
-	        for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
-	            actividadesID2.add(actividad.getActividadID());
-	        }
-	        
-	        System.out.println(learningPathPrueba.getLearningPathID());
-
-	        estudiante.enviarFeedback("LP106", "Excelente curso", 5, "U105");
-	        estudiante1.enviarFeedback("LP106", "Buen curso", 3, "U106");
-
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		    estudiantePrueba.inscribirLearningPath("LP106", "P105");
+		    
+		}
+		
+		catch (Exception e) {
+		    e.printStackTrace();
+		}
 	}
 
 
@@ -375,7 +371,7 @@ class PruebasProfesor {
 		Actividad actividadCreada = (RecursoEducativo) profesorPrueba.crearActividad("A12", "Descripcion", "Objetivos", 3, 120,
 				true, date, "reseña", 0, 0, "Recurso Educativo", "LP106", actividadesPrevias, actividadesSeguimiento,
 				atributosEspecificos, "A103");
-		assertEquals(5, profesorPrueba.mapaActividades.size());
+		assertEquals(4, profesorPrueba.mapaActividades.size());
 	}
 	
 	/// Test de Calificacion Minima Quiz
@@ -567,7 +563,7 @@ class PruebasProfesor {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 
         RecursoEducativo recurso = (RecursoEducativo) profesorPrueba.crearActividad("A17", "Descripcion", "Objetivos", 3, 120,
-                true, date, "reseña", 0, 0, "Recurso Educativo", "LP106", actividadesPrevias, actividadesSeguimiento,
+                true, date, "reseña", 0, 0, "RecursoEducativo", "LP106", actividadesPrevias, actividadesSeguimiento,
                 atributosEspecificos, "A103");
 
         recurso.setEstado("Exitoso"); // Ensure estado is set before revising

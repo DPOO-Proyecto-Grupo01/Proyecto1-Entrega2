@@ -172,9 +172,14 @@ class EstudianteTest {
 		    Encuesta encuesta = new Encuesta("A103", "Encuesta Descripcion", "Encuesta Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		    RecursoEducativo recurso = new RecursoEducativo("A104", "Recurso Descripcion", "Recurso Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), "Video", "http://recurso.com");
 		    Tarea tarea = new Tarea("A105", "Tarea Descripcion", "Tarea Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "Instrucciones", "Pendiente");
-
+		    
+		    
+		    
+	
 		    learningPath.getActividades().put("A102", examen);
 		    learningPath.getActividades().put("A103", encuesta);
+		    learningPath.getActividades().put("A104", recurso);
+		    learningPath.getActividades().put("A105", tarea);
 		    learningPath.actividades.put("A104", recurso);
 		    learningPath.actividades.put("A105", tarea);
 		

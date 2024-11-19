@@ -21,14 +21,12 @@ import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 import main.Central;
 
-import static main.Central.actividades;
-
-
 
 public class Profesor extends Usuario {
 	
     public Map<String, LearningPath> learningPathsCreados;
     public Map<String, Actividad> mapaActividades;
+    
     public String profesor = "Profesor";
     public Profesor(String UsuarioID, String nombre, String contraseña, String email, String tipoUsuario) {
         super(UsuarioID, nombre, contraseña, email, tipoUsuario);
@@ -62,74 +60,79 @@ public class Profesor extends Usuario {
     
 
 
-public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
-                               int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas,
-                               double resultado, int calificacion, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento,
-                               HashMap<String, Object> parametrosEspecificos, String actividadPrevia) throws NombreRepetido {
-	if (mapaActividades.containsKey(actividadID)) {
-		    throw new NombreRepetido("El nombre"+ actividadID + "ya");
+	public Actividad crearActividad(String actividadID, String descripcion, String objetivo, int nivelDificultad,
+	                               int duracionEsperada, boolean esObligatoria, Date fechaLimite, String resenas,
+	                               double resultado, int calificacion, String tipo, String learningPathID, List<String> actividadesPrevia, List<String> actividadesSeguimiento,
+	                               HashMap<String, Object> parametrosEspecificos, String actividadPrevia) throws NombreRepetido {
+		if (mapaActividades.containsKey(actividadID)) {
+			    throw new NombreRepetido("El nombre"+ actividadID + "ya");
+		}
+		else {
+	    // Crea una actividad
+	    Actividad actividad = null;
+	    
+	    if (tipo.equals("Quiz")) {
+	        double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
+	        @SuppressWarnings("unchecked")
+			List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+	        String respuestaCorrecta = parametrosEspecificos.get("RespuestaCorrecta") != null ? (String) parametrosEspecificos.get("RespuestaCorrecta") : "";
+	        Quiz quiz = new Quiz(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
+	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia,
+	                actividadesSeguimiento, preguntas, calificacionMinima, respuestaCorrecta);
+	        actividad = quiz;
+	
+	    } else if (tipo.equals("Examen")) {
+	        double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
+	        @SuppressWarnings("unchecked")
+			List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+	        Examen examen = new Examen(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
+	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, calificacionMinima);
+	        actividad = examen;
+	
+	    } else if (tipo.equals("Encuesta")) {
+	        @SuppressWarnings("unchecked")
+			List<String> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<String>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+	        Encuesta encuesta = new Encuesta(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
+	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas);
+	        actividad = encuesta;
+	
+	    } else if (tipo.equals("RecursoEducativo")) {
+	        String tipoRecurso = parametrosEspecificos.get("tipoRecurso") != null ? (String) parametrosEspecificos.get("tipoRecurso") : "";
+	        String linkRecurso = parametrosEspecificos.get("linkRecurso") != null ? (String) parametrosEspecificos.get("linkRecurso") : "";
+	        RecursoEducativo recurso = new RecursoEducativo(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
+	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, tipoRecurso, linkRecurso);
+	        actividad = recurso;
+	        
+	    } else if (tipo.equals("Tarea")) { 
+	        @SuppressWarnings("unchecked")
+			List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+	        String instrucciones = parametrosEspecificos.get("instrucciones") != null ? (String) parametrosEspecificos.get("instrucciones") : "";
+	        String estado = parametrosEspecificos.get("estado") != null ? (String) parametrosEspecificos.get("estado") : "Pendiente";
+	        Tarea tarea = new Tarea(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
+	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, instrucciones, estado);
+	        actividad = tarea;
+	
+	    }
+	    
+	    if (actividad != null) {
+	        mapaActividades.put(actividadID, actividad);
+	        System.out.println("Actividad creada con éxito"+ actividad);
+	        
+	        LearningPath lp = learningPathsCreados.get(learningPathID);
+	        
+	        
+	        if (lp.actividades == null) {
+	            lp.actividades = new HashMap<>();
+	        }
+	        System.out.println("Actividades: " + actividad);
+	        System.out.println("Actividades ID"+ actividadID);
+	        lp.actividades.put(actividadID, actividad);
+	        actividad.setActividadPrevia(actividadPrevia);
+	
+	    }
+	    return actividad;
+		}
 	}
-	else {
-    // Crea una actividad
-    Actividad actividad = null;
-    
-    if (tipo.equals("Quiz")) {
-        double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
-        @SuppressWarnings("unchecked")
-		List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
-        String respuestaCorrecta = parametrosEspecificos.get("RespuestaCorrecta") != null ? (String) parametrosEspecificos.get("RespuestaCorrecta") : "";
-        Quiz quiz = new Quiz(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
-                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia,
-                actividadesSeguimiento, preguntas, calificacionMinima, respuestaCorrecta);
-        actividad = quiz;
-
-    } else if (tipo.equals("Examen")) {
-        double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
-        @SuppressWarnings("unchecked")
-		List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
-        Examen examen = new Examen(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
-                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, calificacionMinima);
-        actividad = examen;
-
-    } else if (tipo.equals("Encuesta")) {
-        @SuppressWarnings("unchecked")
-		List<String> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<String>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
-        Encuesta encuesta = new Encuesta(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
-                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas);
-        actividad = encuesta;
-
-    } else if (tipo.equals("Recurso Educativo")) {
-        String tipoRecurso = parametrosEspecificos.get("tipoRecurso") != null ? (String) parametrosEspecificos.get("tipoRecurso") : "";
-        String linkRecurso = parametrosEspecificos.get("linkRecurso") != null ? (String) parametrosEspecificos.get("linkRecurso") : "";
-        RecursoEducativo recurso = new RecursoEducativo(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
-                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, tipoRecurso, linkRecurso);
-        actividad = recurso;
-        
-    } else if (tipo.equals("Tarea")) { 
-        @SuppressWarnings("unchecked")
-		List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
-        String instrucciones = parametrosEspecificos.get("instrucciones") != null ? (String) parametrosEspecificos.get("instrucciones") : "";
-        String estado = parametrosEspecificos.get("estado") != null ? (String) parametrosEspecificos.get("estado") : "Pendiente";
-        Tarea tarea = new Tarea(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
-                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, instrucciones, estado);
-        actividad = tarea;
-
-    }
-    
-    if (actividad != null) {
-        mapaActividades.put(actividadID, actividad);
-        System.out.println("Actividad creada con éxito"+ actividad);
-        
-        if (actividades == null) {
-            actividades = new ArrayList<>();
-        }
-        actividades.add(actividad);
-        actividad.setActividadPrevia(actividadPrevia);
-
-    }
-    return actividad;
-	}
-}
 
 	public void CalificacionMinima(String actividadID, double calificacionMinima) {
 	    Actividad actividad = mapaActividades.get(actividadID);
@@ -143,6 +146,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 	        // Handle the case where actividad is null, if necessary
 	    }
 	}
+	
 
 
 
@@ -163,6 +167,7 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 		LearningPath lp = learningPathsCreados.get(LearningPathID);
 		if (lp != null) {
 			Actividad actividad = lp.actividades.get(actividadID);
+			System.out.println("Actividad ID: " + actividadID);
 			if (actividad != null) {
 				if (actividad.getTipoActividad().equals("Tarea") || actividad.getTipoActividad().equals("Examen")) {
 					System.out.println(actividad.getEstado());
@@ -183,10 +188,16 @@ public Actividad crearActividad(String actividadID, String descripcion, String o
 				}
 			} else {
 				// Handle the case where actividad is null, if necessary
+				if (lp.getActividades().isEmpty()) {
+					System.out.println("No hay actividades");
+				}
 				
 			}
 		} else {
 			// Handle the case where lp is null, if necessary
+			if (learningPathsCreados.isEmpty()) {
+				System.out.println("No hay Learning Paths");
+			}
 		}
 	}
 

@@ -24,7 +24,7 @@ public class LearningPath {
 	private Date fechaModificacion;
 	private List<String> actividadesID;
 	private List<String> intereses = new ArrayList<>();
-	public Map<String,Actividad> actividades= new HashMap<>();
+	public Map<String,Actividad> actividades = new HashMap<>();
 	private List<Feedback> feedback = new ArrayList<>();
 	private Profesor profesor;
 	public String profesorID;
