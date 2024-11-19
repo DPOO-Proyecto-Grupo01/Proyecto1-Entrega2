@@ -65,6 +65,8 @@ class EstudianteTest {
 		    actividadesID.add("A103");
 		    actividadesID.add("A102");
 		    actividadesID.add("A110");
+		    actividadesID.add("A204");
+		    actividadesID.add("A203");
 
 		    ArrayList<String> intereses = new ArrayList<>();
 		    intereses.add("Java");
@@ -107,6 +109,8 @@ class EstudianteTest {
 		    createdLearningPath.actividades.put("A103", actividades.get(2));
 		    createdLearningPath.actividades.put("A102", actividades.get(1));
 		    createdLearningPath.actividades.put("A110", actividades.get(3));
+		    createdLearningPath.actividades.put("A203", actividades.get(4));
+		    createdLearningPath.actividades.put("A204", actividades.get(5));
 
 		    ArrayList<String> actividadesPrevias = new ArrayList<>();
 		    actividadesPrevias.add("A101");
@@ -231,7 +235,7 @@ class EstudianteTest {
     /// Test completar Tarea
     @Test
     void testCompletarTareaActividad() throws Exception {
-        Actividad resultado = estudiantePrueba.completarActividad("A105", "LP106");
+        Actividad resultado = estudiantePrueba.completarActividad("A101", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals("Enviado", resultado.getEstado());
     }    
@@ -254,7 +258,7 @@ class EstudianteTest {
     /// Test completar Recurso Educativo
     @Test
     void testCompletarRecursoEducativoActividad() throws Exception {
-        Actividad resultado = estudiantePrueba.completarActividad("A104", "LP106");
+        Actividad resultado = estudiantePrueba.completarActividad("A204", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals("Enviado", resultado.getEstado());
     }
@@ -336,7 +340,7 @@ class EstudianteTest {
         learningPath.getActividades().put("A101", actividad);
 
         List<Actividad> actividadesDisponibles = estudiantePrueba.actividadesDisponibles("LP106_U105");
-        assertEquals(4, actividadesDisponibles.size(), "There should be one available activity");
+        assertEquals(6, actividadesDisponibles.size(), "There should be one available activity");
         assertEquals("A101_U105", actividadesDisponibles.get(0).getActividadID());
     }
     

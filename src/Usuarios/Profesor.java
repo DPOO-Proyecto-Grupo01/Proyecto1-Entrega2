@@ -22,6 +22,7 @@ import LearningPaths.Progreso;
 import main.Central;
 
 
+
 public class Profesor extends Usuario {
 	
     public Map<String, LearningPath> learningPathsCreados;
@@ -126,6 +127,7 @@ public class Profesor extends Usuario {
 	        }
 	        System.out.println("Actividades: " + actividad);
 	        System.out.println("Actividades ID"+ actividadID);
+	        
 	        lp.actividades.put(actividadID, actividad);
 	        actividad.setActividadPrevia(actividadPrevia);
 	

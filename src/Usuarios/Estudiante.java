@@ -319,7 +319,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         } else if (actividad.getTipoActividad().equals("Examen")) {
             Examen examen = (Examen) actividad;
             examen.completarExamen();
-        } else if (actividad.getTipoActividad().equals("Recurso Educativo")) {
+        } else if (actividad.getTipoActividad().equals("RecursoEducativo")) {
             RecursoEducativo recurso = (RecursoEducativo) actividad;
             recurso.completarRecurso();
             recurso.setEstado("Enviado");

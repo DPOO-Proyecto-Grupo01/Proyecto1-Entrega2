@@ -195,6 +195,8 @@ class PruebasProfesor {
 
 		    estudiantePrueba.inscribirLearningPath("LP106", "P105");
 		    
+		    estudiante.enviarFeedback("LP106", "Excelente curso", 5, "U105");
+		    
 		}
 		
 		catch (Exception e) {
@@ -595,12 +597,12 @@ class PruebasProfesor {
 	 
 		@Test
 		void testRevisarFeedback() throws LearningPathNoInscrito {
-			assertEquals(2, profesorPrueba.revisarFeedback("LP106").size());
+			assertEquals(1, profesorPrueba.revisarFeedback("LP106").size());
 		}
 	 
 	 @Test
 	 void testCalcularRating() {
-		 assertEquals(4.0, profesorPrueba.calcularRating("LP106"));
+		 assertEquals(5, profesorPrueba.calcularRating("LP106"));
         
 	 }
 
