@@ -83,14 +83,13 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         }
         
         LearningPath learningPath = profesor.getLearningPathsCreados().get(LearningPathID);
-        System.out.println("Learning Path: " + learningPath);
         if (learningPath == null) {
             throw new LearningPathNoInscrito("Learning Path no encontrado: " + LearningPathID);
         }
         
         LearningPath learningPathEstudiante = clonarLearningPath(learningPath, this.usuarioID);
         Map<String,Actividad> actividadesLPE= new HashMap<>();
-        
+
 		for (String actividadID : learningPath.getActividadesID()) {
 			//clonar actividades y meterlas en el learning path del estudiante
 			Actividad actividad = learningPath.actividades.get(actividadID);
@@ -276,21 +275,18 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	}
 		
 	
-	
+
 	public Actividad completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
-		
+
 		String idLpEstudiante = learningPathID + "_" + this.usuarioID;
 		String actividadIDEstudiante = actividadID + "_" + this.usuarioID;
         
         LearningPath learningPath = learningPathsInscritos.get(idLpEstudiante);
-        System.out.println("Learning Path: " + learningPath.getLearningPathID());
-        System.out.println("Actividades del lp: "+ learningPath.getActividades());
-        System.out.println("Actividad: " + actividadIDEstudiante);
          
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadIDEstudiante)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
         }
-		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado() == "Exitoso") {
+		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado() == "Enviado") {
 			throw new YaSeCompleto("La actividad ya ha sido completada");
 		}
         Map<String, Actividad> mapa = learningPath.getActividades();

@@ -79,7 +79,7 @@ class PruebasProfesor {
 	        ArrayList<String> intereses = new ArrayList<>();
 	        intereses.add("Java");
 	        intereses.add("Programacion");
-
+	        
 	        LearningPath newLearningPath = new LearningPath("LP105", "Aprendiendo a programar en Java", "Descripcion",
 	                "Objetivos", 3, 120, "P105", actividadesID, intereses);
 
@@ -205,8 +205,6 @@ class PruebasProfesor {
 	        e.printStackTrace();
 	    }
 	}
-	
-	
 
 
 	
@@ -525,7 +523,6 @@ class PruebasProfesor {
 		profesorPrueba.revisarEstadoActividad("A16", "LP106");
 		assertEquals("Fallido", actividadCreada.getEstado());
 	}
-	
 	///Test de Revisar estado de Encuesta
 	@Test
 	void testRevisarEstadoEncuesta() throws ParseException, NombreRepetido {

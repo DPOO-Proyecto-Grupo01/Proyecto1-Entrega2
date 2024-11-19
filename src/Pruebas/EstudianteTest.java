@@ -24,7 +24,7 @@ import Usuarios.*;
 class EstudianteTest {
 	
 
-	
+
 	private Estudiante estudiantePrueba;
 	public static List<LearningPath> learningPaths;
 	public List<Feedback> feedback;
@@ -57,17 +57,18 @@ class EstudianteTest {
 		    profesores = persistenciaUsuarios.cargarProfesores(usuarios);
 		    learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
 		    actividades = persistenciaActividades.cargarActividades(actividadesFile);
-
+		    persistenciaLearningPaths.cargarActividadesDelLearningPath(actividades, learningPaths);
+		    
 		    // Probar persistencia de quiz
 		    ArrayList<String> actividadesID = new ArrayList<>();
 		    actividadesID.add("A101");
 		    actividadesID.add("A103");
 		    actividadesID.add("A102");
 		    actividadesID.add("A110");
+
 		    ArrayList<String> intereses = new ArrayList<>();
 		    intereses.add("Java");
 		    intereses.add("Programacion");
-
 
 		    if (!actividades.contains(actividades.get(1))) {
 		        persistenciaActividades.salvarActividad("actividades.json", actividades.get(1));
@@ -102,6 +103,10 @@ class EstudianteTest {
 		                createdLearningPath.getDuracionMinutos(), createdLearningPath.getProfesorID(),
 		                createdLearningPath.getActividadesID(), createdLearningPath.getIntereses());
 		    }
+		    createdLearningPath.actividades.put("A101", actividades.get(0));
+		    createdLearningPath.actividades.put("A103", actividades.get(2));
+		    createdLearningPath.actividades.put("A102", actividades.get(1));
+		    createdLearningPath.actividades.put("A110", actividades.get(3));
 
 		    ArrayList<String> actividadesPrevias = new ArrayList<>();
 		    actividadesPrevias.add("A101");
@@ -120,7 +125,7 @@ class EstudianteTest {
 		    atributosEspecificos.put("RespuestaCorrecta", respuestas.get(0));
 
 		    preguntas.add(new Pregunta("Para que es public, private, protected", respuestas));
-		    atributosEspecificos.put("preguntas", preguntas);
+		    atributosEspecificos.put("Preguntas", preguntas);
 
 		    String fecha = "2021-12-01";
 		    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
@@ -147,19 +152,18 @@ class EstudianteTest {
 
 		    profesor.revisarEstadoActividad("A110", "LP106");
 
-		    Actividad quiz = estudiante.completarActividad("A103_U105", "LP106_U105");
-		    estudiante.completarActividad("A110_U105", "LP106_U105");
+		    Actividad quiz = estudiante.completarActividad("A103", "LP106");
 
 		    ArrayList<String> actividadesID1 = new ArrayList<>();
 		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 		        actividadesID1.add(actividad.getActividadID());
 		    }
 
-		    estudiante.completarActividad("A101_U105", "LP106_U105");
+		    estudiante.completarActividad("A101", "LP106");
 		    ArrayList<String> actividadesID2 = new ArrayList<>();
 		    for (Actividad actividad : estudiante.actividadesDisponibles("LP106_U105")) {
 		        actividadesID2.add(actividad.getActividadID());
-		        
+		       
             }
 		    estudiantePrueba = estudiante;
 		    learningPath = createdLearningPath;
@@ -171,10 +175,12 @@ class EstudianteTest {
 
 		    learningPath.getActividades().put("A102", examen);
 		    learningPath.getActividades().put("A103", encuesta);
-		    learningPath.getActividades().put("A104", recurso);
-		    learningPath.getActividades().put("A105", tarea);
+		    learningPath.actividades.put("A104", recurso);
+		    learningPath.actividades.put("A105", tarea);
+		
 
 		    estudiantePrueba.inscribirLearningPath("LP106", "P105");
+		    
 		}
 		
 		catch (Exception e) {
@@ -212,7 +218,7 @@ class EstudianteTest {
         
         estudiantePrueba.inscribirLearningPath("LP106", "P105");
 
-        Actividad resultado = estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
+        Actividad resultado = estudiantePrueba.completarActividad("A101", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals("Exitoso", resultado.getEstado());
     }
@@ -220,7 +226,7 @@ class EstudianteTest {
     /// Test completar Tarea
     @Test
     void testCompletarTareaActividad() throws Exception {
-        Actividad resultado = estudiantePrueba.completarActividad("A105_U105", "LP106_U105");
+        Actividad resultado = estudiantePrueba.completarActividad("A105", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals("Enviado", resultado.getEstado());
     }    
@@ -228,7 +234,7 @@ class EstudianteTest {
     /// Test completar Encuesta
     @Test
     void testCompletarEncuestaActividad() throws Exception {
-        Actividad resultado = estudiantePrueba.completarActividad("A103_U105", "LP106_U105");
+        Actividad resultado = estudiantePrueba.completarActividad("A103", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals("Exitoso", resultado.getEstado());
     }
@@ -236,14 +242,14 @@ class EstudianteTest {
     /// Test completar Examen
     @Test
     void testCompletarExamenActividad() throws Exception {
-        Actividad resultado = estudiantePrueba.completarActividad("A102_U105", "LP106_U105");
+        Actividad resultado = estudiantePrueba.completarActividad("A102", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals(null, resultado.getEstado());
     }
     /// Test completar Recurso Educativo
     @Test
     void testCompletarRecursoEducativoActividad() throws Exception {
-        Actividad resultado = estudiantePrueba.completarActividad("A104_U105", "LP106_U105");
+        Actividad resultado = estudiantePrueba.completarActividad("A104", "LP106");
         assertNotNull(resultado, "Activity result should not be null");
         assertEquals("Enviado", resultado.getEstado());
     }
@@ -259,8 +265,8 @@ class EstudianteTest {
     @Test 
         void testCompletarActividadYaSeCompleto() {
 			assertThrows(YaSeCompleto.class, () -> {
-				estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
-				estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
+				Actividad actividad = estudiantePrueba.completarActividad("A101", "LP106");
+				estudiantePrueba.completarActividad("A101", "LP106");
 			});
     }
 	@Test
@@ -270,7 +276,7 @@ class EstudianteTest {
 	
 	    estudiantePrueba.inscribirLearningPath("LP106", "P105");
 	
-	    Actividad resultado = estudiantePrueba.completarActividad("A101_U105", "LP106_U105");
+	    Actividad resultado = estudiantePrueba.completarActividad("A101", "LP106");
 	    assertNotNull(resultado, "Activity result should not be null");
 	    assertEquals("Exitoso", resultado.getEstado());
 

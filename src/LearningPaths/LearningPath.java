@@ -53,7 +53,6 @@ public class LearningPath {
 		
 		}
 	
-	
 		public void inscribirEstudiante(String estudiante, LearningPath learningpath) {
 			learningPathsEstudiantes.put(estudiante, learningpath);
 			
