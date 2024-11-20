@@ -319,11 +319,12 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         } else if (actividad.getTipoActividad().equals("Examen")) {
             Examen examen = (Examen) actividad;
             examen.completarExamen();
+            examen.setEstado("Exitoso");
         } else if (actividad.getTipoActividad().equals("RecursoEducativo")) {
             RecursoEducativo recurso = (RecursoEducativo) actividad;
             recurso.completarRecurso();
             recurso.setEstado("Enviado");
-        } else if (actividad.getTipoActividad().equals("Quiz")) {
+        } else if (actividad.getTipoActividad() .equals("Quiz")) {
             Quiz quiz = (Quiz) actividad;
             quiz.completarQuiz();
             quiz.setRespuestaUsuario("A");
@@ -343,6 +344,8 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         actividad.setFechafin(fechaFin);
         
         
+        System.out.println("Actividad completada: " + actividad.getActividadID());
+        System.out.println("Estado de la actividad: "+ actividad.getEstado());
         List<String> actividadSeguimiento =  actividad.getActividadesSeguimiento();
         Progreso progreso = progresoLearningPath.get(learningPath);
         List<Actividad> actividades = learningPath.actividades.values().stream().toList();

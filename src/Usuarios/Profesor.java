@@ -120,6 +120,9 @@ public class Profesor extends Usuario {
 	        System.out.println("Actividad creada con éxito"+ actividad);
 	        
 	        LearningPath lp = learningPathsCreados.get(learningPathID);
+	        System.out.println("Learning Path creados: " + learningPathsCreados);
+	        System.out.println("Learning Path ID: " + learningPathID);
+	        System.out.println("Learning Path: " + lp);
 	        
 	        
 	        if (lp.actividades == null) {
@@ -160,6 +163,7 @@ public class Profesor extends Usuario {
     	} else {
 	        LearningPath learningPath = new LearningPath(LearningPathID, titulo, descripcion, objetivos, nivelDificultad, duracion, profesorID, actividadesID, intereses);
 	        learningPathsCreados.put(LearningPathID, learningPath);
+	        
 	        return learningPath;
     	}
     }

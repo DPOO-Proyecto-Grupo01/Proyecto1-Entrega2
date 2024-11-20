@@ -9,7 +9,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 import Actividades.Actividad;
+import Actividades.Encuesta;
+import Actividades.Examen;
 import Actividades.Pregunta;
+import Actividades.Quiz;
+import Actividades.Tarea;
 import Exceptions.ActividadNoPertenece;
 import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
@@ -243,10 +247,69 @@ public class ConsolaEstudiante {
     }
 
     private static void completarActividad() throws ActividadNoPertenece, YaSeCompleto {
-        System.out.print("Ingrese el ID del Learning Path en el que desea trabajar: ");
-        String learningPathID = scanner.nextLine();
-        System.out.print("Ingrese el ID de la actividad que desea completar: ");
-        String actividadID = scanner.nextLine();
+        boolean validInput = false;
+        String learningPathID = "";
+        String actividadID = "";
+
+        while (!validInput) {
+            System.out.print("Ingrese el ID del Learning Path en el que desea trabajar: ");
+            learningPathID = scanner.nextLine();
+
+            System.out.print("Ingrese el ID de la actividad que desea completar: ");
+            actividadID = scanner.nextLine();
+
+            LearningPath lp = estudianteActual.getLearningPathsInscritos().get(learningPathID);
+
+			if (lp != null && lp.getActividades().containsKey(actividadID)) {
+				Actividad actividad = lp.getActividades().get(actividadID);
+				if (actividad != null) {
+					validInput = true;
+
+					// Check the type of the activity and print questions if applicable
+					if (actividad instanceof Quiz) {
+						List<Pregunta> preguntas = ((Quiz) actividad).getPreguntas();
+						System.out.println("Preguntas de la actividad (Quiz):");
+						for (Pregunta pregunta : preguntas) {
+							System.out.println(pregunta.getPregunta() + "\n");
+							System.out.println(pregunta.getOpciones() + "\n");
+							System.out.print("Ingrese su respuesta: ");
+							String respuesta = scanner.nextLine();
+							System.out.println("Su respuesta: " + respuesta + "\n");
+						}
+					} else if (actividad instanceof Examen) {
+						List<Pregunta> preguntas = ((Examen) actividad).getPreguntas();
+						System.out.println("Preguntas de la actividad (Examen):");
+						for (Pregunta pregunta : preguntas) {
+							System.out.println(pregunta.getPregunta() + "\n");
+							System.out.println(pregunta.getOpciones() + "\n");
+							System.out.print("Ingrese su respuesta: ");
+							String respuesta = scanner.nextLine();
+							System.out.println("Su respuesta: " + respuesta + "\n");
+						}
+					} else if (actividad instanceof Tarea) {
+						List<Pregunta> preguntas = ((Tarea) actividad).getPreguntas();
+						System.out.println("Preguntas de la actividad (Tarea):");
+						for (Pregunta pregunta : preguntas) {
+							System.out.println(pregunta.getPregunta() + "\n");
+							System.out.println(pregunta.getOpciones() + "\n");
+							System.out.print("Ingrese su respuesta: ");
+							String respuesta = scanner.nextLine();
+							System.out.println("Su respuesta: " + respuesta + "\n");
+						}
+					}
+				}
+			}
+            
+            if (lp != null && lp.getActividades().containsKey(actividadID)) {
+                validInput = true;
+            } else {
+                System.out.println("Learning Path o Actividad no encontrados. Por favor, intente de nuevo.");
+            }
+        }
+        
+        //DA las preguntas de dicha actividad
+        
+        
 
         estudianteActual.completarActividad(actividadID, learningPathID);
     }

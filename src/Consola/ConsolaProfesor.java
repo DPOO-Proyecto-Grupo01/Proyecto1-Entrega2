@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 
+import Usuarios.Estudiante;
 import Usuarios.Profesor;
 import LearningPaths.LearningPath;
 import Actividades.Actividad;
@@ -32,10 +33,21 @@ public class ConsolaProfesor {
     private static final String usuariosFile = "src/datos/users.json";
     private static final String actividadesFile = "src/datos/activities.json";
     private static final String learningPathsFile = "src/datos/learning_paths.json";
+    private static List<LearningPath> learningPaths;
+    private static Map<String, Profesor> profesores = new HashMap<>();
+    private static List<Actividad> actividades;
+    private static List<Estudiante> estudiantes;
     
     
     public static void main(String[] args) throws Exception { 
+    	cargarActividades();
+        cargarLearningPaths();
         cargarProfesores();
+        cargarLpProfesoress();
+        cargarActividadesLP();
+        cargarEstudiantes();
+        
+        
         boolean authenticated = false;
         
         
@@ -66,14 +78,59 @@ public class ConsolaProfesor {
     }
 
     private static void cargarProfesores() {
-        List<Profesor> profesores;
+        List<Profesor> profesor;
 		try {
-			profesores = persistenciaUsuarios.cargarProfesores(usuariosFile);
+			profesor = persistenciaUsuarios.cargarProfesores(usuariosFile);
+			for (Profesor profe : profesor) {
+                profesores.put(profe.getUsuarioID(), profe);
+			}
             System.out.println("Informacion cargada" );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+    }
+    public static void cargarLearningPaths() {
+        try {
+            learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void cargarActividadesLP() {
+        try {
+            persistenciaLearningPaths.cargarActividadesDelLearningPath(actividades, learningPaths);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static void cargarEstudiantes() {
+        List<Estudiante> estudiantes;
+        try {
+            estudiantes = persistenciaUsuarios.cargarEstudiantes(usuariosFile);
+            System.out.println("Datos de estudiantes cargados correctamente\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+    public static void cargarActividades() {
+        try {
+            actividades = persistenciaActividades.cargarActividades(actividadesFile);
+            System.out.println("Actividades cargadas correctamente: " + actividades.size() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void cargarLpProfesoress() {
+        try {
+            persistenciaUsuarios.cargarLearningPathsProfesor(learningPaths, profesores);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     private static int iniciarSesion() {
@@ -968,40 +1025,131 @@ private static void crearLearningPath() {
  
 
 
-    private static void revisarEstadoActividad() {
-    	System.out.println("\n");
-        System.out.print("ID de la Actividad: ");
-        String actividadID = scanner.nextLine();
-        System.out.print("ID del Learning Path: ");
-        String learningPathID = scanner.nextLine();
-        profesorActual.revisarEstadoActividad(actividadID, learningPathID);
-    }
+	private static void revisarEstadoActividad() {
+		boolean validInput = false;
+		String actividadID = "";
+		String learningPathID = "";
+	
+		while (!validInput) {
+			System.out.println("\n");
+			System.out.print("ID de la Actividad: ");
+			actividadID = scanner.nextLine();
+	
+			System.out.print("ID del Learning Path: ");
+			learningPathID = scanner.nextLine();
+	
+			LearningPath lp = null;
+			for (LearningPath learningPath : learningPaths) {
+				if (learningPath.getLearningPathID().equals(learningPathID)) {
+					lp = learningPath;
+					break;
+				}
+			}
+	
+			if (lp != null && lp.getActividades().containsKey(actividadID)) {
+				validInput = true;
+				profesorActual.revisarEstadoActividad(actividadID, learningPathID);
+			} else {
+				System.out.println("Learning Path o Actividad no encontrados. Por favor, intente de nuevo.");
+			}
+		}
+	}
 
-    private static void verProgresoEstudiante() {
-    	System.out.println("\n");
-        System.out.print("ID del Estudiante: ");
-        String estudianteID = scanner.nextLine();
-        System.out.print("ID del Learning Path: ");
-        String learningPathID = scanner.nextLine();
-        Map<String, String> progreso = profesorActual.verProgresoEstudiante(estudianteID, learningPathID);
-        System.out.println("Progreso del Estudiante: " + progreso);
-    }
+	private static void verProgresoEstudiante() {
+		boolean validInput = false;
+		String estudianteID = "";
+		String learningPathID = "";
 
-    private static void revisarFeedback() {
-    	System.out.println("\n");
-        System.out.print("ID del Learning Path: ");
-        String learningPathID = scanner.nextLine();
-        List<Map> feedbacks = profesorActual.revisarFeedback(learningPathID);
-        feedbacks.forEach(System.out::println);
-    }
+		while (!validInput) {
+			System.out.println("\n");
+			System.out.print("ID del Estudiante: ");
+			estudianteID = scanner.nextLine();
 
-    private static void calcularRating() {
-    	System.out.println("\n");
-        System.out.print("ID del Learning Path: ");
-        String learningPathID = scanner.nextLine();
-        double rating = profesorActual.calcularRating(learningPathID);
-        System.out.println("Rating promedio: " + rating);
-    }
+			System.out.print("ID del Learning Path: ");
+			learningPathID = scanner.nextLine();
+
+			LearningPath lp = null;
+			for (LearningPath learningPath : learningPaths) {
+				if (learningPath.getLearningPathID().equals(learningPathID)) {
+					lp = learningPath;
+					break;
+				}
+			}
+
+			Estudiante estudiante = null;
+			for (Estudiante est : estudiantes) {
+				if (est.getUsuarioID().equals(estudianteID)) {
+					estudiante = est;
+					break;
+				}
+			}
+
+			if (lp != null && estudiante != null) {
+				validInput = true;
+				Map<String, String> progreso = profesorActual.verProgresoEstudiante(estudianteID, learningPathID);
+				System.out.println("Progreso del Estudiante: " + progreso);
+			} else {
+				System.out.println("Learning Path o Estudiante no encontrados. Por favor, intente de nuevo.");
+			}
+		}
+	}
+
+	private static void revisarFeedback() {
+		boolean validInput = false;
+		String learningPathID = "";
+
+		while (!validInput) {
+			System.out.println("\n");
+			System.out.print("ID del Learning Path: ");
+			learningPathID = scanner.nextLine();
+
+			LearningPath lp = null;
+			for (LearningPath learningPath : learningPaths) {
+				if (learningPath.getLearningPathID().equals(learningPathID)) {
+					lp = learningPath;
+					break;
+				}
+			}
+
+			if (lp != null) {
+				validInput = true;
+				List<Map> feedbacks = profesorActual.revisarFeedback(learningPathID);
+				if (feedbacks == null || feedbacks.isEmpty()) {
+					throw new RuntimeException("No feedback found for the given Learning Path ID.");
+				}
+				feedbacks.forEach(System.out::println);
+			} else {
+				System.out.println("Learning Path not found. Please try again.");
+			}
+		}
+	}
+
+	private static void calcularRating() {
+		boolean validInput = false;
+		String learningPathID = "";
+
+		while (!validInput) {
+			System.out.println("\n");
+			System.out.print("ID del Learning Path: ");
+			learningPathID = scanner.nextLine();
+
+			LearningPath lp = null;
+			for (LearningPath learningPath : learningPaths) {
+				if (learningPath.getLearningPathID().equals(learningPathID)) {
+					lp = learningPath;
+					break;
+				}
+			}
+
+			if (lp != null) {
+				validInput = true;
+				double rating = profesorActual.calcularRating(learningPathID);
+				System.out.println("Rating promedio: " + rating);
+			} else {
+				System.out.println("Learning Path no encontrado. Por favor, intente de nuevo.");
+			}
+		}
+	}
 
     private static void persistData() {
     	
