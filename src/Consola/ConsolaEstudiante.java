@@ -170,26 +170,23 @@ public class ConsolaEstudiante {
         }
     }
 
-    private static void registrarse() throws NombreRepetido {
-        System.out.println("Ingrese un correo electronico: ");
-        String email = scanner.nextLine();
-
-        String usuarioID = "E" + Integer.toString(contador);
-        contador += 1;
-
-        System.out.print("Ingrese su nombre: ");
-        String nombre = scanner.nextLine();
-
-        System.out.print("Ingrese su contraseña: ");
-        String contrasena = scanner.nextLine();
-
-        System.out.print("Ingrese sus intereses: ");
-        String intereses = scanner.nextLine();
-
-        Estudiante estudiante = new Estudiante(usuarioID, nombre, contrasena, email, "Estudiante");
-        estudiante.setIntereses(intereses);
-        persistenciaUsuarios.salvarEstudiante(usuariosFile, estudiante.getUsuarioID(), estudiante.getNombre(), estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
-    }
+	private static void registrarse() throws NombreRepetido {
+	        
+	    	System.out.print("Ingrese su usuario ID: ");
+	        String usuarioID = scanner.nextLine();
+	        System.out.print("Ingrese su nombre: ");
+	        String nombre = scanner.nextLine();
+	        System.out.print("Ingrese su contraseña: ");
+	        String contrasena = scanner.nextLine();
+	        System.out.print("Ingrese su email: ");
+	        String email = scanner.nextLine();
+	        System.out.print("Ingrese sus intereses academicos: ");
+	        String intereses = scanner.nextLine();
+	
+	        Estudiante estudiante = new Estudiante(usuarioID, nombre, contrasena, email, "Estudiante");
+	        estudiante.setIntereses(intereses);
+	        persistenciaUsuarios.salvarEstudiante(usuariosFile, estudiante.getUsuarioID(), estudiante.getNombre(), estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
+	    }
 
     private static boolean authenticar() {
         System.out.print("UsuarioID: ");
