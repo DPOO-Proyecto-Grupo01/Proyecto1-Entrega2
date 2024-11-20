@@ -75,26 +75,35 @@ public class Profesor extends Usuario {
 	    if (tipo.equals("Quiz")) {
 	        double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
 	        @SuppressWarnings("unchecked")
-			List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+			List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
 	        String respuestaCorrecta = parametrosEspecificos.get("RespuestaCorrecta") != null ? (String) parametrosEspecificos.get("RespuestaCorrecta") : "";
 	        Quiz quiz = new Quiz(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
 	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia,
 	                actividadesSeguimiento, preguntas, calificacionMinima, respuestaCorrecta);
+	        
+	        quiz.convertToJSONObject();
+	        
 	        actividad = quiz;
 	
 	    } else if (tipo.equals("Examen")) {
 	        double calificacionMinima = parametrosEspecificos.get("calificacionMinima") != null ? (Double) parametrosEspecificos.get("calificacionMinima") : 0.0;
 	        @SuppressWarnings("unchecked")
-			List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+			List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
 	        Examen examen = new Examen(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
 	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, calificacionMinima);
+	       
+	        examen.convertToJSONObject();
+	        
 	        actividad = examen;
 	
 	    } else if (tipo.equals("Encuesta")) {
 	        @SuppressWarnings("unchecked")
-			List<String> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<String>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+			List<String> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<String>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
 	        Encuesta encuesta = new Encuesta(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
 	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas);
+	        
+	        encuesta.convertToJSONObject();
+	        
 	        actividad = encuesta;
 	
 	    } else if (tipo.equals("RecursoEducativo")) {
@@ -102,15 +111,21 @@ public class Profesor extends Usuario {
 	        String linkRecurso = parametrosEspecificos.get("linkRecurso") != null ? (String) parametrosEspecificos.get("linkRecurso") : "";
 	        RecursoEducativo recurso = new RecursoEducativo(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
 	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, tipoRecurso, linkRecurso);
+	        
+	        recurso.convertToJSONObject();
+	        
 	        actividad = recurso;
 	        
 	    } else if (tipo.equals("Tarea")) { 
 	        @SuppressWarnings("unchecked")
-			List<Pregunta> preguntas = parametrosEspecificos.get("Preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("Preguntas") : new ArrayList<>();
+			List<Pregunta> preguntas = parametrosEspecificos.get("preguntas") != null ? (List<Pregunta>) parametrosEspecificos.get("preguntas") : new ArrayList<>();
 	        String instrucciones = parametrosEspecificos.get("instrucciones") != null ? (String) parametrosEspecificos.get("instrucciones") : "";
 	        String estado = parametrosEspecificos.get("estado") != null ? (String) parametrosEspecificos.get("estado") : "Pendiente";
 	        Tarea tarea = new Tarea(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,
 	                esObligatoria, fechaLimite, resenas, resultado, calificacion, actividadesPrevia, actividadesSeguimiento, preguntas, instrucciones, estado);
+	        
+	        tarea.convertToJSONObject();
+	        
 	        actividad = tarea;
 	
 	    }

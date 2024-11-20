@@ -1,5 +1,6 @@
 package Actividades;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Collection;
@@ -23,6 +24,8 @@ public class Tarea extends Actividad {
 		this.estado = estado;
 		this.instrucciones = instrucciones;
 		this.preguntas = preguntas;	
+		
+	
 
 	}
 	
@@ -33,7 +36,42 @@ public class Tarea extends Actividad {
 
 	@Override
 	public JSONObject convertToJSONObject() {
-		return null;
+        JSONObject newObject = new JSONObject();
+        newObject.put("actividadID", actividadID);
+        newObject.put("descripcion", descripcion);
+        newObject.put("objetivo", objetivo);
+        newObject.put("nivelDificultad", nivelDificultad);
+        newObject.put("duracionEsperada", duracionEsperada);
+        newObject.put("esObligatoria", esObligatoria);
+        newObject.put("fechaLimite", fechaLimite.getTime());
+        newObject.put("resenas", resenas);
+        newObject.put("calificacion", calificacion);
+        newObject.put("resultado", resultado);
+        newObject.put("actividadesPrevias", actividadesPrevias);
+        newObject.put("actividadesSeguimiento", actividadesSeguimiento);
+        newObject.put("tipoActividad", tipoActividad);
+        newObject.put("estado", estado);
+        newObject.put("instrucciones", instrucciones);
+        
+		JSONArray preguntasArray = new JSONArray();
+		for (Pregunta pregunta : preguntas) {
+			JSONObject preguntaJSON = new JSONObject();
+			preguntaJSON.put("pregunta", pregunta.pregunta);
+
+			JSONArray opcionesArray = new JSONArray();
+			for (String opcion : pregunta.opciones) {
+				opcionesArray.put(opcion);
+			}
+			preguntaJSON.put("opciones", opcionesArray);
+
+			preguntasArray.put(preguntaJSON);
+		}
+        
+        newObject.put("preguntas", preguntas);
+        newObject.put("opciones", opciones);
+        
+        return newObject;
+       
 	}
 
 	public String getDescripcion() {

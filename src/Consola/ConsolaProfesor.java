@@ -22,6 +22,7 @@ import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Exceptions.NombreRepetido;
 
 public class ConsolaProfesor {
     
@@ -990,7 +991,7 @@ public class ConsolaProfesor {
     
 
 
-private static void crearLearningPath() {
+private static void crearLearningPath() throws NombreRepetido {
     System.out.print("Ingrese el id del Learning Path: ");
     String LearningPathID = scanner.nextLine();
     System.out.print("Ingrese el titulo del Learning Path: ");
@@ -1017,6 +1018,9 @@ private static void crearLearningPath() {
     System.out.print("Ingrese los intereses del Learning Path: ");
     String interes = scanner.nextLine();
     intereses.add(interes);
+    
+    profesorActual.crearLearningPath(LearningPathID, titulo, descripcion, objetivos, 
+    		nivelDificultad, duracion, profesorID, actividadesID, intereses);
 
     persistenciaLearningPaths.salvarLearningPath(learningPathsFile, LearningPathID,
             titulo, descripcion, objetivos, nivelDificultad, duracion, profesorID,
