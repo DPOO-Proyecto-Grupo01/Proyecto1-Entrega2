@@ -108,7 +108,6 @@ public class ConsolaProfesor {
     }
     
     private static void cargarEstudiantes() {
-        List<Estudiante> estudiantes;
         try {
             estudiantes = persistenciaUsuarios.cargarEstudiantes(usuariosFile);
             System.out.println("Datos de estudiantes cargados correctamente\n");
@@ -492,6 +491,7 @@ public class ConsolaProfesor {
 		    }
 		}
 		
+		
 		System.out.print("Actividades previas: ");
 		List<String> actividadesPrevias = new ArrayList<>();
 		String actividadPrevia = scanner.nextLine();
@@ -538,13 +538,21 @@ public class ConsolaProfesor {
 		String learningPathID = scanner.nextLine();
 		String tipo = "Examen";
 		
+		System.out.print("Calificación mínima: ");
+		Double calificacionMinima = scanner.nextDouble();
 		HashMap<String, Object> parametrosEspecificos = new HashMap<>();
 		parametrosEspecificos.put("Preguntas", preguntas);
+		parametrosEspecificos.put("calificacionMinima", calificacionMinima);
+		
+		System.out.println(parametrosEspecificos.keySet());
+		System.out.println(parametrosEspecificos.values());
 		
 		Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
 		        duracionEsperada, esObligatoria, fecha, resenas,
 		        resultado, calificacion, tipo, learningPathID, actividadesPrevias, actividadesSeguimiento,
 		        parametrosEspecificos, actividadPrevia);
+		
+		
 		
 		persistenciaActividades.salvarActividad(actividadesFile, actividad);
 		
@@ -689,8 +697,13 @@ public class ConsolaProfesor {
 		String learningPathID = scanner.nextLine();
 		String tipo = "Quiz";
 		
+		
+		System.out.print("Calificación mínima: ");
+		Double calificacionMinima = scanner.nextDouble();
 		HashMap<String, Object> parametrosEspecificos = new HashMap<>();
 		parametrosEspecificos.put("Preguntas", preguntas);
+		parametrosEspecificos.put("calificacionMinima", calificacionMinima);
+		
 		
 		Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
 		        duracionEsperada, esObligatoria, fecha, resenas,
@@ -974,8 +987,14 @@ public class ConsolaProfesor {
 		String learningPathID = scanner.nextLine();
 		String tipo = "Tarea";
 
-            HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-            parametrosEspecificos.put("Preguntas", preguntas);
+        HashMap<String, Object> parametrosEspecificos = new HashMap<>();
+        System.out.print("Ingrese las instrucciones de la tarea: ");
+        String instrucciones = scanner.nextLine();
+        System.out.print("Ingrese el estado de la tarea: ");
+        String estado = scanner.nextLine();
+        parametrosEspecificos.put("Preguntas", preguntas);
+        parametrosEspecificos.put("Instrucciones", instrucciones);
+        parametrosEspecificos.put("Estado", estado);
 
             Actividad actividad = profesorActual.crearActividad(actividadID, descripcion, objetivo, nivelDificultad,
                      duracionEsperada, esObligatoria, fecha, resenas,

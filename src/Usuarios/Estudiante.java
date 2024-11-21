@@ -362,7 +362,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		
 	
 	 public double getProgresoLearningPath(String learningPathID) throws LearningPathNoInscrito {
-	        LearningPath learningPath = learningPathsInscritos.get(learningPathID);
+	        LearningPath learningPath = learningPathsInscritos.get(learningPathID+ "_" + this.usuarioID);
 	        if (learningPath == null) {
                 throw new LearningPathNoInscrito("Learning Path no inscrito");
                 }

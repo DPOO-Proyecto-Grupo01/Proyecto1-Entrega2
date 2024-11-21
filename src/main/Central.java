@@ -200,9 +200,7 @@ public class Central {
 					date, "reseña", 0, 0, "Quiz", "LP106", actividadesPrevias, actividadesSeguimiento,
 					atributosEspecificos, "A103");
 
-			if (!actividades.contains(actividadCreada)) {
-				persistenciaActividades.salvarActividad("actividades.json", actividadCreada);
-			}
+			
 
 			System.out.println("Actividad creada por el profesor: " + actividadCreada.getActividadID());
 			System.out.println("Numero de actividades en el learning Path: "

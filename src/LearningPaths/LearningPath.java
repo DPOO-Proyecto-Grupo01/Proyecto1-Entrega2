@@ -32,6 +32,7 @@ public class LearningPath {
 	public Map<String, Progreso> progresoEstudiante= new HashMap<>();
 	public HashMap<String, Estudiante> estudiantesInscritos = new HashMap<>();
 	public static HashMap<String, LearningPath> learningPathsEstudiantes = new HashMap<>();
+	private int exitosas;
 	
 	
 //////////////////////
@@ -223,15 +224,7 @@ public class LearningPath {
 
 
 	public double actualizarProgreso(Progreso progreso, List<Actividad> actividades) {
-		int exitosas = 0;
-		
-		for (Actividad actividad : actividades) {
-			
-			if ( actividad.getEstado() != null && actividad.getEstado().equals("Exitoso") ){
-				exitosas++;
-			}
-		}
-		
+		exitosas+=1;
 		setProgreso(progreso);
 		double porcentajeExitosas = ((double)exitosas/actividades.size());
 		

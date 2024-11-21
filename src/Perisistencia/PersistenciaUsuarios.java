@@ -156,18 +156,17 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
 	
 	public void cargarLearningPathsProfesor(List<LearningPath> learningPaths, Map<String, Profesor> profesoresParametro ) throws Exception {
-		System.out.println("Cargando Learning Paths de Profesores");
+		
 		for (Profesor profesor : profesoresParametro.values()) {
 			
 			Map<String, LearningPath> lpProfesorActual = new HashMap<>();
 			
 			for (LearningPath lp : learningPaths) {
-				System.out.println("learning path: "+lp);
 				
 				
 				if (lp.getProfesorID().equals(profesor.getUsuarioID())){
 					profesor.learningPathsCreados.put(lp.getLearningPathID(),lp);
-					System.out.println("Learning Paths: "+ profesor.learningPathsCreados);
+					
 					lpProfesorActual.put(lp.getLearningPathID(),lp);
 				}
 			

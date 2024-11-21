@@ -270,7 +270,7 @@ public class ConsolaEstudiante {
 						List<Pregunta> preguntas = ((Quiz) actividad).getPreguntas();
 						System.out.println("Preguntas de la actividad (Quiz):");
 						for (Pregunta pregunta : preguntas) {
-							
+							System.out.println(pregunta.getPregunta());
 							System.out.print("Ingrese su respuesta: ");
 							String respuesta = scanner.nextLine();
 							System.out.println("Su respuesta: " + respuesta + "\n");
@@ -279,7 +279,7 @@ public class ConsolaEstudiante {
 						List<Pregunta> preguntas = ((Examen) actividad).getPreguntas();
 						System.out.println("Preguntas de la actividad (Examen):");
 						for (Pregunta pregunta : preguntas) {
-							
+							System.out.println(pregunta.getPregunta());
 							System.out.print("Ingrese su respuesta: ");
 							String respuesta = scanner.nextLine();
 							System.out.println("Su respuesta: " + respuesta + "\n");
@@ -288,7 +288,7 @@ public class ConsolaEstudiante {
 						List<Pregunta> preguntas = ((Tarea) actividad).getPreguntas();
 						System.out.println("Preguntas de la actividad (Tarea):");
 						for (Pregunta pregunta : preguntas) {
-							
+							System.out.println(pregunta.getPregunta());
 							System.out.print("Ingrese su respuesta: ");
 							String respuesta = scanner.nextLine();
 							System.out.println("Su respuesta: " + respuesta + "\n");
@@ -303,8 +303,6 @@ public class ConsolaEstudiante {
                 System.out.println("Learning Path o Actividad no encontrados. Por favor, intente de nuevo.");
             }
         }
-        
-        //DA las preguntas de dicha actividad
         
         
 
