@@ -179,5 +179,27 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 		
 	}
 	
+	public void cargarLearningPathsEstudiante(List<LearningPath> learningPaths, Map<String, Estudiante> estudiantesParametro ) throws Exception {
+			
+			for (Estudiante estudiante : estudiantesParametro.values()) {
+				
+				Map<String, LearningPath> lpEstudianteActual = new HashMap<>();
+				
+				for (LearningPath lp : learningPaths) {
+					
+					
+					if (lp.getLearningPathID().contains(estudiante.getUsuarioID())){
+						System.out.println("Se agrego el lp"+lp.getLearningPathID()+" al estudiante"+estudiante);
+						estudiante.learningPathsInscritos.put(lp.getLearningPathID(),lp);
+						
+						lpEstudianteActual.put(lp.getLearningPathID(),lp);
+					}
+			
 
+				}
+			}
+	}
 }
+
+		
+	

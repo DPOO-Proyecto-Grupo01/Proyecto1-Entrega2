@@ -39,17 +39,19 @@ public class ConsolaEstudiante {
     private static List<LearningPath> learningPaths;
     private static Map<String, Profesor> profesores = new HashMap<>();
     private static List<Actividad> actividades;
+    private static List<Estudiante> estudiantes;
 
     private static int contador = 1;
 
     public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
         cargarActividades();
         cargarLearningPaths();
-        cargarProfesores();
-        cargarLpProfesoress();
         cargarActividadesLP();
+        cargarProfesores();
         cargarEstudiantes();
-
+        cargarLpEstudiantes();
+        cargarLpProfesoress();
+        
         boolean authenticated = false;
 
         if (iniciarSesion() == 1) {
@@ -78,7 +80,6 @@ public class ConsolaEstudiante {
     } 
 
     private static void cargarEstudiantes() {
-        List<Estudiante> estudiantes;
         try {
             estudiantes = persistenciaUsuarios.cargarEstudiantes(usuariosFile);
             System.out.println("Datos de estudiantes cargados correctamente\n");
@@ -107,6 +108,19 @@ public class ConsolaEstudiante {
         }
     }
 
+	public static void cargarLpEstudiantes() {
+		Map<String, Estudiante> estudiantesMap = new HashMap<>();
+		try {
+			for (Estudiante estudiante : estudiantes) {
+				estudiantesMap.put(estudiante.getUsuarioID(), estudiante);
+			}
+			System.out.println("Estudiantes cargados "+estudiantes);
+			System.out.println("lps cargados "+learningPaths);
+			persistenciaUsuarios.cargarLearningPathsEstudiante(learningPaths, estudiantesMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
     public static void cargarActividades() {
         try {
             actividades = persistenciaActividades.cargarActividades(actividadesFile);
@@ -194,12 +208,12 @@ public class ConsolaEstudiante {
         System.out.print("Contraseña: ");
         String contrasena = scanner.nextLine();
 
-        List<Estudiante> estudiantes;
         try {
-            estudiantes = persistenciaUsuarios.cargarEstudiantes(usuariosFile);
             for (Estudiante estudiante : estudiantes) {
                 if (estudiante.getUsuarioID().equals(usuarioID) && estudiante.getContraseña().equals(contrasena)) {
                     estudianteActual = estudiante;
+                    System.out.println("Bienvenido " + estudiante);
+                    System.out.println("Sus lps son"+ estudiante.getLearningPathsInscritos());
                     return true;
                 }
             }
@@ -253,11 +267,12 @@ public class ConsolaEstudiante {
 
             System.out.print("Ingrese el ID de la actividad que desea completar: ");
             actividadID = scanner.nextLine();
-
-            LearningPath lp = estudianteActual.getLearningPathsInscritos().get(learningPathID);
-
-			if (lp != null && lp.getActividades().containsKey(actividadID)) {
-				Actividad actividad = lp.getActividades().get(actividadID);
+            
+            LearningPath lp = estudianteActual.getLearningPathsInscritos().get(learningPathID+"_"+estudianteActual.getUsuarioID());
+            System.out.println("Actividades "+lp.getActividades());
+            
+			if (lp != null && lp.getActividades().containsKey(actividadID+"_"+estudianteActual.getUsuarioID())) {
+				Actividad actividad = lp.getActividades().get(actividadID+"_"+estudianteActual.getUsuarioID());
 				if (actividad != null) {
 					validInput = true;
 
@@ -332,5 +347,13 @@ public class ConsolaEstudiante {
     private static void persistData() {
         persistenciaUsuarios.salvarEstudiante(usuariosFile, estudianteActual.getUsuarioID(), estudianteActual.getNombre(), estudianteActual.getContraseña(), estudianteActual.getEmail(), estudianteActual.getTipoUsuario());
     }
+    
+	public static String getLearningPathsFile() {
+		return learningPathsFile;
+	}
+	
+	public static PersistenciaLearningPaths getPersistenciaLearningPaths() {
+		return persistenciaLearningPaths;
+	}
 }
  

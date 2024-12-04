@@ -13,6 +13,9 @@ import java.util.Map;
 import java.time.format.DateTimeFormatter;
 
 import Actividades.*;
+import Consola.ConsolaEstudiante;
+import LearningPaths.LearningPath;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 

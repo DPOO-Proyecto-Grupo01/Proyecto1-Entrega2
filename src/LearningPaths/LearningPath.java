@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import Actividades.Actividad;
 import Actividades.Quiz;
 import Usuarios.Estudiante;
@@ -241,7 +243,20 @@ public class LearningPath {
 		
 	}
 
-	
+	public JSONObject toJSON() {
+		// TODO Ver si falta algun atributo, yo segui lo que vi en learning_paths.json
+		JSONObject objeto = new JSONObject();
+		objeto.put("descripcion", descripcion);
+		objeto.put("actividadesID", actividadesID);
+		objeto.put("nivelDificultad", nivelDificultad);
+		objeto.put("objetivos", objetivos);
+		objeto.put("titulo", titulo);
+		objeto.put("duracion", duracionMinutos);
+		objeto.put("LearningPathID", LearningPathID);
+		objeto.put("intereses", intereses);
+		objeto.put("profesorID", profesorID);
+		return objeto;
+	}
 	
 	
 	public String obtenerDetalles() {

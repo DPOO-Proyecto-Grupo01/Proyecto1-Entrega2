@@ -21,9 +21,10 @@ import Exceptions.YaSeCompleto;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
+import Perisistencia.PersistenciaLearningPaths;
 
 public class Estudiante extends Usuario {
-	private Map<String,LearningPath> learningPathsInscritos = new HashMap<>();
+	public Map<String,LearningPath> learningPathsInscritos = new HashMap<>();
 	public String estudiante = "Estudiante";
 	public HashMap<String,Profesor> profesores = new HashMap<>();
 	public Map<LearningPath, Progreso> progresoLearningPath = new HashMap<>();
@@ -121,7 +122,15 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
             this.actividades.put(actividadID, actividad);
             map.put("Actividad " + actividad.getActividadID(), actividad.getDescripcion());
         }
-
+        
+        PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
+        
+        try {
+        persistenciaLearningPaths.actualizarLearningPathEstudiante(learningPathEstudiante);
+        }
+		catch (Exception e) {
+			e.printStackTrace();
+		}
         return map;
 
     } catch (LearningPathNoInscrito e) {
@@ -285,7 +294,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadIDEstudiante)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
         }
-		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado() == "Exitoso") {
+		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado().equals("Exitoso")) {
 			throw new YaSeCompleto("La actividad ya ha sido completada");
 		}
         Map<String, Actividad> mapa = learningPath.getActividades();
@@ -433,6 +442,8 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		profesores.put(profesorID, profesor);
 		
 	}
+	
+	
 	
 	
 	

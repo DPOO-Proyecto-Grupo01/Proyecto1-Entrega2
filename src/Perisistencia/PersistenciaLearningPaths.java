@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Actividades.Actividad;
+import Consola.ConsolaEstudiante;
 import LearningPaths.LearningPath;
 import Usuarios.Profesor;
  
@@ -58,6 +59,34 @@ public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 	    return lista;
 	}
 
+
+	public void actualizarLearningPathEstudiante(LearningPath lp) throws Exception {
+		List<LearningPath> lps = cargarLearningPath(ConsolaEstudiante.getLearningPathsFile());
+		boolean found = false;
+		for (int i = 0; i < lps.size(); i++) {
+			if (lps.get(i).getLearningPathID().equals(lp.getLearningPathID())) {
+				lps.set(i, lps.get(i));
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			lps.add(lp);
+		}
+		salvarListaLearningPaths(lps);
+	}
+
+	public void salvarListaLearningPaths(List<LearningPath> lps) throws Exception {
+		JSONArray jsonArray = new JSONArray();
+		for (LearningPath lp : lps) {
+			jsonArray.put(lp.toJSON());
+		}
+		try{
+			Files.write(Paths.get(ConsolaEstudiante.getLearningPathsFile()), jsonArray.toString().getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void salvarLearningPath(String archivo, String LearningPathID, String titulo, String descripcion, String objetivos,
 			int nivelDificultad, int duracion, String profesorID, List<String> actividadesID, List<String> intereses ) {
