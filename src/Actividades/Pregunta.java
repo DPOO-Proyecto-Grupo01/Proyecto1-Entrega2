@@ -12,4 +12,8 @@ public class Pregunta{
 		this.pregunta = pregunta;
 		this.opciones = opciones;
 	}
+	public String getPregunta() {
+		// TODO Auto-generated method stub
+		return pregunta;
+	}
 }

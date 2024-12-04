@@ -24,7 +24,6 @@ import Usuarios.Profesor;
 import Usuarios.Usuario;
 
 
-
 public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 	
 	

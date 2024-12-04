@@ -38,6 +38,7 @@ public class ConsolaProfesor {
     private static Map<String, Profesor> profesores = new HashMap<>();
     private static List<Actividad> actividades;
     private static List<Estudiante> estudiantes;
+    private static List<Profesor> profesoresLista;
     
     
     public static void main(String[] args) throws Exception { 
@@ -56,6 +57,7 @@ public class ConsolaProfesor {
             while (!authenticated) {
                 if (authenticar()) {
                     authenticated = true;
+                    
                     menu();
                 } else {
                     System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
@@ -79,10 +81,9 @@ public class ConsolaProfesor {
     }
 
     private static void cargarProfesores() {
-        List<Profesor> profesor;
 		try {
-			profesor = persistenciaUsuarios.cargarProfesores(usuariosFile);
-			for (Profesor profe : profesor) {
+			profesoresLista = persistenciaUsuarios.cargarProfesores(usuariosFile);
+			for (Profesor profe : profesoresLista) {
                 profesores.put(profe.getUsuarioID(), profe);
 			}
             System.out.println("Informacion cargada" );
@@ -127,6 +128,11 @@ public class ConsolaProfesor {
     
     public static void cargarLpProfesoress() {
         try {
+        	System.out.println("Cargando Learning Paths de profesores...");
+        	for (Profesor profesor : profesores.values()) {
+        	}
+        	for (LearningPath learningPath : learningPaths) {
+        	}
             persistenciaUsuarios.cargarLearningPathsProfesor(learningPaths, profesores);
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,8 +166,8 @@ public class ConsolaProfesor {
         
         List<Profesor> profesores;
 		try {
-			profesores = persistenciaUsuarios.cargarProfesores(usuariosFile);
-			for (Profesor profesor : profesores) {
+			
+			for (Profesor profesor : profesoresLista) {
 	            if (profesor.getUsuarioID().equals(usuarioID) && profesor.getContraseña().equals(contrasena)) {
 	                profesorActual = profesor;
 	                return true;

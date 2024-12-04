@@ -34,8 +34,6 @@ public class Estudiante extends Usuario {
 		super(UsuarioID, nombre, contraseña, email, tipoUsuario);
         
     }
-	
-	
 
 	public HashMap<String, Actividad> getActividades() {
 		return actividades;
@@ -91,10 +89,10 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         Map<String,Actividad> actividadesLPE= new HashMap<>();
 
 		for (String actividadID : learningPath.getActividadesID()) {
-			System.out.println("ActividadID: " + actividadID);
+
 			Actividad actividad = learningPath.actividades.get(actividadID);
-			System.out.println("Actividad: " + actividad);
-			Actividad actividadEstudiante = clonarActividad(actividad.getTipoActividad(), actividad, this.usuarioID);
+
+			Actividad actividadEstudiante = clonarActividad(actividad.getTipoActividad(), actividad, this.usuarioID); 
 			actividadEstudiante.setActividadPrevia(actividad.getActividadPrevia()+"_"+this.usuarioID);
 			actividadesLPE.put(actividadEstudiante.getActividadID(), actividadEstudiante);
 			
@@ -296,6 +294,9 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         ArrayList<String> actividadesPrevias2 = new ArrayList<String>();
         
         for (String actividadPrevia : actividadesPrevias) {
+			if (actividadPrevia == null) {
+				System.out.println("No hay actividades previas");
+			}
         	Actividad act = mapa.get(actividadPrevia);
             if (act.getEstado()== null ) {
             	actividadesPrevias2.add(act.getActividadID());

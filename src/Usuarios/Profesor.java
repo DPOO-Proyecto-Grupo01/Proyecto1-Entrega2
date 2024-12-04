@@ -37,7 +37,6 @@ public class Profesor extends Usuario {
     }
 
     
-   
     @Override
     public String getTipoUsuario() {
         return this.profesor;
@@ -69,6 +68,7 @@ public class Profesor extends Usuario {
 			    throw new NombreRepetido("El nombre"+ actividadID + "ya");
 		}
 		else {
+			
 	    // Crea una actividad
 	    Actividad actividad = null;
 	    
@@ -133,7 +133,7 @@ public class Profesor extends Usuario {
 	    if (actividad != null) {
 	        mapaActividades.put(actividadID, actividad);
 	        System.out.println("Actividad creada con éxito"+ actividad);
-	        
+	        System.out.println("profesor: "+ this);
 	        LearningPath lp = learningPathsCreados.get(learningPathID);
 	        System.out.println("Learning Path creados: " + learningPathsCreados);
 	        System.out.println("Learning Path ID: " + learningPathID);
@@ -165,7 +165,7 @@ public class Profesor extends Usuario {
 	    } else {
 	        // Handle the case where actividad is null, if necessary
 	    }
-	}
+	} 
 	
 
 

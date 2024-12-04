@@ -50,10 +50,6 @@ public class ConsolaEstudiante {
         cargarActividadesLP();
         cargarEstudiantes();
 
-        for (Profesor profesor : profesores.values()) {
-            System.out.println("El profesor: " + profesor.getUsuarioID() + " tiene estos lps: " + profesor.getLearningPathsCreados().keySet() + "\n");
-        }
-
         boolean authenticated = false;
 
         if (iniciarSesion() == 1) {
@@ -79,7 +75,7 @@ public class ConsolaEstudiante {
                 }
             }
         }
-    }
+    } 
 
     private static void cargarEstudiantes() {
         List<Estudiante> estudiantes;
@@ -89,7 +85,7 @@ public class ConsolaEstudiante {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    } 
 
     public static void cargarLearningPaths() {
         try {
