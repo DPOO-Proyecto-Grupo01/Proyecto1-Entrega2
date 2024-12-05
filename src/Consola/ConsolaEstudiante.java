@@ -268,11 +268,11 @@ public class ConsolaEstudiante {
             System.out.print("Ingrese el ID de la actividad que desea completar: ");
             actividadID = scanner.nextLine();
             
-            LearningPath lp = estudianteActual.getLearningPathsInscritos().get(learningPathID+"_"+estudianteActual.getUsuarioID());
+            LearningPath lp = estudianteActual.getLearningPathsInscritos().get(learningPathID);
             System.out.println("Actividades "+lp.getActividades());
             
-			if (lp != null && lp.getActividades().containsKey(actividadID+"_"+estudianteActual.getUsuarioID())) {
-				Actividad actividad = lp.getActividades().get(actividadID+"_"+estudianteActual.getUsuarioID());
+			if (lp != null && lp.getActividades().containsKey(actividadID)) {
+				Actividad actividad = lp.getActividades().get(actividadID);
 				if (actividad != null) {
 					validInput = true;
 

@@ -21,6 +21,7 @@ import Exceptions.YaSeCompleto;
 import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
+import Perisistencia.PersistenciaActividades;
 import Perisistencia.PersistenciaLearningPaths;
 
 public class Estudiante extends Usuario {
@@ -118,15 +119,17 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         for (String actividadID : actividades) {
         	
             Actividad actividad = learningPathEstudiante.actividades.get(actividadID);
-            System.out.println("Actividad: " + actividad.getActividadID());
+            
             this.actividades.put(actividadID, actividad);
             map.put("Actividad " + actividad.getActividadID(), actividad.getDescripcion());
         }
         
         PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
+        PersistenciaActividades persistenciaActividades = new PersistenciaActividades();
         
         try {
         persistenciaLearningPaths.actualizarLearningPathEstudiante(learningPathEstudiante);
+        persistenciaActividades.salvarActividad(profesorID, null);
         }
 		catch (Exception e) {
 			e.printStackTrace();
@@ -162,6 +165,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	}
 	
 	//Metodo para clonar actividades
+	@SuppressWarnings("null")
 	public Actividad clonarActividad(String tipoActividad, Actividad actividad, String estudianteID) {
 	    Actividad actividadEstudiante = null;
 
@@ -169,6 +173,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	        Quiz quiz = (Quiz) actividad;
 	        List<String> actividadesPrevias = new ArrayList<>();
 	        for (String actividadPrevia : quiz.getActividadesPrevias()) {
+	        	if (!(actividadPrevia == null)|| !(actividadPrevia.equals(""))) {
                 actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
                 }
 	        actividadEstudiante = new Quiz(
@@ -188,10 +193,12 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            quiz.getCalificacionMinima(),
 	            quiz.getRespuestaCorrecta()
 	        );
-	    } else if (tipoActividad.equals("Examen")) {
+	    }} else if (tipoActividad.equals("Examen")) {
 	        Examen examen = (Examen) actividad;
 	        List<String> actividadesPrevias = new ArrayList<>();
+	        
 	        for (String actividadPrevia : examen.getActividadesPrevias()) {
+	        	if (!(actividadPrevia == null)|| !(actividadPrevia.equals(""))) {
                 actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
                 	}
 	        
@@ -211,10 +218,11 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            examen.getPreguntas(),
 	            examen.getCalificacionMinima()
 	        );
-	    } else if (tipoActividad.equals("Encuesta")) {
+	        } } else if (tipoActividad.equals("Encuesta")) {
 	        Encuesta encuesta = (Encuesta) actividad;
 	        List<String> actividadesPrevias = new ArrayList<>();
 	        for (String actividadPrevia : encuesta.getActividadesPrevias()) {
+	        if (!(actividadPrevia == null)|| !(actividadPrevia.equals(""))) {
                 actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
                 }
 	        actividadEstudiante = new Encuesta(
@@ -232,10 +240,11 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            encuesta.getActividadesSeguimiento(),
 	            encuesta.getPreguntas()
 	        );
-	    } else if (tipoActividad.equals("Recurso Educativo")) {
+	        }} else if (tipoActividad.equals("Recurso Educativo")) {
 	        RecursoEducativo recurso = (RecursoEducativo) actividad;
 	        List<String> actividadesPrevias = new ArrayList<>();
 	        for (String actividadPrevia : recurso.getActividadesPrevias()) {
+	        	if (!(actividadPrevia == null)|| !(actividadPrevia.equals(""))) {
 				actividadesPrevias.add(actividadPrevia + "_" + estudianteID);
 			}
 	        actividadEstudiante = new RecursoEducativo(
@@ -254,7 +263,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	            recurso.getTipoRecurso(),
 	            recurso.getLinkRecusro()
 	        );
-	    } else if (tipoActividad.equals("Tarea")) {
+	    } } else if (tipoActividad.equals("Tarea")) {
 	        Tarea tarea = (Tarea) actividad;
 	        List<String> actividadesPrevias = new ArrayList<>();
 	        for (String actividadPrevia : tarea.getActividadesPrevias()) {
@@ -294,7 +303,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         if (learningPath == null || !learningPath.getActividades().containsKey(actividadIDEstudiante)) {
             throw new ActividadNoPertenece("La actividad no pertenece al learning path");
         }
-		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado().equals("Exitoso")) {
+		if (learningPath.getActividades().get(actividadIDEstudiante).getEstado()==("Exitoso")) {
 			throw new YaSeCompleto("La actividad ya ha sido completada");
 		}
         Map<String, Actividad> mapa = learningPath.getActividades();
@@ -303,16 +312,19 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         ArrayList<String> actividadesPrevias2 = new ArrayList<String>();
         
         for (String actividadPrevia : actividadesPrevias) {
-			if (actividadPrevia == null) {
+        	System.out.println("Actividades previas: " + actividadPrevia);
+			if (actividadPrevia == null||actividadPrevia.equals("")) {
 				System.out.println("No hay actividades previas");
 			}
+			else{
         	Actividad act = mapa.get(actividadPrevia);
             if (act.getEstado()== null ) {
             	actividadesPrevias2.add(act.getActividadID());
+                System.out.println("Tenga cuidado no ha realizado las actividades previas: " + actividadesPrevias2);
                 
-            }
+            }}
         }
-        System.out.println("Tenga cuidado no ha realizado las actividades previas: " + actividadesPrevias2);
+
 
         Actividad actividadPrevia = learningPath.getActividades().get(actividad.getActividadPrevia());
         
