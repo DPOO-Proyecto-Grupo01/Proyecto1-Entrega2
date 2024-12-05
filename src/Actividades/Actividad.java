@@ -247,4 +247,25 @@ public abstract class Actividad {
 		return null;
 	}
 	
+	public JSONObject toJSON() {
+		// TODO Ver si falta algun atributo, yo segui lo que vi en learning_paths.json
+		JSONObject objeto = new JSONObject();
+		objeto.put("descripcion", descripcion);
+		objeto.put("calificacion", calificacion);
+		objeto.put("nivelDificultad", nivelDificultad);
+		objeto.put("resultado", resultado);
+		objeto.put("PreguntasAbiertas", preguntas);
+		objeto.put("tipoActividad", tipoActividad);
+		objeto.put("objetivo", objetivo);
+		objeto.put("actividadesPrevias", actividadesPrevias);
+		objeto.put("actividadesSeguimiento", actividadesSeguimiento);
+		objeto.put("fechaLimite", fechaLimite);
+		objeto.put("duracionEsperada", duracionEsperada);
+		objeto.put("resenas", actividadesSeguimiento);
+		objeto.put("actividadID", actividadID);
+		objeto.put("esObligatoria", esObligatoria);
+		return objeto;
+	}
+	
+	
 }

@@ -94,7 +94,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 
 			Actividad actividad = learningPath.actividades.get(actividadID);
 
-			Actividad actividadEstudiante = clonarActividad(actividad.getTipoActividad(), actividad, this.usuarioID); 
+			Actividad actividadEstudiante = clonarActividad(actividad.getTipoActividad(), actividad, this.usuarioID);
 			actividadEstudiante.setActividadPrevia(actividad.getActividadPrevia()+"_"+this.usuarioID);
 			actividadesLPE.put(actividadEstudiante.getActividadID(), actividadEstudiante);
 			
@@ -129,16 +129,18 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         
         try {
         persistenciaLearningPaths.actualizarLearningPathEstudiante(learningPathEstudiante);
-        persistenciaActividades.salvarActividad(profesorID, null);
-        }
-		catch (Exception e) {
-			e.printStackTrace();
+		for (Actividad actividad : actividadesLPE.values()) {
+			System.out.println("Actividades: " + actividad);
+			persistenciaActividades.actualizarActividadesEstudiante(actividad);
 		}
+	} catch (Exception e) {
+		e.printStackTrace();
+        }
         return map;
 
     } catch (LearningPathNoInscrito e) {
         throw e;   
-    }
+    } 
 }
 
 	public LearningPath clonarLearningPath(LearningPath lp, String estudianteID) {

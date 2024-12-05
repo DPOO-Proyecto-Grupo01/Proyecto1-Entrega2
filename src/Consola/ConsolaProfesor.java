@@ -49,7 +49,7 @@ public class ConsolaProfesor {
         cargarActividadesLP();
         cargarEstudiantes();
         
-        
+       
         boolean authenticated = false;
         
         
@@ -282,7 +282,7 @@ public class ConsolaProfesor {
 		    } catch (NumberFormatException e) {
 		        System.out.println("Por favor, ingrese un número válido entre 0 y 10.");
 		    }
-		}
+		} 
 		
 		int duracionEsperada = -1;
 		while (duracionEsperada < 0) {

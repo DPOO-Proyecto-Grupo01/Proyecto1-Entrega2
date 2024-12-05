@@ -50,7 +50,6 @@ public class Tarea extends Actividad {
         newObject.put("actividadesPrevias", actividadesPrevias);
         newObject.put("actividadesSeguimiento", actividadesSeguimiento);
         newObject.put("tipoActividad", tipoActividad);
-        newObject.put("estado", estado);
         newObject.put("instrucciones", instrucciones);
         
 		JSONArray preguntasArray = new JSONArray();
@@ -70,9 +69,16 @@ public class Tarea extends Actividad {
         newObject.put("preguntas", preguntas);
         newObject.put("opciones", opciones);
         
+		if (estado != null) {
+			newObject.put("estado", estado);
+		}
+		else {
+			newObject.put("estado", "null");
+
+		}
         return newObject;
-       
-	}
+		} 
+
 
 	public String getDescripcion() {
 		return descripcion;

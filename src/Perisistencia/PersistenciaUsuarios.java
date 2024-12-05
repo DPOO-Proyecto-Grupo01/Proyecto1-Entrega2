@@ -189,7 +189,6 @@ public class PersistenciaUsuarios implements IpersistenciaUsuarios {
 					
 					
 					if (lp.getLearningPathID().contains(estudiante.getUsuarioID())){
-						System.out.println("Se agrego el lp"+lp.getLearningPathID()+" al estudiante"+estudiante);
 						estudiante.learningPathsInscritos.put(lp.getLearningPathID(),lp);
 						
 						lpEstudianteActual.put(lp.getLearningPathID(),lp);

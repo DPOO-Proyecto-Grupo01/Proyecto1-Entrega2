@@ -117,6 +117,26 @@ public class PersistenciaActividades implements IpersistenciaActividades {
         return lista;
     }
 
+	public void actualizarActividadesEstudiante(Actividad act) throws Exception {
+		String archivo = ConsolaEstudiante.getActividadesFile();
+        String content = null;
+        try {
+            content = new String(Files.readAllBytes(Paths.get(archivo)));
+            // Parse the content to a JSON array
+            if (content.trim().isEmpty())
+                content = "[]";
+            JSONArray jsonArray = new JSONArray(content);
+
+            JSONObject object = act.convertToJSONObject();
+            //TODO Lidiar con ACTUALIZAR una actividad que ya fue guardada
+            jsonArray.put(object);
+            Files.write(Paths.get(archivo), jsonArray.toString().getBytes());
+        } catch (IOException e) {
+        	System.out.println("Error al guardar actividad: " + act);
+            throw new RuntimeException(e);
+            
+        } }
+
     /**
      * Coge una lista de preguntas en JSON y la vuelve un List<Preguntas>
      */
