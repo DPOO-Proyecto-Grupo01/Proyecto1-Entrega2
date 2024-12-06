@@ -1,6 +1,10 @@
 package InterfazProfesor;
 
 import javax.swing.*;
+
+import Consola.ConsolaEstudiante;
+import Consola.ConsolaProfesor;
+
 import java.awt.*;
 
 public class InterfazProfesor extends JFrame {
@@ -8,9 +12,23 @@ public class InterfazProfesor extends JFrame {
     private JLabel lblBienvenida;
     private JPanel panelCentral;
     private CardLayout cardLayout;
+    private ConsolaProfesor mundo;
 
-    public InterfazProfesor(String profesorNombre) {
-        setTitle("Interfaz Profesor - Bienvenido " + profesorNombre);
+    public InterfazProfesor() {
+    	
+    	mundo = new ConsolaProfesor();
+    	
+    	
+    	ConsolaProfesor.cargarActividades();
+    	ConsolaProfesor.cargarLearningPaths();
+    	ConsolaProfesor.cargarProgresos();
+    	ConsolaProfesor.cargarProgresoLP();
+    	ConsolaProfesor.cargarProfesores();
+    	ConsolaProfesor.cargarLpProfesoress();
+    	ConsolaProfesor.cargarActividadesLP();
+    	ConsolaProfesor.cargarEstudiantes();
+    	
+        setTitle("Interfaz Profesor - Bienvenido ");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -29,13 +47,12 @@ public class InterfazProfesor extends JFrame {
 
         panelCentral.add(botonManager.crearPanelOpciones(), "Menu");
         panelCentral.add(crearPanelCrearActividad(), "CrearActividad");
-        panelCentral.add(crearPanelCrearLearningPath(), "CrearLearningPath");
+        panelCentral.add(new PanelCrearLearningPath(cardLayout, panelCentral, lblBienvenida), "CrearLearningPath");
         panelCentral.add(crearPanelVerProgresoEstudiante(), "VerProgresoEstudiante");
         panelCentral.add(crearPanelRevisarEstadodeActividad(), "RevisarEstadodeActividad");
         panelCentral.add(crearPanelRevisarProgreso(), "RevisarProgreso");
         panelCentral.add(crearPanelRevisarFeedback(), "RevisarFeedback");
         panelCentral.add(crearPanelCalcularRating(), "CalcularRating");
-       
 
         add(panelCentral, BorderLayout.CENTER);
     }
@@ -58,25 +75,7 @@ public class InterfazProfesor extends JFrame {
         return panel;
     }
 
-    private JPanel crearPanelCrearLearningPath() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Crear Learning Path", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(label, BorderLayout.NORTH);
-
-        JButton btnRegresar = new JButton("Regresar");
-        btnRegresar.addActionListener(e -> {
-            lblBienvenida.setText("Selecciona una opción");
-            cardLayout.show(panelCentral, "Menu");
-        });
-        panel.add(btnRegresar, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-
+   
     private JPanel crearPanelVerProgresoEstudiante() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -178,11 +177,13 @@ public class InterfazProfesor extends JFrame {
             dispose();
         }
     }
-
+    
     public static void main(String[] args) {
+    	new InterfazProfesor();
         SwingUtilities.invokeLater(() -> {
-            InterfazProfesor interfaz = new InterfazProfesor("Profesor Ejemplo");
-            interfaz.setVisible(true);
+            IniciarSesion inicioSesion = new IniciarSesion();
+            inicioSesion.setVisible(true);
         });
     }
+    
 }

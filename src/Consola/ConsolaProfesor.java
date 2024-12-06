@@ -62,7 +62,7 @@ public class ConsolaProfesor {
         
         if (iniciarSesion() == 1) {
             while (!authenticated) {
-                if (authenticar()) {
+                if (authenticar(null, null)) {
                     authenticated = true;
                     
                     menu();
@@ -73,10 +73,10 @@ public class ConsolaProfesor {
         } else {
             boolean registered = false;
             while (!registered) {
-                registrarse();
+                registrarse(null, null, null, null);
                 System.out.println("Usuario registrado");
                 System.out.println("Iniciar sesión");
-                if (authenticar()) {
+                if (authenticar(null, null)) {
                     registered = true;
                     menu();
                     
@@ -87,7 +87,7 @@ public class ConsolaProfesor {
         }
     }
 
-    private static void cargarProfesores() {
+    public static void cargarProfesores() {
 		try {
 			profesoresLista = persistenciaUsuarios.cargarProfesores(usuariosFile);
 			for (Profesor profe : profesoresLista) {
@@ -115,7 +115,7 @@ public class ConsolaProfesor {
         }
     }
     
-    private static void cargarEstudiantes() {
+    public static void cargarEstudiantes() {
         try {
             estudiantes = persistenciaUsuarios.cargarEstudiantes(usuariosFile);
             System.out.println("Datos de estudiantes cargados correctamente\n");
@@ -181,15 +181,9 @@ public class ConsolaProfesor {
         return opcion;
     }
 
-    private static boolean authenticar() {
-        System.out.print("UsuarioID: ");
-        String usuarioID = scanner.nextLine();
-        System.out.print("Contraseña: ");
-        String contrasena = scanner.nextLine();
+    public static boolean authenticar(String usuarioID, String contrasena) {
         
-        List<Profesor> profesores;
-		try {
-			
+		try {			
 			for (Profesor profesor : profesoresLista) {
 	            if (profesor.getUsuarioID().equals(usuarioID) && profesor.getContraseña().equals(contrasena)) {
 	                profesorActual = profesor;
@@ -203,18 +197,9 @@ public class ConsolaProfesor {
         return false;
     }
     
-    public static void registrarse() {
+    public static void registrarse(String usuarioID, String nombre, String contrasena, String email) {
     	
     	
-    	System.out.print("Ingrese su usuario ID: ");
-        String usuarioID = scanner.nextLine();
-        System.out.print("Ingrese su nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Ingrese su contraseña: ");
-        String contrasena = scanner.nextLine();
-        System.out.print("Ingrese su email: ");
-        String email = scanner.nextLine();
-        
     	Profesor profesor = new Profesor(usuarioID, nombre, contrasena, email, "Profesor");
     	
     	persistenciaUsuarios.salvarProfesor(usuariosFile, profesor.getUsuarioID(), profesor.getNombre(),
@@ -245,7 +230,7 @@ public class ConsolaProfesor {
     private static void handleOption(int option) throws Exception {
         switch (option) {
             case 1 -> crearActividad();
-            case 2 -> crearLearningPath();
+            case 2 -> crearLearningPath(null, null, null, null, option, option, null, null, null);
             case 3 -> revisarEstadoActividad();
             case 4 -> verProgresoEstudiante();
             case 5 -> revisarFeedback();
@@ -1039,33 +1024,10 @@ public class ConsolaProfesor {
     
 
 
-private static void crearLearningPath() throws NombreRepetido {
-    System.out.print("Ingrese el id del Learning Path: ");
-    String LearningPathID = scanner.nextLine();
-    System.out.print("Ingrese el titulo del Learning Path: ");
-    String titulo = scanner.nextLine();
-    System.out.print("Ingrese la descripción del Learning Path: ");
-    String descripcion = scanner.nextLine();
-    System.out.print("Ingrese los objetivos del Learning Path: ");
-    String objetivos = scanner.nextLine();
-    System.out.print("Ingrese el nivel de dificultad del Learning Path, un numero del 1 al 10: ");
-    int nivelDificultad = scanner.nextInt();
-    scanner.nextLine(); // Consume newline
-    System.out.print("Ingrese la duración del Learning Path, en minutos sin decmal: ");
-    int duracion = scanner.nextInt();
-    scanner.nextLine(); // Consume newline
-    System.out.print("Ingrese su id: ");
-    String profesorID = scanner.nextLine();
-
-    List<String> actividadesID = new ArrayList<>();
-    System.out.print("Ingrese las actividades del Learning Path: ");
-    String actividadID = scanner.nextLine();
-    actividadesID.add(actividadID);
-
-    List<String> intereses = new ArrayList<>();
-    System.out.print("Ingrese los intereses del Learning Path: ");
-    String interes = scanner.nextLine();
-    intereses.add(interes);
+public static void crearLearningPath(String LearningPathID, String titulo, String descripcion, String objetivos, 
+		int nivelDificultad, int duracion, String profesorID, List<String> actividadesID, List<String> intereses
+		) throws NombreRepetido {
+    
     
     profesorActual.crearLearningPath(LearningPathID, titulo, descripcion, objetivos, 
     		nivelDificultad, duracion, profesorID, actividadesID, intereses);

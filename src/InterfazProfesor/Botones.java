@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Botones {
 
-	private final CardLayout cardLayout;
+    private final CardLayout cardLayout;
     private final JPanel panelCentral;
     private final InterfazProfesor interfaz;
 
