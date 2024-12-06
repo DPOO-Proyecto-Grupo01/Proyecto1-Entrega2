@@ -84,7 +84,7 @@ public class ConsolaEstudiante {
         }
     } 
 
-    private static void cargarEstudiantes() {
+    public static void cargarEstudiantes() {
         try {
             estudiantes = persistenciaUsuarios.cargarEstudiantes(usuariosFile);
             System.out.println("Datos de estudiantes cargados correctamente\n");
