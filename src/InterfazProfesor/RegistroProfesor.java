@@ -61,7 +61,7 @@ class RegistroProfesor extends JFrame {
             	ConsolaProfesor.registrarse(id, nombre, contrasena, correo);
                 JOptionPane.showMessageDialog(this, "Registro exitoso", "Información", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                InterfazProfesor interfaz = new InterfazProfesor();
+                InterfazProfesor interfaz = new InterfazProfesor(id);
                 interfaz.setVisible(true);
                 
             } else {

@@ -11,12 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import Exceptions.ActividadNoPertenece;
 import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
 import Exceptions.YaSeCompleto;
 import InterfazEstudiante.EstudianteInterfaz;
+import InterfazProfesor.IniciarSesion;
 import InterfazProfesor.InterfazProfesor;
 import Usuarios.Authenticator;
 import Usuarios.Usuario;
@@ -113,9 +115,12 @@ public class Interfaz implements ActionListener {
 				
 				
 			} else if ( tipoUsuario1.equals("Profesor")) {
-				InterfazProfesor profesor = new InterfazProfesor();
-				profesor.setVisible(true);
 				this.frame.setVisible(false);
+                SwingUtilities.invokeLater(() -> {
+                    IniciarSesion inicioSesion = new IniciarSesion();
+                    inicioSesion.setVisible(true);
+                });
+
 			} else {
 				System.out.println("Usuario o contraseña incorrectos");
 			}

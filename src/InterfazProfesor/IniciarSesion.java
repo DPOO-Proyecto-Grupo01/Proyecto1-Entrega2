@@ -1,14 +1,22 @@
 package InterfazProfesor;
 
 import javax.swing.*;
-
 import Consola.ConsolaProfesor;
-
 import java.awt.*;
 
 public class IniciarSesion extends JFrame {
 
     public IniciarSesion() {
+    	
+    	ConsolaProfesor.cargarActividades();
+        ConsolaProfesor.cargarLearningPaths();
+        ConsolaProfesor.cargarProgresos();
+        ConsolaProfesor.cargarProgresoLP();
+        ConsolaProfesor.cargarProfesores();
+        ConsolaProfesor.cargarLpProfesoress();
+        ConsolaProfesor.cargarActividadesLP();
+        ConsolaProfesor.cargarEstudiantes();
+        
         setTitle("Inicio de Sesión - Profesor");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,48 +40,24 @@ public class IniciarSesion extends JFrame {
         JPanel panelInferior = new JPanel();
         panelInferior.add(btnIniciarSesion);
         add(panelInferior, BorderLayout.SOUTH);
-        
-        JButton btnRegistrarse = new JButton("Registrarse");
-        panelInferior.add(btnRegistrarse);
-
-        add(panelInferior, BorderLayout.SOUTH);
 
         btnIniciarSesion.addActionListener(e -> {
             String usuario = txtUsuario.getText();
             String contrasena = new String(txtContrasena.getPassword());
 
             if (autenticarUsuario(usuario, contrasena)) {
-                dispose(); 
+                dispose();
                 SwingUtilities.invokeLater(() -> {
-                    InterfazProfesor interfaz = new InterfazProfesor();
+                    InterfazProfesor interfaz = new InterfazProfesor(usuario);
                     interfaz.setVisible(true);
                 });
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-        
-        btnRegistrarse.addActionListener(e -> {
-            SwingUtilities.invokeLater(() -> {
-            	RegistroProfesor registro = new RegistroProfesor();
-                registro.setVisible(true);
-            });
-        });
     }
 
     private boolean autenticarUsuario(String usuario, String contrasena) {
-    	
-    	System.out.println("Usuario: " + usuario + " Contraseña: " + contrasena);
-    	System.out.println(ConsolaProfesor.authenticar(usuario, contrasena));
-
-    	
         return ConsolaProfesor.authenticar(usuario, contrasena);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            IniciarSesion inicioSesion = new IniciarSesion();
-            inicioSesion.setVisible(true);
-        });
     }
 }
