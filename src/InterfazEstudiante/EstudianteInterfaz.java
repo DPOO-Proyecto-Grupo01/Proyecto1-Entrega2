@@ -40,6 +40,7 @@ public class EstudianteInterfaz extends Interfaz {
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setLocationRelativeTo(null);
 		ventana.setTitle("¡Bienvenido!");
+		
 		ventana.setLayout(new BorderLayout());
 		ventana.setVisible(true);
 
