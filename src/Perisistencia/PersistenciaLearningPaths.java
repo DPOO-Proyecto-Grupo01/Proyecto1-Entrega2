@@ -15,13 +15,13 @@ import org.json.JSONObject;
 import Actividades.Actividad;
 import Consola.ConsolaEstudiante;
 import LearningPaths.LearningPath;
+import LearningPaths.Progreso;
 import Usuarios.Profesor;
  
 public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 	
 	public List<LearningPath> cargarLearningPath(String archivo) throws Exception {
 	   
-
 	    String jsonCompleto = new String(Files.readAllBytes(new File(archivo).toPath()));
 	    JSONArray learningPaths = new JSONArray(jsonCompleto);
 	    ArrayList<LearningPath> lista = new ArrayList<LearningPath>();
@@ -86,7 +86,7 @@ public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	} 
 
 	public void salvarLearningPath(String archivo, String LearningPathID, String titulo, String descripcion, String objetivos,
 			int nivelDificultad, int duracion, String profesorID, List<String> actividadesID, List<String> intereses ) {
@@ -132,5 +132,20 @@ public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 
 		}
 	}
+	
+	public void cargarProgresoDelLearningPath(List<Progreso >listaProgreso, List<LearningPath> listaLearningPaths) {
+        for (LearningPath lp: listaLearningPaths) {
+            Progreso progresoActual = null;
+            
+            for (Progreso progreso : listaProgreso) {
+                if (progreso.getLearningPath().equals(lp.getLearningPathID())) {
+                    progresoActual=progreso;
+                }
+            }
+            
+            lp.setProgreso(progresoActual);
+
+        }
+    }
 
 }

@@ -23,6 +23,7 @@ import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 import Perisistencia.PersistenciaActividades;
 import Perisistencia.PersistenciaLearningPaths;
+import Perisistencia.PersistenciaProgreso;
 
 public class Estudiante extends Usuario {
 	public Map<String,LearningPath> learningPathsInscritos = new HashMap<>();
@@ -108,9 +109,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         Progreso progreso = crearProgreso(learningPathEstudiante, new Date(), new Date(), 0, "En Progreso");
         progresoLearningPath.put(learningPathEstudiante, progreso);
         learningPathEstudiante.progresoEstudiante.put(this.usuarioID, progreso);
-        Progreso progreso2 = crearProgreso(learningPath, new Date(), new Date(), 0, "En Progreso");
-        progresoLearningPath.put(learningPath, progreso2);
-        learningPath.progresoEstudiante.put(this.usuarioID, progreso2);
+        learningPathEstudiante.setProgreso(progreso);
 
         Map<String, String> map = new HashMap<>();
         map.put("Titulo Learning Path", learningPathEstudiante.getTitulo());
@@ -126,11 +125,12 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         
         PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
         PersistenciaActividades persistenciaActividades = new PersistenciaActividades();
+        PersistenciaProgreso persistenciaProgreso = new PersistenciaProgreso();
         
         try {
         persistenciaLearningPaths.actualizarLearningPathEstudiante(learningPathEstudiante);
+        persistenciaProgreso.actualizarProgreso(progreso);
 		for (Actividad actividad : actividadesLPE.values()) {
-			System.out.println("Actividades: " + actividad);
 			persistenciaActividades.actualizarActividadesEstudiante(actividad);
 		}
 	} catch (Exception e) {
@@ -295,7 +295,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		
 	
 
-	public Actividad completarActividad(String actividadID, String learningPathID) throws ActividadNoPertenece, YaSeCompleto {
+	public Actividad completarActividad(String actividadID, String learningPathID) throws Exception {
 
 		String idLpEstudiante = learningPathID + "_" + this.usuarioID;
 		String actividadIDEstudiante = actividadID + "_" + this.usuarioID;
@@ -371,7 +371,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         System.out.println("Actividad completada: " + actividad.getActividadID());
         System.out.println("Estado de la actividad: "+ actividad.getEstado());
         List<String> actividadSeguimiento =  actividad.getActividadesSeguimiento();
-        Progreso progreso = progresoLearningPath.get(learningPath);
+        Progreso progreso = learningPath.getProgreso();
         List<Actividad> actividades = learningPath.actividades.values().stream().toList();
         learningPath.actualizarProgreso(progreso, actividades);
         learningPath.getProgresoEstudiante().put(this.usuarioID, progreso);
@@ -382,8 +382,6 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
     }
 	
 	
-	
-		
 	
 	 public double getProgresoLearningPath(String learningPathID) throws LearningPathNoInscrito {
 	        LearningPath learningPath = learningPathsInscritos.get(learningPathID+ "_" + this.usuarioID);
@@ -444,9 +442,8 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	public Progreso crearProgreso(LearningPath learningPath, Date fechaInicio, Date fechaCompletado, int tiempoDedicado,
 			String estado) {
 		// Crea un registro de progreso para una actividad
-		int random = (int) (Math.random() * 1000 + 1);
-		String randomString = Integer.toString(random);
-		Progreso progreso = new Progreso(randomString, this.usuarioID, learningPath, fechaInicio, fechaCompletado, tiempoDedicado, estado);
+		String ID = "progreso_" +learningPath.getLearningPathID();
+		Progreso progreso = new Progreso(ID, this.usuarioID, learningPath.getLearningPathID(), fechaInicio, fechaCompletado, tiempoDedicado, estado,0.0);
 		return progreso;
 	}
 	

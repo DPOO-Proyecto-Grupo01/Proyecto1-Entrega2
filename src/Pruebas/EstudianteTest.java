@@ -24,7 +24,6 @@ import Usuarios.*;
 class EstudianteTest {
 	
 
-
 	private Estudiante estudiantePrueba;
 	public static List<LearningPath> learningPaths;
 	public List<Feedback> feedback;
@@ -105,7 +104,7 @@ class EstudianteTest {
 		                createdLearningPath.getObjetivos(), createdLearningPath.getNivelDificultad(),
 		                createdLearningPath.getDuracionMinutos(), createdLearningPath.getProfesorID(),
 		                createdLearningPath.getActividadesID(), createdLearningPath.getIntereses());
-		    }
+		    } 
 		    createdLearningPath.actividades.put("A101", actividades.get(0));
 		    createdLearningPath.actividades.put("A103", actividades.get(2));
 		    createdLearningPath.actividades.put("A102", actividades.get(1));
@@ -221,7 +220,7 @@ class EstudianteTest {
     }
 
     @Test
-    void testCompletarActividad() throws ActividadNoPertenece, YaSeCompleto, LearningPathNoInscrito {
+    void testCompletarActividad() throws Exception {
         // Ensure activity is added to the learning path
         Quiz actividad = new Quiz("A101", "Descripcion", "Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5, "A");
         learningPath.getActividades().put("A101", actividad);

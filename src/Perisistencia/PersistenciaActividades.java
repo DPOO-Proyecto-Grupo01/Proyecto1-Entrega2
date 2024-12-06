@@ -36,7 +36,7 @@ public class PersistenciaActividades implements IpersistenciaActividades {
             int duracionEsperada = actividad.getInt("duracionEsperada");
             boolean esObligatoria = actividad.getBoolean("esObligatoria");
             // Convertir la fecha de string a date, si es 
-
+ 
             String fechaLimite2 = null;
             if (actividad.has("fechaLimite2") && actividad.get("fechaLimite2") instanceof Number) {
                 fechaLimite2 = String.valueOf(actividad.getLong("fechaLimite2"));

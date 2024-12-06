@@ -14,13 +14,13 @@ import Actividades.Examen;
 import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.Tarea;
-import Exceptions.ActividadNoPertenece;
 import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
-import Exceptions.YaSeCompleto;
 import LearningPaths.LearningPath;
+import LearningPaths.Progreso;
 import Perisistencia.PersistenciaActividades;
 import Perisistencia.PersistenciaLearningPaths;
+import Perisistencia.PersistenciaProgreso;
 import Perisistencia.PersistenciaUsuarios;
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
@@ -28,25 +28,30 @@ import Usuarios.Usuario;
 
 public class ConsolaEstudiante {
 
-    private static Scanner scanner = new Scanner(System.in);
+	private static Scanner scanner = new Scanner(System.in);
     private static Estudiante estudianteActual;
     private static PersistenciaUsuarios persistenciaUsuarios = new PersistenciaUsuarios();
     private static PersistenciaActividades persistenciaActividades = new PersistenciaActividades();
     private static PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
+    private static PersistenciaProgreso persistenciaProgreso = new PersistenciaProgreso();
     private static final String usuariosFile = "src/datos/users.json";
     private static final String actividadesFile = "src/datos/activities.json";
     private static final String learningPathsFile = "src/datos/learning_paths.json";
+    private static final String progresoFile = "src/datos/progreso.json";
     private static List<LearningPath> learningPaths;
     private static Map<String, Profesor> profesores = new HashMap<>();
     private static List<Actividad> actividades;
     private static List<Estudiante> estudiantes;
+    private static List<Progreso> progresos;
 
     private static int contador = 1;
 
-    public static void main(String[] args) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+    public static void main(String[] args) throws Exception {
         cargarActividades();
         cargarLearningPaths();
+        cargarProgresos();
         cargarActividadesLP();
+        cargarProgresoLP();
         cargarProfesores();
         cargarEstudiantes();
         cargarLpEstudiantes();
@@ -127,6 +132,14 @@ public class ConsolaEstudiante {
             e.printStackTrace();
         }
     }
+    
+	public static void cargarProgresos() {
+        try {
+            progresos = persistenciaProgreso.cargarProgreso(progresoFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
 
     public static void cargarLpProfesoress() {
         try {
@@ -143,6 +156,14 @@ public class ConsolaEstudiante {
             e.printStackTrace();
         }
     }
+    
+	public static void cargarProgresoLP() {
+		try {
+			persistenciaLearningPaths.cargarProgresoDelLearningPath(progresos, learningPaths);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
     private static int iniciarSesion() {
         System.out.println("1. Iniciar Sesion\n");
@@ -153,7 +174,7 @@ public class ConsolaEstudiante {
         return opcion;
     }
 
-    private static void menu() throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+    private static void menu() throws Exception {
         int option;
         do {
             System.out.println("---- Estudiante Interface ----\n");
@@ -170,7 +191,7 @@ public class ConsolaEstudiante {
         } while (option != 6);
     }
 
-    private static void handleOption(int option) throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+    private static void handleOption(int option) throws Exception {
         switch (option) {
             case 1 -> mostrarRecomendacionesYInscribirLearningPath();
             case 2 -> completarActividad();
@@ -254,7 +275,7 @@ public class ConsolaEstudiante {
         estudianteActual.inscribirLearningPath(learningPathID, profesorID);
     }
 
-    private static void completarActividad() throws ActividadNoPertenece, YaSeCompleto {
+    private static void completarActividad() throws Exception {
         boolean validInput = false;
         String learningPathID = "";
         String actividadID = "";
@@ -267,8 +288,6 @@ public class ConsolaEstudiante {
             actividadID = scanner.nextLine();
             
             LearningPath lp = estudianteActual.getLearningPathsInscritos().get(learningPathID+ "_" + estudianteActual.getUsuarioID());
-            System.out.println("Learning Path "+estudianteActual.getLearningPathsInscritos());
-            System.out.println("Actividades "+lp.getActividades());
             
 			if (lp != null && lp.getActividades().containsKey(actividadID+ "_" + estudianteActual.getUsuarioID())) {
 				Actividad actividad = lp.getActividades().get(actividadID+ "_" + estudianteActual.getUsuarioID());
@@ -306,10 +325,7 @@ public class ConsolaEstudiante {
 					}
 				}
 			}
-            
-            if (lp != null && lp.getActividades().containsKey(actividadID)) {
-                validInput = true;
-            } else {
+             else {
                 System.out.println("Learning Path o Actividad no encontrados. Por favor, intente de nuevo.");
             }
         }
@@ -361,6 +377,10 @@ public class ConsolaEstudiante {
 	
 	public static PersistenciaActividades getPersistenciaActividades() {
 		return persistenciaActividades;
+	}
+
+	public static String getProgresoFile() {
+		return progresoFile;
 	}
 }
  
