@@ -2,83 +2,177 @@ package InterfazProfesor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class InterfazProfesor extends JFrame {
 
-    private JButton btnCrearActividad, btnCrearLearningPath, btnRevisarEstadoActividad;
-    private JButton btnVerProgresoEstudiante, btnRevisarFeedback, btnCalcularRating, btnSalir;
     private JLabel lblBienvenida;
+    private JPanel panelCentral;
+    private CardLayout cardLayout;
 
     public InterfazProfesor(String profesorNombre) {
-        setTitle("Interfaz Profesor - Bienvenido ");
-        setSize(1000, 800);
+        setTitle("Interfaz Profesor - Bienvenido " + profesorNombre);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         JPanel panelSuperior = new JPanel();
-        lblBienvenida = new JLabel("Selecciona una opcion");
+        lblBienvenida = new JLabel("Selecciona una opción");
         lblBienvenida.setFont(new Font("Arial", Font.BOLD, 18));
         panelSuperior.add(lblBienvenida);
         add(panelSuperior, BorderLayout.NORTH);
 
-        JPanel panelCentral = new JPanel();
-        panelCentral.setLayout(new GridLayout(7, 1, 10, 10));
+        cardLayout = new CardLayout();
+        panelCentral = new JPanel(cardLayout);
 
-        btnCrearActividad = new JButton("Crear Actividad");
-        btnCrearLearningPath = new JButton("Crear Learning Path");
-        btnRevisarEstadoActividad = new JButton("Revisar Estado de Actividad");
-        btnVerProgresoEstudiante = new JButton("Ver Progreso de Estudiante");
-        btnRevisarFeedback = new JButton("Revisar Feedback");
-        btnCalcularRating = new JButton("Calcular Rating");
-        btnSalir = new JButton("Salir");
+        Botones botonManager = new Botones(cardLayout, panelCentral, this);
 
-        panelCentral.add(btnCrearActividad);
-        panelCentral.add(btnCrearLearningPath);
-        panelCentral.add(btnRevisarEstadoActividad);
-        panelCentral.add(btnVerProgresoEstudiante);
-        panelCentral.add(btnRevisarFeedback);
-        panelCentral.add(btnCalcularRating);
-        panelCentral.add(btnSalir);
+        panelCentral.add(botonManager.crearPanelOpciones(), "Menu");
+        panelCentral.add(crearPanelCrearActividad(), "CrearActividad");
+        panelCentral.add(crearPanelCrearLearningPath(), "CrearLearningPath");
+        panelCentral.add(crearPanelVerProgresoEstudiante(), "VerProgresoEstudiante");
+        panelCentral.add(crearPanelRevisarEstadodeActividad(), "RevisarEstadodeActividad");
+        panelCentral.add(crearPanelRevisarProgreso(), "RevisarProgreso");
+        panelCentral.add(crearPanelRevisarFeedback(), "RevisarFeedback");
+        panelCentral.add(crearPanelCalcularRating(), "CalcularRating");
+       
 
         add(panelCentral, BorderLayout.CENTER);
-
-        btnCrearActividad.addActionListener(e -> crearActividad());
-        btnCrearLearningPath.addActionListener(e -> crearLearningPath());
-        btnRevisarEstadoActividad.addActionListener(e -> revisarEstadoActividad());
-        btnVerProgresoEstudiante.addActionListener(e -> verProgresoEstudiante());
-        btnRevisarFeedback.addActionListener(e -> revisarFeedback());
-        btnCalcularRating.addActionListener(e -> calcularRating());
-        btnSalir.addActionListener(e -> salir());
     }
 
-    private void crearActividad() {
-       
+    private JPanel crearPanelCrearActividad() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        JLabel label = new JLabel("Crear Actividad", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        panel.add(label, BorderLayout.NORTH);
+
+        JButton btnRegresar = new JButton("Regresar");
+        btnRegresar.addActionListener(e -> {
+            lblBienvenida.setText("Selecciona una opción");
+            cardLayout.show(panelCentral, "Menu");
+        });
+        panel.add(btnRegresar, BorderLayout.SOUTH);
+
+        return panel;
     }
 
-    private void crearLearningPath() {
-        
+    private JPanel crearPanelCrearLearningPath() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        JLabel label = new JLabel("Crear Learning Path", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        panel.add(label, BorderLayout.NORTH);
+
+        JButton btnRegresar = new JButton("Regresar");
+        btnRegresar.addActionListener(e -> {
+            lblBienvenida.setText("Selecciona una opción");
+            cardLayout.show(panelCentral, "Menu");
+        });
+        panel.add(btnRegresar, BorderLayout.SOUTH);
+
+        return panel;
     }
 
-    private void revisarEstadoActividad() {
-        
+
+    private JPanel crearPanelVerProgresoEstudiante() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        JLabel label = new JLabel("Ver Progreso Estudiante", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        panel.add(label, BorderLayout.NORTH);
+
+        JButton btnRegresar = new JButton("Regresar");
+        btnRegresar.addActionListener(e -> {
+            lblBienvenida.setText("Selecciona una opción");
+            cardLayout.show(panelCentral, "Menu");
+        });
+        panel.add(btnRegresar, BorderLayout.SOUTH);
+
+        return panel;
     }
 
-    private void verProgresoEstudiante() {
-        
+	public JPanel crearPanelRevisarEstadodeActividad() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+
+		JLabel label = new JLabel("Revisar Estado de Actividad", SwingConstants.CENTER);
+		label.setFont(new Font("Arial", Font.BOLD, 14));
+		panel.add(label, BorderLayout.NORTH);
+
+		JButton btnRegresar = new JButton("Regresar");
+		btnRegresar.addActionListener(e -> {
+			lblBienvenida.setText("Selecciona una opción");
+			cardLayout.show(panelCentral, "Menu");
+		});
+		panel.add(btnRegresar, BorderLayout.SOUTH);
+
+		return panel;
+	}
+	
+	private JPanel crearPanelRevisarProgreso() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+
+		JLabel label = new JLabel("Revisar Progreso", SwingConstants.CENTER);
+		label.setFont(new Font("Arial", Font.BOLD, 14));
+		panel.add(label, BorderLayout.NORTH);
+
+		JButton btnRegresar = new JButton("Regresar");
+		btnRegresar.addActionListener(e -> {
+			lblBienvenida.setText("Selecciona una opción");
+			cardLayout.show(panelCentral, "Menu");
+		});
+		panel.add(btnRegresar, BorderLayout.SOUTH);
+
+		return panel;
+	}
+	
+	private JPanel crearPanelRevisarFeedback() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+
+		JLabel label = new JLabel("Revisar Feedback", SwingConstants.CENTER);
+		label.setFont(new Font("Arial", Font.BOLD, 14));
+		panel.add(label, BorderLayout.NORTH);
+
+		JButton btnRegresar = new JButton("Regresar");
+		btnRegresar.addActionListener(e -> {
+			lblBienvenida.setText("Selecciona una opción");
+			cardLayout.show(panelCentral, "Menu");
+		});
+		panel.add(btnRegresar, BorderLayout.SOUTH);
+
+		return panel;
+	}
+	
+	private JPanel crearPanelCalcularRating() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+
+		JLabel label = new JLabel("Calcular Rating", SwingConstants.CENTER);
+		label.setFont(new Font("Arial", Font.BOLD, 14));
+		panel.add(label, BorderLayout.NORTH);
+
+		JButton btnRegresar = new JButton("Regresar");
+		btnRegresar.addActionListener(e -> {
+			lblBienvenida.setText("Selecciona una opción");
+			cardLayout.show(panelCentral, "Menu");
+		});
+		panel.add(btnRegresar, BorderLayout.SOUTH);
+
+		return panel;
+	}
+	
+
+    public void cambiarMensaje(String mensaje) {
+        lblBienvenida.setText(mensaje);
     }
 
-    private void revisarFeedback() {
-       
-    }
-
-    private void calcularRating() {
-        
-    }
-
-    private void salir() {
+    public void salir() {
         int confirm = JOptionPane.showConfirmDialog(this, "Salir", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             dispose();
