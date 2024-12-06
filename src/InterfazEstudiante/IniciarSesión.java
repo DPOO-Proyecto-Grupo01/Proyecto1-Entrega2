@@ -21,6 +21,7 @@ public class IniciarSesión extends JPanel implements ActionListener {
     private JPasswordField registerContraseña;
     private JTextField registerNombre;
     private JTextField registerEmail;
+    private JTextField intereses;
     private String usuarioID;
     private String contrasena;
     private String nombre;
@@ -30,9 +31,9 @@ public class IniciarSesión extends JPanel implements ActionListener {
     private JPanel registerPanel;
     
 
-    private Interfaz padre;
+    private EstudianteInterfaz padre;
 
-    public IniciarSesión(Interfaz elpadre) {
+    public IniciarSesión(EstudianteInterfaz elpadre) {
         padre = elpadre;
 
         // Configuración del layout general
@@ -80,8 +81,10 @@ public class IniciarSesión extends JPanel implements ActionListener {
         registerContraseña = new JPasswordField();
         registerNombre = new JTextField();
         registerEmail = new JTextField();
+        intereses = new JTextField();
         registerButton = new JButton("Registrarse");
         registerButton.addActionListener(this);
+        
 
         panel.add(new JLabel("Usuario:"));
         panel.add(registerUserText);
@@ -91,6 +94,8 @@ public class IniciarSesión extends JPanel implements ActionListener {
         panel.add(registerNombre);
         panel.add(new JLabel("Email:"));
         panel.add(registerEmail);
+        panel.add(new JLabel("Intereses:"));
+        panel.add(intereses);
         panel.add(new JLabel(""));
         panel.add(registerButton);
 
@@ -109,9 +114,13 @@ public class IniciarSesión extends JPanel implements ActionListener {
     private void loginUser() {
         usuarioID = loginUserText.getText();
         contrasena = new String(loginContraseña.getPassword());
-        //Cuando espiche el boton que se elimine el panel de login y se muestre el panel de la interfaz
-        loginPanel.setVisible(false);
-        registerPanel.setVisible(false);
+        
+		if (padre.IniciarSesion(usuarioID, contrasena)==true) {
+			padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
+		} else {
+			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+        
         
         
         
@@ -122,10 +131,14 @@ public class IniciarSesión extends JPanel implements ActionListener {
         contrasena = new String(registerContraseña.getPassword());
         nombre = registerNombre.getText();
         email = registerEmail.getText();
+        if (padre.registrarse(usuarioID, contrasena, nombre, email, intereses.getText())) {
+			padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
+			JOptionPane.showMessageDialog(null, "Usuario registrado", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Usuario ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
-        //Cuando espiche el boton que se elimine el panel
-        loginPanel.setVisible(false);
-        registerPanel.setVisible(false);
+        
         
     }
     
@@ -144,6 +157,11 @@ public class IniciarSesión extends JPanel implements ActionListener {
 	public String getEmail() {
 		return email;
 	}
+	
+	public String getIntereses() {
+		return intereses.getText();
+	}
+	
 	
 	
 }

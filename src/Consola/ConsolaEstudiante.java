@@ -61,7 +61,7 @@ public class ConsolaEstudiante {
 
         if (iniciarSesion() == 1) {
             while (!authenticated) {
-                if (authenticar()) {
+                if (authenticar(null, null)) {
                     authenticated = true;
                     menu();
                 } else {
@@ -71,10 +71,10 @@ public class ConsolaEstudiante {
         } else {
             boolean registered = false;
             while (!registered) {
-                registrarse();
+                registrarse("admin", "admin", "admin", "admin", "admin");
                 System.out.println("Usuario registrado\n");
                 System.out.println("Iniciar sesión\n");
-                if (authenticar()) {
+                if (authenticar(null, null)) {
                     registered = true;
                     menu();
                 } else {
@@ -203,29 +203,15 @@ public class ConsolaEstudiante {
         }
     }
 
-	private static void registrarse() throws NombreRepetido {
+	public static void registrarse(String usuarioID, String nombre, String contrasena,  String email, String intereses ) throws NombreRepetido {
 	        
-	    	System.out.print("Ingrese su usuario ID: ");
-	        String usuarioID = scanner.nextLine();
-	        System.out.print("Ingrese su nombre: ");
-	        String nombre = scanner.nextLine();
-	        System.out.print("Ingrese su contraseña: ");
-	        String contrasena = scanner.nextLine();
-	        System.out.print("Ingrese su email: ");
-	        String email = scanner.nextLine();
-	        System.out.print("Ingrese sus intereses academicos: ");
-	        String intereses = scanner.nextLine();
-	
+			
 	        Estudiante estudiante = new Estudiante(usuarioID, nombre, contrasena, email, "Estudiante");
 	        estudiante.setIntereses(intereses);
 	        persistenciaUsuarios.salvarEstudiante(usuariosFile, estudiante.getUsuarioID(), estudiante.getNombre(), estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
 	    }
 
-    private static boolean authenticar() {
-        System.out.print("UsuarioID: ");
-        String usuarioID = scanner.nextLine();
-        System.out.print("Contraseña: ");
-        String contrasena = scanner.nextLine();
+    public static boolean authenticar(String usuarioID,String contrasena ) {
 
         try {
             for (Estudiante estudiante : estudiantes) {

@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Consola.ConsolaEstudiante;
@@ -21,6 +22,12 @@ public class EstudianteInterfaz extends Interfaz {
 	private IniciarSesión panelInicial;
 	private CardLayout cardLayout;
 	private panelBotones panelBotones;
+	private String usuario;
+	private String contrasena;
+	private String nombre;
+	private String email;
+	private String intereses;
+	
 
 
 	public EstudianteInterfaz() throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
@@ -28,12 +35,14 @@ public class EstudianteInterfaz extends Interfaz {
 		mundo = new ConsolaEstudiante();
 
 		ConsolaEstudiante.cargarActividades();
-		ConsolaEstudiante.cargarLearningPaths();
-		ConsolaEstudiante.cargarActividadesLP();
-		ConsolaEstudiante.cargarProfesores();
-		ConsolaEstudiante.cargarEstudiantes();
-		ConsolaEstudiante.cargarLpEstudiantes();
-		ConsolaEstudiante.cargarLpProfesoress();
+        ConsolaEstudiante.cargarLearningPaths();
+        ConsolaEstudiante.cargarProgresos();
+        ConsolaEstudiante.cargarActividadesLP(); 
+        ConsolaEstudiante.cargarProgresoLP();
+        ConsolaEstudiante.cargarProfesores();
+        ConsolaEstudiante.cargarEstudiantes();
+        ConsolaEstudiante.cargarLpEstudiantes();
+        ConsolaEstudiante.cargarLpProfesoress();
 
 		ventana = new JFrame();
 		ventana.setSize(800, 800);
@@ -45,6 +54,19 @@ public class EstudianteInterfaz extends Interfaz {
 		ventana.setVisible(true);
 
 		panelInicial = new IniciarSesión(this);
+		if (panelInicial.getNombre() == null) {
+			usuario=panelInicial.getUsuarioID();
+			contrasena=panelInicial.getContrasena();
+			IniciarSesion(usuario, contrasena);
+		}
+		else {
+			nombre = panelInicial.getNombre();
+			email = panelInicial.getEmail();
+			intereses = panelInicial.getIntereses();
+			registrarse(usuario, contrasena, nombre, email, intereses);
+		}
+		
+		
 		cardLayout = new CardLayout();
 		
 		ventana.setLayout(cardLayout);
@@ -53,10 +75,6 @@ public class EstudianteInterfaz extends Interfaz {
 		
 		panelInicial = new IniciarSesión(this);
         ventana.add(panelInicial, "IniciarSesion");
-		
-		
-		
-		
 		
 	}
 	
@@ -67,6 +85,16 @@ public class EstudianteInterfaz extends Interfaz {
     public JFrame getVentana() {
         return ventana;
     }
+    
+	public boolean IniciarSesion(String usuario, String contrasena) {
+		return ConsolaEstudiante.authenticar(usuario, contrasena);
+		
+	}
+	
+	public void registrarse(String usuario, String contrasena, String nombre, String email, String intereses) throws NombreRepetido {
+		
+		ConsolaEstudiante.registrarse(usuario, contrasena, nombre, email, intereses);
+	}
 
 	public static void main(String[] args) {
 		try {

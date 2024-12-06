@@ -75,8 +75,8 @@ public class Interfaz implements ActionListener {
 		tipoGroup.add(profesorRadio);
 
 		button = new JButton();
-		button.setBounds(138, 130, 10, 25);
-		button.setSize(80, 25);
+		button.setBounds(120, 130, 10, 25);
+		button.setSize(150, 25);
 		button.setText("Ingresar");
 		button.addActionListener(this);
 		panel.add(button);
