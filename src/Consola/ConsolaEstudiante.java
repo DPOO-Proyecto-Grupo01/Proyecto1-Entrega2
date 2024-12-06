@@ -39,10 +39,10 @@ public class ConsolaEstudiante {
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     private static final String progresoFile = "src/datos/progreso.json";
     private static List<LearningPath> learningPaths;
-    private static Map<String, Profesor> profesores = new HashMap<>();
-    private static List<Actividad> actividades;
-    private static List<Estudiante> estudiantes;
-    private static List<Progreso> progresos;
+    public static Map<String, Profesor> profesores = new HashMap<>();
+    public static List<Actividad> actividades;
+    public static List<Estudiante> estudiantes;
+    public static List<Progreso> progresos;
 
     private static int contador = 1;
 
@@ -107,6 +107,7 @@ public class ConsolaEstudiante {
             profesoresLista = persistenciaUsuarios.cargarProfesores(usuariosFile);
             for (Profesor profesor : profesoresLista) {
                 profesores.put(profesor.getUsuarioID(), profesor);
+                System.out.println("Profesor cargado: " + profesor.getUsuarioID() + "\n");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -203,13 +204,18 @@ public class ConsolaEstudiante {
         }
     }
 
-	public static void registrarse(String usuarioID, String nombre, String contrasena,  String email, String intereses ) throws NombreRepetido {
-	        
-			
-	        Estudiante estudiante = new Estudiante(usuarioID, nombre, contrasena, email, "Estudiante");
-	        estudiante.setIntereses(intereses);
-	        persistenciaUsuarios.salvarEstudiante(usuariosFile, estudiante.getUsuarioID(), estudiante.getNombre(), estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
-	    }
+    public static boolean registrarse(String usuarioID, String nombre, String contrasena, String email, String intereses) throws NombreRepetido {
+        try {
+            Estudiante estudiante = new Estudiante(usuarioID, nombre, contrasena, email, "Estudiante");
+            estudiante.setIntereses(intereses);
+            persistenciaUsuarios.salvarEstudiante(usuariosFile, estudiante.getUsuarioID(), estudiante.getNombre(), estudiante.getContraseña(), estudiante.getEmail(), estudiante.getTipoUsuario());
+            return true; 
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public static boolean authenticar(String usuarioID,String contrasena ) {
 

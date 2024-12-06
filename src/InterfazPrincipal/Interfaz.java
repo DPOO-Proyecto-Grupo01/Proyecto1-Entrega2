@@ -105,6 +105,7 @@ public class Interfaz implements ActionListener {
 				try {
 					EstudianteInterfaz estudiante = new EstudianteInterfaz();
 					
+					this.frame.setVisible(false);
 				} catch (NombreRepetido | LearningPathNoInscrito | ActividadNoPertenece | YaSeCompleto e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

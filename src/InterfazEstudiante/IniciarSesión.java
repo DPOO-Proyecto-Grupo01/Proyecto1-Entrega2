@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import Exceptions.NombreRepetido;
 import InterfazPrincipal.Interfaz;
 
 public class IniciarSesión extends JPanel implements ActionListener {
@@ -74,18 +75,31 @@ public class IniciarSesión extends JPanel implements ActionListener {
     }
 
     private JPanel crearPanelRegistro() {
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+        // Crear panel con GridLayout
+        JPanel panel = new JPanel(new GridLayout(6, 2, 5, 5)); // Ajusta las filas/columnas si es necesario
         panel.setBackground(new Color(255, 255, 255));
-
+        
+        // Campos de texto
         registerUserText = new JTextField();
+        registerUserText.setPreferredSize(new Dimension(100, 20)); // Ancho x Alto
+        
         registerContraseña = new JPasswordField();
+        registerContraseña.setPreferredSize(new Dimension(100, 20));
+        
         registerNombre = new JTextField();
+        registerNombre.setPreferredSize(new Dimension(100, 20));
+        
         registerEmail = new JTextField();
+        registerEmail.setPreferredSize(new Dimension(100, 20));
+        
         intereses = new JTextField();
+        intereses.setPreferredSize(new Dimension(100, 20));
+        
+        // Botón de registro
         registerButton = new JButton("Registrarse");
         registerButton.addActionListener(this);
-        
 
+        // Agregar componentes al panel
         panel.add(new JLabel("Usuario:"));
         panel.add(registerUserText);
         panel.add(new JLabel("Contraseña:"));
@@ -96,27 +110,34 @@ public class IniciarSesión extends JPanel implements ActionListener {
         panel.add(registerEmail);
         panel.add(new JLabel("Intereses:"));
         panel.add(intereses);
-        panel.add(new JLabel(""));
+        panel.add(new JLabel("")); // Espacio vacío
         panel.add(registerButton);
 
+        // Retornar el panel
         return panel;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             loginUser();
         } else if (e.getSource() == registerButton) {
-            registerUser();
+            try {
+				registerUser();
+			} catch (HeadlessException | NombreRepetido e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         }
     }
 
     private void loginUser() {
         usuarioID = loginUserText.getText();
         contrasena = new String(loginContraseña.getPassword());
-        
 		if (padre.IniciarSesion(usuarioID, contrasena)==true) {
 			padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
+			JOptionPane.showMessageDialog(null, "Usuario autenticado", "Inicio de sesión exitoso", JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -126,12 +147,12 @@ public class IniciarSesión extends JPanel implements ActionListener {
         
     }
 
-    private void registerUser() {
+    private void registerUser() throws HeadlessException, NombreRepetido {
         usuarioID = registerUserText.getText();
         contrasena = new String(registerContraseña.getPassword());
         nombre = registerNombre.getText();
         email = registerEmail.getText();
-        if (padre.registrarse(usuarioID, contrasena, nombre, email, intereses.getText())) {
+        if (padre.registrarse(usuarioID, contrasena, nombre, email, intereses.getText())==true) {
 			padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
 			JOptionPane.showMessageDialog(null, "Usuario registrado", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
 		} else {

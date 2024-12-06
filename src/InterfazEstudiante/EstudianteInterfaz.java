@@ -3,7 +3,9 @@ package InterfazEstudiante;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,18 +22,15 @@ public class EstudianteInterfaz extends Interfaz {
 	private ConsolaEstudiante mundo;
 	private JFrame ventana;
 	private IniciarSesión panelInicial;
+	private Inscribir panelInscribir;
 	private CardLayout cardLayout;
 	private panelBotones panelBotones;
-	private String usuario;
-	private String contrasena;
-	private String nombre;
-	private String email;
-	private String intereses;
+	private boolean sesionIniciada;
 	
 
-
 	public EstudianteInterfaz() throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
-
+		
+		sesionIniciada = false;
 		mundo = new ConsolaEstudiante();
 
 		ConsolaEstudiante.cargarActividades();
@@ -43,6 +42,7 @@ public class EstudianteInterfaz extends Interfaz {
         ConsolaEstudiante.cargarEstudiantes();
         ConsolaEstudiante.cargarLpEstudiantes();
         ConsolaEstudiante.cargarLpProfesoress();
+        
 
 		ventana = new JFrame();
 		ventana.setSize(800, 800);
@@ -52,21 +52,9 @@ public class EstudianteInterfaz extends Interfaz {
 		
 		ventana.setLayout(new BorderLayout());
 		ventana.setVisible(true);
+		
+		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenesInterfaz/icono2.png"));
 
-		panelInicial = new IniciarSesión(this);
-		if (panelInicial.getNombre() == null) {
-			usuario=panelInicial.getUsuarioID();
-			contrasena=panelInicial.getContrasena();
-			IniciarSesion(usuario, contrasena);
-		}
-		else {
-			nombre = panelInicial.getNombre();
-			email = panelInicial.getEmail();
-			intereses = panelInicial.getIntereses();
-			registrarse(usuario, contrasena, nombre, email, intereses);
-		}
-		
-		
 		cardLayout = new CardLayout();
 		
 		ventana.setLayout(cardLayout);
@@ -75,6 +63,12 @@ public class EstudianteInterfaz extends Interfaz {
 		
 		panelInicial = new IniciarSesión(this);
         ventana.add(panelInicial, "IniciarSesion");
+        
+     
+        cardLayout.show(ventana.getContentPane(), "IniciarSesion");
+        
+        panelInscribir = new Inscribir(this);
+        ventana.add(panelInscribir, "Inscribir");
 		
 	}
 	
@@ -91,10 +85,12 @@ public class EstudianteInterfaz extends Interfaz {
 		
 	}
 	
-	public void registrarse(String usuario, String contrasena, String nombre, String email, String intereses) throws NombreRepetido {
+	public boolean registrarse(String usuario, String contrasena, String nombre, String email, String intereses) throws NombreRepetido {
 		
-		ConsolaEstudiante.registrarse(usuario, contrasena, nombre, email, intereses);
+		return ConsolaEstudiante.registrarse(usuario, contrasena, nombre, email, intereses);
 	}
+	
+	
 
 	public static void main(String[] args) {
 		try {
@@ -108,4 +104,26 @@ public class EstudianteInterfaz extends Interfaz {
 		ventana.dispose();
 		System.exit(0);
 	}
+	
+	public void iniciarSesion() {
+        sesionIniciada = true;
+    }
+
+    // Método para verificar si la sesión está iniciada
+    public boolean isSesionIniciada() {
+        return sesionIniciada;
+    }
+
+    // Cambiar a otro panel solo si la sesión está iniciada
+    public void cambiarPanel(String panel) {
+        if (sesionIniciada || panel.equals("IniciarSesion")) {
+            cardLayout.show(ventana.getContentPane(), panel);
+        } else {
+            // Mensaje de advertencia si no se ha iniciado sesión
+            javax.swing.JOptionPane.showMessageDialog(ventana, 
+                "Debe iniciar sesión antes de acceder a esta funcionalidad.", 
+                "Acceso denegado", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+    }
 }
