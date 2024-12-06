@@ -28,7 +28,7 @@ public class Progreso {
 	    
 	    
 	    public Progreso(String progresoID, String estudianteID, String learningPathID, Date fechaInicio, 
-	    		Date fechaCompletado, int tiempoDedicado, String estado, double porecntajeDeExito) {
+	    		Date fechaCompletado, int tiempoDedicado, String estado, double porcentajeDeExito) {
 	    	            this.progresoID = progresoID;
 	    	            this.estudianteID = estudianteID;
 	    	            this.learningPathID = learningPathID;
@@ -101,12 +101,11 @@ public class Progreso {
 
 		public void setPorcentajeDeExito(double porcentajeDeExito) throws Exception {
 			PersistenciaProgreso persistenciaProgreso = new PersistenciaProgreso();
-			persistenciaProgreso.actualizarProgreso(this);
 			this.porcentajeDeExito = porcentajeDeExito;
+			persistenciaProgreso.actualizarProgreso(this);
 			
-		}
+		} 
 		
-		//Hacer una funcion para actualizar progreso
 		
 
 		public  Map<String, String > mostrarProgreso() {

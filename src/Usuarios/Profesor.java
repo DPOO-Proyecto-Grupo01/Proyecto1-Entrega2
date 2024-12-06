@@ -226,21 +226,20 @@ public class Profesor extends Usuario {
     
 	public Map<String, String> verProgresoEstudiante(String estudianteID, String learningPathID) {
         LearningPath lp = learningPathsCreados.get(learningPathID);
-        System.out.println("Learning Path ID: " + learningPathID);
         
         if (lp == null) {
             System.out.println("Learning Path not found: " + learningPathID);
             return new HashMap<>(); // Return an empty map or handle as needed
         }
-        System.out.println(lp.getTitulo());
-        Progreso progreso = lp.obtenerProgresoEstudiante(estudianteID);
+
+        Progreso progreso = lp.getProgreso();
         
         if (progreso == null) {
             System.out.println("Progreso not found for estudianteID: " + estudianteID);
             return new HashMap<>(); // Return an empty map or handle as needed
         }
         return progreso.mostrarProgreso();
-    }
+    } 
     
     
     

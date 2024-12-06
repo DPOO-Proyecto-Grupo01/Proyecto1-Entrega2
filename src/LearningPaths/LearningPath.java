@@ -227,8 +227,8 @@ public class LearningPath {
 
 	public double actualizarProgreso(Progreso progreso, List<Actividad> actividades) throws Exception {
 		exitosas+=1;
-		setProgreso(progreso);
 		double porcentajeExitosas = ((double)exitosas/actividades.size());
+		
 		
 		progreso.setPorcentajeDeExito(porcentajeExitosas);
 	
@@ -239,7 +239,6 @@ public class LearningPath {
 	public Progreso obtenerProgresoEstudiante(String estudianteID) {
 		System.out.print(progresoEstudiante);
 		return progresoEstudiante.get(estudianteID);
-		
 	}
 
 	public JSONObject toJSON() {

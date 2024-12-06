@@ -50,7 +50,7 @@ public class ConsolaEstudiante {
         cargarActividades();
         cargarLearningPaths();
         cargarProgresos();
-        cargarActividadesLP();
+        cargarActividadesLP(); 
         cargarProgresoLP();
         cargarProfesores();
         cargarEstudiantes();

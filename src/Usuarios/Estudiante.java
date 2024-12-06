@@ -392,6 +392,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	        
 	        if (progreso != null) {
 	            return progreso.getPorcentajeDeExito();
+	            
 	        } else {
 	            System.out.println("Progreso no encontrado para el LearningPath: " + learningPathID);
 	            return 0.0;

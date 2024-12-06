@@ -12,12 +12,14 @@ import java.util.InputMismatchException;
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
 import LearningPaths.LearningPath;
+import LearningPaths.Progreso;
 import Actividades.Actividad;
 import Actividades.Encuesta;
 import Actividades.Examen;
 import Perisistencia.PersistenciaUsuarios;
 import Perisistencia.PersistenciaActividades;
 import Perisistencia.PersistenciaLearningPaths;
+import Perisistencia.PersistenciaProgreso;
 import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
@@ -31,19 +33,24 @@ public class ConsolaProfesor {
     private static PersistenciaUsuarios persistenciaUsuarios = new PersistenciaUsuarios();
     private static PersistenciaActividades persistenciaActividades = new PersistenciaActividades();
     private static PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
+    private static PersistenciaProgreso persistenciaProgreso = new PersistenciaProgreso();
     private static final String usuariosFile = "src/datos/users.json";
     private static final String actividadesFile = "src/datos/activities.json";
     private static final String learningPathsFile = "src/datos/learning_paths.json";
+    private static final String progresoFile = "src/datos/progreso.json";
     private static List<LearningPath> learningPaths;
     private static Map<String, Profesor> profesores = new HashMap<>();
     private static List<Actividad> actividades;
     private static List<Estudiante> estudiantes;
     private static List<Profesor> profesoresLista;
+    private static List<Progreso> progresos;
     
     
     public static void main(String[] args) throws Exception { 
     	cargarActividades();
         cargarLearningPaths();
+        cargarProgresos();
+        cargarProgresoLP();
         cargarProfesores();
         cargarLpProfesoress();
         cargarActividadesLP();
@@ -138,6 +145,22 @@ public class ConsolaProfesor {
             e.printStackTrace();
         }
     }
+    
+	public static void cargarProgresoLP() {
+		try {
+			persistenciaLearningPaths.cargarProgresoDelLearningPath(progresos, learningPaths);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void cargarProgresos() {
+        try {
+            progresos = persistenciaProgreso.cargarProgreso(progresoFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
     
     private static int iniciarSesion() {
         int opcion = 0;
@@ -1099,7 +1122,7 @@ private static void crearLearningPath() throws NombreRepetido {
 
 			LearningPath lp = null;
 			for (LearningPath learningPath : learningPaths) {
-				if (learningPath.getLearningPathID().equals(learningPathID)) {
+				if (learningPath.getLearningPathID().equals(learningPathID+"_"+estudianteID)) {
 					lp = learningPath;
 					break;
 				}
@@ -1115,7 +1138,7 @@ private static void crearLearningPath() throws NombreRepetido {
 
 			if (lp != null && estudiante != null) {
 				validInput = true;
-				Map<String, String> progreso = profesorActual.verProgresoEstudiante(estudianteID, learningPathID);
+				Map<String, String> progreso = profesorActual.verProgresoEstudiante(estudianteID, learningPathID+"_"+estudianteID);
 				System.out.println("Progreso del Estudiante: " + progreso);
 			} else {
 				System.out.println("Learning Path o Estudiante no encontrados. Por favor, intente de nuevo.");

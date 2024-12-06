@@ -61,7 +61,7 @@ public class PersistenciaProgreso {
 		boolean found = false;
 		for (int i = 0; i < listaProgresos.size(); i++) {
 			if (listaProgresos.get(i).getLearningPath().equals(progreso.getLearningPath())) {
-				listaProgresos.set(i, listaProgresos.get(i));
+				listaProgresos.set(i, progreso);
 				found = true;
 				break;
 			}
