@@ -11,6 +11,7 @@ import java.util.List;
 
 public class PanelCrearLearningPath extends JPanel {
 
+	
     public PanelCrearLearningPath(CardLayout cardLayout, JPanel panelCentral, JLabel lblBienvenida) {
         setLayout(new BorderLayout());
 

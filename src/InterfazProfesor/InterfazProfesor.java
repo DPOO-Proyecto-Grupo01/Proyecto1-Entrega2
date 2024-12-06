@@ -76,6 +76,7 @@ public class InterfazProfesor extends JFrame {
     }
 
    
+    
     private JPanel crearPanelVerProgresoEstudiante() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());

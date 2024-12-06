@@ -33,6 +33,7 @@ class RegistroProfesor extends JFrame {
         JLabel lblContrasena = new JLabel("Contraseña:");
         JPasswordField txtContrasena = new JPasswordField();
 
+        
         panelCentral.add(lblNombre);
         panelCentral.add(txtNombre);
         panelCentral.add(lblID);

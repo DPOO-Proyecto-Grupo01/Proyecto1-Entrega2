@@ -113,7 +113,7 @@ public class Interfaz implements ActionListener {
 				
 				
 			} else if ( tipoUsuario1.equals("Profesor")) {
-				InterfazProfesor profesor = new InterfazProfesor(tipoUsuario1);
+				InterfazProfesor profesor = new InterfazProfesor();
 				profesor.setVisible(true);
 				this.frame.setVisible(false);
 			} else {
