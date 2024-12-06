@@ -3,6 +3,9 @@ package InterfazEstudiante;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -31,8 +34,8 @@ public class Inscribir extends JPanel {
         lblProfesores.setHorizontalAlignment(SwingConstants.CENTER);
         panelProfesores.add(lblProfesores, BorderLayout.NORTH);
 
-        String[] profesores = {"Profesor 1", "Profesor 2", "Profesor 3"}; // Lista de ejemplo
-        comboProfesores = new JComboBox<>(profesores);
+        List<String> profesores = padre.profesores();
+        comboProfesores = new JComboBox<>(profesores.toArray(new String[0]));
         comboProfesores.setFont(new Font("Arial", Font.PLAIN, 14));
         comboProfesores.addActionListener(new ProfesorSelectionListener());
         panelProfesores.add(comboProfesores, BorderLayout.CENTER);

@@ -4,6 +4,7 @@ package InterfazEstudiante;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -88,6 +89,16 @@ public class EstudianteInterfaz extends Interfaz {
 	public boolean registrarse(String usuario, String contrasena, String nombre, String email, String intereses) throws NombreRepetido {
 		
 		return ConsolaEstudiante.registrarse(usuario, contrasena, nombre, email, intereses);
+	}
+	
+	public List<String> profesores(){
+		List<String> profesores1 = ConsolaEstudiante.profesores.keySet().stream().toList();
+		String mensaje = "";
+		for (String profesor : profesores1) {
+			mensaje += profesor + "\n";
+		}
+		JOptionPane.showMessageDialog(null, mensaje, "Profesores", JOptionPane.INFORMATION_MESSAGE);
+		return profesores1;
 	}
 	
 	

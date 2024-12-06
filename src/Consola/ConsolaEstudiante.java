@@ -234,7 +234,7 @@ public class ConsolaEstudiante {
         return false;
     }
 
-    private static void mostrarRecomendacionesYInscribirLearningPath() throws LearningPathNoInscrito {
+    public static void mostrarRecomendacionesYInscribirLearningPath() throws LearningPathNoInscrito {
         try {
             System.out.println("Lista de profesores: \n");
             for (Profesor profesor : profesores.values()) {
