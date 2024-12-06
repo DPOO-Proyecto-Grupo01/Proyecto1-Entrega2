@@ -38,7 +38,9 @@ public class IniciarSesion extends JFrame {
         add(panelCentral, BorderLayout.CENTER);
 
         JPanel panelInferior = new JPanel();
+        JButton btnRegistrar = new JButton("Registrar");
         panelInferior.add(btnIniciarSesion);
+        panelInferior.add(btnRegistrar);
         add(panelInferior, BorderLayout.SOUTH);
 
         btnIniciarSesion.addActionListener(e -> {
@@ -54,6 +56,13 @@ public class IniciarSesion extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
+
+        btnRegistrar.addActionListener(e -> {
+            SwingUtilities.invokeLater(() -> {
+                RegistroProfesor registroProfesor = new RegistroProfesor();
+                registroProfesor.setVisible(true);
+            });
         });
     }
 

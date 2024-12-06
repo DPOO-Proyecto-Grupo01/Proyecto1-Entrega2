@@ -16,7 +16,7 @@ public class InterfazProfesor extends JFrame {
         this.usuarioID = usuarioID; 
 
         mundo = new ConsolaProfesor();
-
+        
         ConsolaProfesor.cargarActividades();
         ConsolaProfesor.cargarLearningPaths();
         ConsolaProfesor.cargarProgresos();
@@ -44,13 +44,12 @@ public class InterfazProfesor extends JFrame {
         Botones botonManager = new Botones(cardLayout, panelCentral, this);
 
         panelCentral.add(botonManager.crearPanelOpciones(), "Menu");
-        panelCentral.add(crearPanelCrearActividad(), "CrearActividad");
+        panelCentral.add(new PanelCrearActividad(cardLayout, panelCentral, lblBienvenida), "CrearActividad");
         panelCentral.add(new PanelCrearLearningPath(cardLayout, panelCentral, lblBienvenida), "CrearLearningPath");
-        panelCentral.add(crearPanelVerProgresoEstudiante(), "VerProgresoEstudiante");
-        panelCentral.add(crearPanelRevisarEstadodeActividad(), "RevisarEstadodeActividad");
-        panelCentral.add(crearPanelRevisarProgreso(), "RevisarProgreso");
-        panelCentral.add(crearPanelRevisarFeedback(), "RevisarFeedback");
-        panelCentral.add(crearPanelCalcularRating(), "CalcularRating");
+        panelCentral.add(new PanelRevisarEstadodeActividad(cardLayout, panelCentral, lblBienvenida), "RevisarEstadodeActividad");
+        panelCentral.add(new PanelVerProgresoEstudiante(cardLayout, panelCentral, lblBienvenida), "VerProgresoEstudiante");
+        panelCentral.add(new PanelRevisarFeedback(cardLayout, panelCentral, lblBienvenida), "RevisarFeedback");
+        panelCentral.add(new PanelCalcularRating(cardLayout, panelCentral, lblBienvenida), "CalcularRating");
 
         add(panelCentral, BorderLayout.CENTER);
     }
@@ -61,60 +60,6 @@ public class InterfazProfesor extends JFrame {
         panel.setLayout(new BorderLayout());
 
         JLabel label = new JLabel("Crear Actividad", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(label, BorderLayout.NORTH);
-
-        JButton btnRegresar = new JButton("Regresar");
-        btnRegresar.addActionListener(e -> {
-            lblBienvenida.setText("Selecciona una opción");
-            cardLayout.show(panelCentral, "Menu");
-        });
-        panel.add(btnRegresar, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    private JPanel crearPanelVerProgresoEstudiante() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Ver Progreso Estudiante", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(label, BorderLayout.NORTH);
-
-        JButton btnRegresar = new JButton("Regresar");
-        btnRegresar.addActionListener(e -> {
-            lblBienvenida.setText("Selecciona una opción");
-            cardLayout.show(panelCentral, "Menu");
-        });
-        panel.add(btnRegresar, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    private JPanel crearPanelRevisarEstadodeActividad() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Revisar Estado de Actividad", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(label, BorderLayout.NORTH);
-
-        JButton btnRegresar = new JButton("Regresar");
-        btnRegresar.addActionListener(e -> {
-            lblBienvenida.setText("Selecciona una opción");
-            cardLayout.show(panelCentral, "Menu");
-        });
-        panel.add(btnRegresar, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    private JPanel crearPanelRevisarProgreso() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Revisar Progreso", SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 14));
         panel.add(label, BorderLayout.NORTH);
 
