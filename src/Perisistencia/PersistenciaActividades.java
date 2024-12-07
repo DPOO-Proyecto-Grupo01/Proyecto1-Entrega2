@@ -20,7 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class PersistenciaActividades implements IpersistenciaActividades {
-
+ 
     @Override
     public ArrayList<Actividad> cargarActividades(String archivo) throws Exception {
        

@@ -26,7 +26,7 @@ public class RecursoEducativo extends Actividad {
 		this.linkRecusro = linkRecusro;
 
 		
-	}
+	} 
 
 
 	@Override

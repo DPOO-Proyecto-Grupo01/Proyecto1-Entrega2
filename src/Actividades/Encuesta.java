@@ -70,10 +70,12 @@ public class Encuesta extends Actividad {
 	}
 
 	
-	public void completarEncuesta() {
+	public List<String> completarEncuesta() {
 		// Responder la encuesta
-		System.out.println(this.preguntasAbiertas);
+		return this.preguntasAbiertas;
 	}
+
+
 
 	
 	

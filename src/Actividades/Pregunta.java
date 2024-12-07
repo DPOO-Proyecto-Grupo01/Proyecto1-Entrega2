@@ -13,7 +13,10 @@ public class Pregunta{
 		this.opciones = opciones;
 	}
 	public String getPregunta() {
-		// TODO Auto-generated method stub
 		return pregunta;
+	}
+	
+	public List<String> getOpciones() {
+		return opciones;
 	}
 }

@@ -101,7 +101,7 @@ public class Interfaz implements ActionListener {
 				tipoUsuario1 = "Estudiante";
 			} else if (profesorRadio.isSelected()) {
 				tipoUsuario1 = "Profesor";
-			} 
+			}   
 			if (tipoUsuario1.equals("Estudiante")) {
 				this.frame.setVisible(false);
 				try {
@@ -109,6 +109,9 @@ public class Interfaz implements ActionListener {
 					
 					this.frame.setVisible(false);
 				} catch (NombreRepetido | LearningPathNoInscrito | ActividadNoPertenece | YaSeCompleto e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

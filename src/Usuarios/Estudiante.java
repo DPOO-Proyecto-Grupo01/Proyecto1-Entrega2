@@ -46,7 +46,7 @@ public class Estudiante extends Usuario {
 	public String getTipoUsuario() {
 		return this.estudiante;
 	}
-	
+	 
 	public String getIntereses() {
         return intereses;
     }
@@ -291,7 +291,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	    }
 
 	    return actividadEstudiante;
-	}
+	} 
 		
 	
 
@@ -314,15 +314,12 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         ArrayList<String> actividadesPrevias2 = new ArrayList<String>();
         
         for (String actividadPrevia : actividadesPrevias) {
-        	System.out.println("Actividades previas: " + actividadPrevia);
 			if (actividadPrevia == null||actividadPrevia.equals("")) {
-				System.out.println("No hay actividades previas");
 			}
 			else{
         	Actividad act = mapa.get(actividadPrevia);
             if (act.getEstado()== null ) {
             	actividadesPrevias2.add(act.getActividadID());
-                System.out.println("Tenga cuidado no ha realizado las actividades previas: " + actividadesPrevias2);
                 
             }}
         }
@@ -368,8 +365,6 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         actividad.setFechafin(fechaFin);
         
         
-        System.out.println("Actividad completada: " + actividad.getActividadID());
-        System.out.println("Estado de la actividad: "+ actividad.getEstado());
         List<String> actividadSeguimiento =  actividad.getActividadesSeguimiento();
         Progreso progreso = learningPath.getProgreso();
         List<Actividad> actividades = learningPath.actividades.values().stream().toList();
@@ -422,7 +417,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 		        } else {
 		            System.out.println("Progreso not found for Learning Path: " + learningPathID);
 		        }
-		    }
+		    } 
 			
 			return actividadesDisponibles;
 		}
@@ -456,7 +451,29 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	}
 	
 	
-	
+	public ArrayList<String> actividadesSinCompletar (Actividad actividad, LearningPath learningPath) {
+        Map<String, Actividad> mapa = learningPath.getActividades();
+        List<String> actividadesPrevias = actividad.getActividadesPrevias();
+        ArrayList<String> actividadesPrevias2 = new ArrayList<String>();
+        
+        ArrayList<String> res = new ArrayList<String>();
+        for (String actividadPrevia : actividadesPrevias) {
+			if (actividadPrevia == null||actividadPrevia.equals("")) {
+				res= null;
+			}
+			
+			else{
+        	Actividad act = mapa.get(actividadPrevia);
+            if (act.getEstado()== null ) {
+            	actividadesPrevias2.add(act.getActividadID());
+            	res= actividadesPrevias2;
+                
+            }}
+		
+        }
+		return res;
+		
+	}
 	
 	
 }

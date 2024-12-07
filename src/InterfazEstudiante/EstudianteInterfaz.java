@@ -17,6 +17,7 @@ import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
 import Exceptions.YaSeCompleto;
 import InterfazPrincipal.Interfaz;
+import Usuarios.Estudiante;
 
 public class EstudianteInterfaz extends Interfaz {
 
@@ -24,14 +25,15 @@ public class EstudianteInterfaz extends Interfaz {
 	private JFrame ventana;
 	private IniciarSesión panelInicial;
 	private Inscribir panelInscribir;
+	private CompletarActividad panelCompletarActividad;
 	private CardLayout cardLayout;
 	private panelBotones panelBotones;
 	private boolean sesionIniciada;
-	
+	protected Estudiante estudianteActual;
 
-	public EstudianteInterfaz() throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+	public EstudianteInterfaz() throws Exception {
 		
-		sesionIniciada = false;
+		sesionIniciada = false; 
 		mundo = new ConsolaEstudiante();
 
 		ConsolaEstudiante.cargarActividades();
@@ -70,7 +72,7 @@ public class EstudianteInterfaz extends Interfaz {
         
         panelInscribir = new Inscribir(this);
         ventana.add(panelInscribir, "Inscribir");
-		
+
 	}
 	
 	public CardLayout getCardLayout() {
@@ -82,8 +84,9 @@ public class EstudianteInterfaz extends Interfaz {
     }
     
 	public boolean IniciarSesion(String usuario, String contrasena) {
-		return ConsolaEstudiante.authenticar(usuario, contrasena);
-		
+		boolean inicio = ConsolaEstudiante.authenticar(usuario, contrasena);
+		estudianteActual = ConsolaEstudiante.getEstudianteActual();
+		return inicio ;
 	}
 	
 	public boolean registrarse(String usuario, String contrasena, String nombre, String email, String intereses) throws NombreRepetido {
@@ -107,6 +110,9 @@ public class EstudianteInterfaz extends Interfaz {
 		try {
 			new EstudianteInterfaz();
 		} catch (NombreRepetido | LearningPathNoInscrito | ActividadNoPertenece | YaSeCompleto e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

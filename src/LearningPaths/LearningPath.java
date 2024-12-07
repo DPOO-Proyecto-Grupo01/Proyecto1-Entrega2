@@ -37,7 +37,7 @@ public class LearningPath {
 	private int exitosas;
 	
 	
-//////////////////////
+////////////////////// 
 	
 	
 	public LearningPath(String LearningPathID, String titulo, String descripcion, String objetivos,

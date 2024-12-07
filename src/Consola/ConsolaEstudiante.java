@@ -27,9 +27,9 @@ import Usuarios.Profesor;
 import Usuarios.Usuario;
 
 public class ConsolaEstudiante {
-
+ 
 	private static Scanner scanner = new Scanner(System.in);
-    private static Estudiante estudianteActual;
+    public static Estudiante estudianteActual;
     private static PersistenciaUsuarios persistenciaUsuarios = new PersistenciaUsuarios();
     private static PersistenciaActividades persistenciaActividades = new PersistenciaActividades();
     private static PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
@@ -217,7 +217,7 @@ public class ConsolaEstudiante {
         }
     }
 
-    public static boolean authenticar(String usuarioID,String contrasena ) {
+    public static boolean authenticar(String usuarioID,String contrasena) {
 
         try {
             for (Estudiante estudiante : estudiantes) {
@@ -373,6 +373,11 @@ public class ConsolaEstudiante {
 
 	public static String getProgresoFile() {
 		return progresoFile;
+	}
+
+	public static Estudiante getEstudianteActual() {
+		// TODO Auto-generated method stub
+		return estudianteActual;
 	}
 }
  
