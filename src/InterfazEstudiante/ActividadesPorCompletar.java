@@ -19,17 +19,18 @@ import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Consola.ConsolaEstudiante;
 import Exceptions.LearningPathNoInscrito;
 import LearningPaths.LearningPath;
 import Usuarios.Estudiante;
 
-public class RevisarProgresoLP extends JPanel {
+public class ActividadesPorCompletar extends JPanel {
 
     private EstudianteInterfaz padre;
     private JComboBox txtNombreActividad;
     private JComboBox txtNombreLP;
 
-    public RevisarProgresoLP(EstudianteInterfaz elPadre) throws Exception {
+    public ActividadesPorCompletar(EstudianteInterfaz elPadre) throws Exception {
 
     	    this.padre = elPadre;
     	    this.setLayout(new BorderLayout());
@@ -47,50 +48,35 @@ public class RevisarProgresoLP extends JPanel {
 
     	    JPanel panelEscoger = new JPanel(new BorderLayout());
     	    panelEscoger.setBackground(Color.WHITE);
-    	    panelEscoger.setBorder(new TitledBorder("Ver Progreso: "));
-    	    panelEscoger.add(new JLabel("Indique el Learning Path para el que quiere revisar su progreso: "), BorderLayout.NORTH);
+    	    panelEscoger.setBorder(new TitledBorder("Ver Actividades sin completar: "));
+    	    panelEscoger.add(new JLabel("Indique el Learning Path para el que quiere revisar sus actividades pendientes: "), BorderLayout.NORTH);
     	    panelEscoger.add(txtNombreLP, BorderLayout.CENTER);
 
-    	    JPanel panelProgreso = new JPanel(new BorderLayout());
-    	    panelProgreso.setBackground(Color.WHITE);
+    	    String lpSeleccionadoS = (String) txtNombreLP.getSelectedItem();
 
+    	    JPanel panelActividades= new JPanel(new BorderLayout());
+    	    panelActividades.setBackground(Color.WHITE);
+    	    
+    	    List<Actividad> actividades = ConsolaEstudiante.verActividadesPorCompletar(lpSeleccionadoS);
   
     	    txtNombreLP.addActionListener(event -> {
     	    	
-	        String lpSeleccionadoS = (String) txtNombreLP.getSelectedItem();
-	        if (lpSeleccionadoS != null) {
-	            double progreso = 10000.000;
-				try {
-					progreso = e.getProgresoLearningPath(lpSeleccionadoS);
-				} catch (LearningPathNoInscrito e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+			for (Actividad a : actividades) {
+				panelActividades.add(new JLabel(a.getActividadID()), BorderLayout.CENTER);
 				}
 
-	            panelProgreso.removeAll(); // Limpiar contenido anterior
-
-	            if (progreso == 1) {
-	                JOptionPane.showMessageDialog(this, "¡Felicidades! Has completado el Learning Path: " + lpSeleccionadoS);
-	            } else if (progreso == 10000.000) {
-	                JOptionPane.showMessageDialog(this, "No se ha encontrado un progreso para este Learning Path", "Progreso", JOptionPane.WARNING_MESSAGE);
-	            } else {
-	                panelProgreso.add(new JLabel("Tu progreso en el Learning Path " + lpSeleccionadoS + " es de: " + progreso + "%"), BorderLayout.CENTER);
-	            }
-
 	            // Actualizar la vista
-	            panelProgreso.revalidate();
-	            panelProgreso.repaint();
-	        }
+	            panelActividades.revalidate();
+	            panelActividades.repaint();
+	        ;
 	    });
 
     	    // Agregar paneles al JFrame
     	    this.add(panelEscoger, BorderLayout.NORTH);
-    	    this.add(panelProgreso, BorderLayout.CENTER);
+    	    this.add(panelActividades, BorderLayout.CENTER);
 
     }
-	public void actionPerformed(ActionEvent e) {
-		
-	}
+
 
 
 

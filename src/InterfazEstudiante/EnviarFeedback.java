@@ -19,17 +19,20 @@ import Actividades.Pregunta;
 import Actividades.Quiz;
 import Actividades.RecursoEducativo;
 import Actividades.Tarea;
+import Consola.ConsolaEstudiante;
 import Exceptions.LearningPathNoInscrito;
 import LearningPaths.LearningPath;
 import Usuarios.Estudiante;
 
-public class RevisarProgresoLP extends JPanel {
+public class EnviarFeedback extends JPanel {
 
     private EstudianteInterfaz padre;
     private JComboBox txtNombreActividad;
     private JComboBox txtNombreLP;
+    private JComboBox calificación = new JComboBox(new String[]{"1", "2", "3", "4", "5"});
+    private JTextField txtFeedback=new JTextField();
 
-    public RevisarProgresoLP(EstudianteInterfaz elPadre) throws Exception {
+    public EnviarFeedback(EstudianteInterfaz elPadre) throws Exception {
 
     	    this.padre = elPadre;
     	    this.setLayout(new BorderLayout());
@@ -48,44 +51,32 @@ public class RevisarProgresoLP extends JPanel {
     	    JPanel panelEscoger = new JPanel(new BorderLayout());
     	    panelEscoger.setBackground(Color.WHITE);
     	    panelEscoger.setBorder(new TitledBorder("Ver Progreso: "));
-    	    panelEscoger.add(new JLabel("Indique el Learning Path para el que quiere revisar su progreso: "), BorderLayout.NORTH);
+    	    panelEscoger.add(new JLabel("Indique el Learning Path para el que quiere enviar FeedBack: "), BorderLayout.NORTH);
     	    panelEscoger.add(txtNombreLP, BorderLayout.CENTER);
 
-    	    JPanel panelProgreso = new JPanel(new BorderLayout());
-    	    panelProgreso.setBackground(Color.WHITE);
+    	    String lpSeleccionadoS = (String) txtNombreLP.getSelectedItem();
+    	    
+    	    JPanel panelFeedback = new JPanel(new BorderLayout());
+    	    panelFeedback.setBackground(Color.WHITE);
+    	    panelFeedback.setBorder(new TitledBorder("Enviar Feedback: "));
+    	    panelFeedback.add(new JLabel("Ingrese su calificación para este Learning Path: "), BorderLayout.NORTH);
+    	    panelFeedback.add(calificación);
+    	    panelFeedback.add(new JLabel("Ingrese su feedback para este Learning Path: "), BorderLayout.CENTER);
+    	    panelFeedback.add(txtFeedback, BorderLayout.SOUTH);
+    	    
+    	    int calificacion = Integer.parseInt((String) calificación.getSelectedItem());
+    	    String feedback = txtFeedback.getText();
+    	    
+    	    ConsolaEstudiante.enviarFeedback(lpSeleccionadoS, feedback, calificacion);
 
+    	    JButton enviarFeedback = new JButton("Enviar");
   
     	    txtNombreLP.addActionListener(event -> {
-    	    	
-	        String lpSeleccionadoS = (String) txtNombreLP.getSelectedItem();
-	        if (lpSeleccionadoS != null) {
-	            double progreso = 10000.000;
-				try {
-					progreso = e.getProgresoLearningPath(lpSeleccionadoS);
-				} catch (LearningPathNoInscrito e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-	            panelProgreso.removeAll(); // Limpiar contenido anterior
-
-	            if (progreso == 1) {
-	                JOptionPane.showMessageDialog(this, "¡Felicidades! Has completado el Learning Path: " + lpSeleccionadoS);
-	            } else if (progreso == 10000.000) {
-	                JOptionPane.showMessageDialog(this, "No se ha encontrado un progreso para este Learning Path", "Progreso", JOptionPane.WARNING_MESSAGE);
-	            } else {
-	                panelProgreso.add(new JLabel("Tu progreso en el Learning Path " + lpSeleccionadoS + " es de: " + progreso + "%"), BorderLayout.CENTER);
-	            }
-
-	            // Actualizar la vista
-	            panelProgreso.revalidate();
-	            panelProgreso.repaint();
-	        }
-	    });
+    	   	    });
 
     	    // Agregar paneles al JFrame
     	    this.add(panelEscoger, BorderLayout.NORTH);
-    	    this.add(panelProgreso, BorderLayout.CENTER);
+    	    this.add(panelFeedback, BorderLayout.CENTER);
 
     }
 	public void actionPerformed(ActionEvent e) {

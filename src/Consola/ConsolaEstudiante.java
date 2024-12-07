@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 import Actividades.Actividad;
@@ -197,8 +198,8 @@ public class ConsolaEstudiante {
             case 1 -> mostrarRecomendacionesYInscribirLearningPath();
             case 2 -> completarActividad();
             case 3 -> verProgresoLearningPath();
-            case 4 -> verActividadesPorCompletar();
-            case 5 -> enviarFeedback();
+            case 4 -> verActividadesPorCompletar(null);
+            case 5 -> enviarFeedback(null, null, option);
             case 6 -> System.out.println("Saliendo...\n");
             default -> System.out.println("Opción inválida.\n");
         }
@@ -333,20 +334,15 @@ public class ConsolaEstudiante {
         System.out.println(estudianteActual.getProgresoLearningPath(learningPathID) + "\n");
     }
 
-    private static void verActividadesPorCompletar() throws LearningPathNoInscrito {
-        System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
-        String learningPathID = scanner.nextLine();
-        System.out.println(estudianteActual.actividadesDisponibles(learningPathID) + "\n");
+    public static List<Actividad> verActividadesPorCompletar(String learningPathID) throws LearningPathNoInscrito {
+        return estudianteActual.actividadesDisponibles(learningPathID);
     }
 
-    private static void enviarFeedback() throws LearningPathNoInscrito {
-        System.out.print("Ingrese el ID del Learning Path que desea revisar: ");
-        String learningPathID = scanner.nextLine();
-        System.out.println("Ingrese su feedback: ");
-        String feedback = scanner.nextLine();
-        System.out.println("Ingrese su calificación: ");
-        int calificacion = scanner.nextInt();
-        String feedbackID = "F" + Integer.toString(contador);
+    public static void enviarFeedback(String learningPathID, String feedback, int calificacion) throws LearningPathNoInscrito {
+        
+        Random random = new Random();
+        int feedbackRandom = random.nextInt(100); 
+        String feedbackID = "F" + Integer.toString(feedbackRandom);
 
         estudianteActual.enviarFeedback(learningPathID, feedback, calificacion, feedbackID);
     }
