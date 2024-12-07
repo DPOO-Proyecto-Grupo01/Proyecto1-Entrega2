@@ -24,8 +24,6 @@ import Usuarios.Estudiante;
 
 public class CompletarActividad extends JPanel {
 
-    private JComboBox<String> comboProfesores;
-    private JComboBox<String> comboLearningPaths;
     private EstudianteInterfaz padre;
     private JComboBox txtNombreActividad;
     private JComboBox txtNombreLP;
