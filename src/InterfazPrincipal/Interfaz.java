@@ -100,7 +100,7 @@ public class Interfaz implements ActionListener {
 			if (estudianteRadio.isSelected()) {
 				tipoUsuario1 = "Estudiante";
 			} else if (profesorRadio.isSelected()) {
-				tipoUsuario1 = "Profesor";
+				tipoUsuario1 = "Profesor";	
 			}   
 			if (tipoUsuario1.equals("Estudiante")) {
 				this.frame.setVisible(false);

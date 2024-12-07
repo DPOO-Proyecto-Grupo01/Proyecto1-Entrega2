@@ -68,9 +68,8 @@ setLayout(new BorderLayout());
             String learningPath = txtLearningPath.getText();
 
             if ( !learningPath.isEmpty()) {
-            	ConsolaProfesor.calcularRating(learningPath);
             	
-                progreso.setText("Rating");
+                progreso.setText("Rating: " + ConsolaProfesor.calcularRating(learningPath));
             } else {
                 progreso.setText("Por favor, completa el campo");
             }

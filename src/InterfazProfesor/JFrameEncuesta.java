@@ -1,15 +1,18 @@
+
 package InterfazProfesor;
 
-import javax.swing.*;
 import Consola.ConsolaProfesor;
+import javax.swing.*;
+import Actividades.Actividad;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
-public class JFrameQuiz extends JFrame {
 
-    public JFrameQuiz() {
+public class JFrameEncuesta extends JFrame {
+
+    public JFrameEncuesta() {
     }
 }

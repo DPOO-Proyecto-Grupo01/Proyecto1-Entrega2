@@ -68,9 +68,8 @@ public class PanelRevisarFeedback extends JPanel {
             String learningPath = txtLearningPath.getText();
 
             if ( !learningPath.isEmpty()) {
-            	ConsolaProfesor.revisarFeedback(learningPath);
             	
-                progreso.setText("Feedback");
+                progreso.setText("Feedback: " + ConsolaProfesor.revisarFeedback(learningPath));
             } else {
                 progreso.setText("Por favor, completa el campo");
             }

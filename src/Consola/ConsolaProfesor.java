@@ -325,7 +325,7 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 
 
 
-	public static void revisarEstadoActividad(String actividadID, String learningPathID) {
+	public static String revisarEstadoActividad(String actividadID, String learningPathID) {
 		boolean validInput = false;
 		
 	
@@ -341,14 +341,15 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 	
 			if (lp != null && lp.getActividades().containsKey(actividadID)) {
 				validInput = true;
-				profesorActual.revisarEstadoActividad(actividadID, learningPathID);
+				return profesorActual.revisarEstadoActividad(actividadID, learningPathID);
 			} else {
 				System.out.println("Learning Path o Actividad no encontrados. Por favor, intente de nuevo.");
 			}
 		}
+		return "No se encontro estado";
 	}
 
-	public static void verProgresoEstudiante(String estudianteID, String learningPathID) {
+	public static String verProgresoEstudiante(String estudianteID, String learningPathID) {
 		boolean validInput = false;
 		
 		while (!validInput) {
@@ -372,20 +373,19 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 				validInput = true;
 				Map<String, String> progreso = profesorActual.verProgresoEstudiante(estudianteID, learningPathID+"_"+estudianteID);
 				System.out.println("Progreso del Estudiante: " + progreso);
+				return progreso.toString();
 			} else {
 				System.out.println("Learning Path o Estudiante no encontrados. Por favor, intente de nuevo.");
 			}
 		}
+		return "No se encontro progreso";
 	}
 
-	public static void revisarFeedback(String learningPathID) {
+	public static String revisarFeedback(String learningPathID) {
 		boolean validInput = false;
 	
 		while (!validInput) {
-			System.out.println("\n");
-			System.out.print("ID del Learning Path: ");
-			learningPathID = scanner.nextLine();
-
+			
 			LearningPath lp = null;
 			for (LearningPath learningPath : learningPaths) {
 				if (learningPath.getLearningPathID().equals(learningPathID)) {
@@ -401,13 +401,15 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 					throw new RuntimeException("No feedback found for the given Learning Path ID.");
 				}
 				feedbacks.forEach(System.out::println);
+				return feedbacks.toString();
 			} else {
-				System.out.println("Learning Path not found. Please try again.");
+		        throw new RuntimeException("No feedback found for the given Learning Path ID.");
 			}
 		}
+		return "No se encontro feedback";
 	}
 
-	public static void calcularRating(String learningPathID) {
+	public static String calcularRating(String learningPathID) {
 		boolean validInput = false;
 
 		while (!validInput) {
@@ -420,13 +422,14 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 			}
 
 			if (lp != null) {
-				validInput = true;
-				double rating = profesorActual.calcularRating(learningPathID);
-				System.out.println("Rating promedio: " + rating);
+			    validInput = true;
+			    double rating = profesorActual.calcularRating(learningPathID);
+			    return Double.toString(rating);
 			} else {
-				System.out.println("Learning Path no encontrado. Por favor, intente de nuevo.");
+				return "No se encontro rating";
 			}
 		}
+		return "No se encontro rating";
 	}
 
     private static void persistData() {

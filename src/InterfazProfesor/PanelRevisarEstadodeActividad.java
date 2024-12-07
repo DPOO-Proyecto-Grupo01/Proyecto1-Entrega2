@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Consola.ConsolaProfesor;
+import Usuarios.Profesor;
 
 public class PanelRevisarEstadodeActividad extends JPanel {
 	
@@ -75,7 +76,8 @@ public class PanelRevisarEstadodeActividad extends JPanel {
 
             if (!actividadID.isEmpty() && !learningPath.isEmpty()) {
             	ConsolaProfesor.revisarEstadoActividad(actividadID, learningPath);
-                progreso.setText("El estado de la actividad " + actividadID + " es " );
+                progreso.setText("El estado de la actividad " + actividadID + " es: " + 
+            	ConsolaProfesor.revisarEstadoActividad(actividadID, learningPath));
             } else {
                 progreso.setText("Por favor, completa ambos campos.");
             }

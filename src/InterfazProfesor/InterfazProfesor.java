@@ -54,61 +54,6 @@ public class InterfazProfesor extends JFrame {
         add(panelCentral, BorderLayout.CENTER);
     }
 
-
-    private JPanel crearPanelCrearActividad() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Crear Actividad", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(label, BorderLayout.NORTH);
-
-        JButton btnRegresar = new JButton("Regresar");
-        btnRegresar.addActionListener(e -> {
-            lblBienvenida.setText("Selecciona una opción");
-            cardLayout.show(panelCentral, "Menu");
-        });
-        panel.add(btnRegresar, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    private JPanel crearPanelRevisarFeedback() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Revisar Feedback", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(label, BorderLayout.NORTH);
-
-        JButton btnRegresar = new JButton("Regresar");
-        btnRegresar.addActionListener(e -> {
-            lblBienvenida.setText("Selecciona una opción");
-            cardLayout.show(panelCentral, "Menu");
-        });
-        panel.add(btnRegresar, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    private JPanel crearPanelCalcularRating() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Calcular Rating", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(label, BorderLayout.NORTH);
-
-        JButton btnRegresar = new JButton("Regresar");
-        btnRegresar.addActionListener(e -> {
-            lblBienvenida.setText("Selecciona una opción");
-            cardLayout.show(panelCentral, "Menu");
-        });
-        panel.add(btnRegresar, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
     public void cambiarMensaje(String mensaje) {
         lblBienvenida.setText(mensaje);
     }
