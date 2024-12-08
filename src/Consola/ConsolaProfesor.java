@@ -369,6 +369,7 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 				}
 			}
 
+			
 			if (lp != null && estudiante != null) {
 				validInput = true;
 				Map<String, String> progreso = profesorActual.verProgresoEstudiante(estudianteID, learningPathID+"_"+estudianteID);

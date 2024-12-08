@@ -79,6 +79,7 @@ public class PanelVerProgresoEstudiante extends JPanel {
             } else {
                 progreso.setText("Por favor, completa ambos campos.");
             }
+            
         });
     }
 }
