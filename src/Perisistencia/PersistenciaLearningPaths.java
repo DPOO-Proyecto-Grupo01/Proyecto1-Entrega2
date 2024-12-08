@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import Actividades.Actividad;
 import Consola.ConsolaEstudiante;
+import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 import Usuarios.Profesor;
@@ -147,5 +148,27 @@ public class PersistenciaLearningPaths implements IpersistenciaLearningPaths {
 
         }
     }
+
+
+	public void cargarFeedbackDelLearningPath(List<Feedback> feedbacks, List<LearningPath> learningPaths) {
+		for (LearningPath lp: learningPaths) {
+            List<Feedback> feedbacksActual = new ArrayList<>();
+            
+            for (Feedback feedback : feedbacks) {
+            	
+                if (feedback.getLearningPath().equals(lp.getLearningPathID())) {
+             
+                    feedbacksActual.add(feedback);
+                }
+            }
+            
+            lp.setFeedback(feedbacksActual);
+
+        }
+    
+		
+	}
+	
+	
 
 }

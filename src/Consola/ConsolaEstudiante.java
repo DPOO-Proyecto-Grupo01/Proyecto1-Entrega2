@@ -17,9 +17,11 @@ import Actividades.Quiz;
 import Actividades.Tarea;
 import Exceptions.LearningPathNoInscrito;
 import Exceptions.NombreRepetido;
+import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 import Perisistencia.PersistenciaActividades;
+import Perisistencia.PersistenciaFeedback;
 import Perisistencia.PersistenciaLearningPaths;
 import Perisistencia.PersistenciaProgreso;
 import Perisistencia.PersistenciaUsuarios;
@@ -35,29 +37,33 @@ public class ConsolaEstudiante {
     private static PersistenciaActividades persistenciaActividades = new PersistenciaActividades();
     private static PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
     private static PersistenciaProgreso persistenciaProgreso = new PersistenciaProgreso();
+    private static PersistenciaFeedback persistenciaFeedback = new PersistenciaFeedback();
     private static final String usuariosFile = "src/datos/users.json";
     private static final String actividadesFile = "src/datos/activities.json";
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     private static final String progresoFile = "src/datos/progreso.json";
+    private static final String feedbackFile = "src/datos/feedback.json";
     private static List<LearningPath> learningPaths;
     public static Map<String, Profesor> profesores = new HashMap<>();
     public static List<Actividad> actividades;
     public static List<Estudiante> estudiantes;
     public static List<Progreso> progresos;
+    public static List<Feedback> feedbacks;
     public static Map<String, String> lps = new HashMap<>();
 
     private static int contador = 1;
 
     public static void main(String[] args) throws Exception {
-        cargarActividades();
+    	cargarActividades();
         cargarLearningPaths();
         cargarProgresos();
-        cargarActividadesLP(); 
         cargarProgresoLP();
+        cargarFeedback();
+        cargarFeedbackLP();
         cargarProfesores();
-        cargarEstudiantes();
-        cargarLpEstudiantes();
         cargarLpProfesoress();
+        cargarActividadesLP();
+        cargarEstudiantes();
         
         boolean authenticated = false;
 
@@ -143,6 +149,21 @@ public class ConsolaEstudiante {
             e.printStackTrace();
         }
 	}
+	
+	public static void cargarFeedback() {
+        try {
+            feedbacks = persistenciaFeedback.cargarFeedback(feedbackFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public static void cargarFeedbackLP() {
+        try {
+            persistenciaLearningPaths.cargarFeedbackDelLearningPath(feedbacks, learningPaths);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }}
 
     public static void cargarLpProfesoress() {
         try {
@@ -360,6 +381,11 @@ public class ConsolaEstudiante {
 	public static Estudiante getEstudianteActual() {
 		// TODO Auto-generated method stub
 		return estudianteActual;
+	}
+	
+	public static String getFeedbackFile() {
+		return feedbackFile;
+    
 	}
 }
  

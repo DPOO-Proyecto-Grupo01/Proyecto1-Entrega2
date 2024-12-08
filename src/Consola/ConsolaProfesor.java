@@ -11,6 +11,7 @@ import java.util.InputMismatchException;
 
 import Usuarios.Estudiante;
 import Usuarios.Profesor;
+import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 import Actividades.Actividad;
@@ -18,6 +19,7 @@ import Actividades.Encuesta;
 import Actividades.Examen;
 import Perisistencia.PersistenciaUsuarios;
 import Perisistencia.PersistenciaActividades;
+import Perisistencia.PersistenciaFeedback;
 import Perisistencia.PersistenciaLearningPaths;
 import Perisistencia.PersistenciaProgreso;
 import Actividades.Pregunta;
@@ -29,21 +31,24 @@ import Exceptions.NombreRepetido;
 public class ConsolaProfesor {
     
     private static Scanner scanner = new Scanner(System.in);
-    private static Profesor profesorActual;
+    public static Profesor profesorActual;
     private static PersistenciaUsuarios persistenciaUsuarios = new PersistenciaUsuarios();
     private static PersistenciaActividades persistenciaActividades = new PersistenciaActividades();
     private static PersistenciaLearningPaths persistenciaLearningPaths = new PersistenciaLearningPaths();
     private static PersistenciaProgreso persistenciaProgreso = new PersistenciaProgreso();
+    private static PersistenciaFeedback persistenciaFeedback = new PersistenciaFeedback();
     private static final String usuariosFile = "src/datos/users.json";
     private static final String actividadesFile = "src/datos/activities.json";
     private static final String learningPathsFile = "src/datos/learning_paths.json";
     private static final String progresoFile = "src/datos/progreso.json";
+    private static final String feedbackFile = "src/datos/feedback.json";
     private static List<LearningPath> learningPaths;
     private static Map<String, Profesor> profesores = new HashMap<>();
     private static List<Actividad> actividades;
     private static List<Estudiante> estudiantes;
     private static List<Profesor> profesoresLista;
     private static List<Progreso> progresos;
+    private static List<Feedback> feedbacks;
     
     
     public static void main(String[] args) throws Exception { 
@@ -51,6 +56,8 @@ public class ConsolaProfesor {
         cargarLearningPaths();
         cargarProgresos();
         cargarProgresoLP();
+        cargarFeedback();
+        cargarFeedbackLP();
         cargarProfesores();
         cargarLpProfesoress();
         cargarActividadesLP();
@@ -153,6 +160,23 @@ public class ConsolaProfesor {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	public static void cargarFeedback() {
+        try {
+            feedbacks = persistenciaFeedback.cargarFeedback(feedbackFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public static void cargarFeedbackLP() {
+        try {
+            persistenciaLearningPaths.cargarFeedbackDelLearningPath(feedbacks, learningPaths);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }}
 	
 	public static void cargarProgresos() {
         try {
@@ -397,6 +421,8 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 			if (lp != null) {
 				validInput = true;
 				List<Map> feedbacks = profesorActual.revisarFeedback(learningPathID);
+				System.out.println("Feedbacks: " + feedbacks);
+				System.out.println("ProFESOR " + profesorActual.getNombre());
 				if (feedbacks == null || feedbacks.isEmpty()) {
 					throw new RuntimeException("No feedback found for the given Learning Path ID.");
 				}

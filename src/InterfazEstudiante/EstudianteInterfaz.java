@@ -51,6 +51,8 @@ public class EstudianteInterfaz extends Interfaz {
 	    ConsolaEstudiante.cargarActividadesLP();
 	    ConsolaEstudiante.cargarProgresoLP();
 	    ConsolaEstudiante.cargarProfesores();
+	    ConsolaEstudiante.cargarFeedback();
+	    ConsolaEstudiante.cargarFeedbackLP();
 	    ConsolaEstudiante.cargarEstudiantes();
 	    ConsolaEstudiante.cargarLpEstudiantes();
 	    ConsolaEstudiante.cargarLpProfesoress();

@@ -285,7 +285,7 @@ class EstudianteTest {
 
 
     @Test
-    void testEnviarFeedback() throws LearningPathNoInscrito {
+    void testEnviarFeedback() throws Exception {
     	estudiantePrueba.inscribirLearningPath("LP106", "P105");
     	estudiantePrueba.enviarFeedback("LP106", "Excelente curso", 5, "FB001");
 

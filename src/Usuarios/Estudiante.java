@@ -22,6 +22,7 @@ import LearningPaths.Feedback;
 import LearningPaths.LearningPath;
 import LearningPaths.Progreso;
 import Perisistencia.PersistenciaActividades;
+import Perisistencia.PersistenciaFeedback;
 import Perisistencia.PersistenciaLearningPaths;
 import Perisistencia.PersistenciaProgreso;
 
@@ -421,13 +422,15 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
 	 
 
 	public void enviarFeedback(String learningPath, String feedback, int calificacion, 
-			String feedbackID ) throws LearningPathNoInscrito{
+			String feedbackID ) throws Exception{
 		LearningPath lp= learningPathsInscritos.get(learningPath);
 		if(lp==null) {
             throw new LearningPathNoInscrito("Learning Path no inscrito");
             }
 		//Imprime la lista de learning paths inscritos
-		Feedback feedbackEstudiante= new Feedback(feedbackID, feedback, calificacion, this.getNombre(), lp);
+		Feedback feedbackEstudiante= new Feedback(feedbackID, feedback, calificacion, this.getUsuarioID(), learningPath);
+		PersistenciaFeedback persistenciaFeedback = new PersistenciaFeedback();
+	    persistenciaFeedback.actualizarFeedback(feedbackEstudiante);
 		List<Feedback> feedbacks= lp.getFeedback();
 		feedbacks.add(feedbackEstudiante);
 		lp.setFeedback(feedbacks);

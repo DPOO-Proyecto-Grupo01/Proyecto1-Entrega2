@@ -22,6 +22,8 @@ public class InterfazProfesor extends JFrame {
         ConsolaProfesor.cargarProgresos();
         ConsolaProfesor.cargarProgresoLP();
         ConsolaProfesor.cargarProfesores();
+        ConsolaProfesor.cargarFeedback();
+        ConsolaProfesor.cargarFeedbackLP();
         ConsolaProfesor.cargarLpProfesoress();
         ConsolaProfesor.cargarActividadesLP();
         ConsolaProfesor.cargarEstudiantes();

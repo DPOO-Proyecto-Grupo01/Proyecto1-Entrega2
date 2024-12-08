@@ -69,7 +69,7 @@ public class PanelRevisarFeedback extends JPanel {
 
             if ( !learningPath.isEmpty()) {
             	
-                progreso.setText("Feedback: " + ConsolaProfesor.revisarFeedback(learningPath));
+                progreso.setText("Feedback: " + ConsolaProfesor.profesorActual.revisarFeedback(learningPath));
             } else {
                 progreso.setText("Por favor, completa el campo");
             }

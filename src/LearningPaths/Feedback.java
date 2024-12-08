@@ -3,6 +3,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import Actividades.Actividad;
 import Usuarios.Estudiante;
 public class Feedback {
@@ -12,13 +14,13 @@ public class Feedback {
 	private int calificacion;
 	private String estudiante;
 	
-	private LearningPath learningPath;
-	private String LearningPathID;
+	private String learningPath;
+
 
 	
 
 	public Feedback(String feedbackID, String comentario, int calificacion, String estudianteId,
-		 LearningPath learningPath) {
+		 String learningPath) {
 		super();
 		this.feedbackID = feedbackID;
 		this.comentario = comentario;
@@ -26,7 +28,7 @@ public class Feedback {
 		this.estudiante = estudianteId;
 		
 		this.learningPath = learningPath;
-		this.LearningPathID = learningPath.getLearningPathID();
+		
 	}
 
 	public String getFeedbackID() {
@@ -55,7 +57,7 @@ public class Feedback {
 	}
 
 
-	public LearningPath getLearningPath() {
+	public String getLearningPath() {
 		return learningPath;
 	}
 
@@ -65,10 +67,23 @@ public class Feedback {
 		map.put("ComentarioEstudiante", comentario);
 		map.put("rating", Integer.toString(calificacion));
 		map.put("Estudiante", estudiante);
-		map.put("Learning Path", LearningPathID);
+		map.put("Learning Path", learningPath);
 		
 		return map;
 	}
+	
+	public JSONObject toJSON() {
+	    JSONObject objeto = new JSONObject();
+
+	    objeto.put("feedbackID", feedbackID);
+	    objeto.put("comentario", comentario);
+	    objeto.put("calificacion", calificacion);
+	    objeto.put("estudianteID", estudiante);
+	    objeto.put("learningPathID", learningPath);
+
+	    return objeto;
+	}
+
 }
 
 
