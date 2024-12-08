@@ -345,7 +345,7 @@ public class ConsolaEstudiante {
         return estudianteActual.actividadesDisponibles(learningPathID);
     }
 
-    public static void enviarFeedback(String learningPathID, String feedback, int calificacion) throws LearningPathNoInscrito {
+    public static void enviarFeedback(String learningPathID, String feedback, int calificacion) throws Exception {
         
         Random random = new Random();
         int feedbackRandom = random.nextInt(100); 

@@ -70,8 +70,8 @@ public class Quiz extends Actividad {
 		for (Pregunta pregunta : preguntas) {
 			JSONObject preguntaJSON = new JSONObject();
 			preguntaJSON.put("pregunta", pregunta.pregunta);
-			JSONArray opcionesArray = new JSONArray();
-			opcionesArray.putAll(pregunta.opciones);
+			JSONArray opcionesArray = new JSONArray(pregunta.opciones);
+			
 			preguntaJSON.put("opciones", opcionesArray);
 
 			preguntasArray.put(preguntaJSON);
