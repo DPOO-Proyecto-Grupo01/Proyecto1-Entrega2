@@ -75,7 +75,7 @@ public class PanelVerProgresoEstudiante extends JPanel {
             String learningPath = txtLearningPath.getText();
 
             if (!studentId.isEmpty() && !learningPath.isEmpty()) {
-                progreso.setText("Progreso encontrado para estudiante " + studentId + " en " + learningPath + ConsolaProfesor.verProgresoEstudiante(studentId, learningPath));
+            	progreso.setText("Progreso encontrado para estudiante " + studentId + " en " + learningPath + " " +ConsolaProfesor.verProgresoEstudiante(studentId, learningPath) +"%");
             } else {
                 progreso.setText("Por favor, completa ambos campos.");
             }
