@@ -393,11 +393,13 @@ public static void crearLearningPath(String LearningPathID, String titulo, Strin
 				}
 			}
 
+			
 			if (lp != null && estudiante != null) {
 				validInput = true;
 				Map<String, String> progreso = profesorActual.verProgresoEstudiante(estudianteID, learningPathID+"_"+estudianteID);
-				System.out.println("Progreso del Estudiante: " + progreso);
-				return progreso.toString();
+				String porcentajeExito = progreso.get("Porcentaje de Exito");
+				System.out.println("Progreso del Estudiante: " + porcentajeExito);
+				return porcentajeExito;
 			} else {
 				System.out.println("Learning Path o Estudiante no encontrados. Por favor, intente de nuevo.");
 			}
