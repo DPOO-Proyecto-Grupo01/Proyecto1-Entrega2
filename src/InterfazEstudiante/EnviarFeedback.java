@@ -21,6 +21,7 @@ public class EnviarFeedback extends JPanel {
     private JComboBox<String> txtNombreLP;
     private JComboBox<String> calificación = new JComboBox<>(new String[]{"1", "2", "3", "4", "5"});
     private JTextField txtFeedback = new JTextField();
+    private Estudiante e;
 
     public EnviarFeedback(EstudianteInterfaz elPadre) throws Exception {
 
@@ -29,7 +30,7 @@ public class EnviarFeedback extends JPanel {
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setBackground(Color.WHITE);
 
-        Estudiante e = elPadre.estudianteActual;
+        e = elPadre.estudianteActual;
 
         ArrayList<String> learningPathsLista = new ArrayList<>(e.getLearningPathsInscritos().keySet());
         String[] learningPaths = learningPathsLista.toArray(new String[0]);
@@ -95,7 +96,7 @@ public class EnviarFeedback extends JPanel {
         String feedback = txtFeedback.getText().trim();
 
         if (!feedback.isEmpty()) {
-            ConsolaEstudiante.enviarFeedback(lpSeleccionadoS, feedback, calificacion);
+            e.enviarFeedback(lpSeleccionadoS, feedback, calificacion, e.getNombre());
             JOptionPane.showMessageDialog(this, "Feedback enviado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un feedback antes de enviar.", "Advertencia", JOptionPane.WARNING_MESSAGE);

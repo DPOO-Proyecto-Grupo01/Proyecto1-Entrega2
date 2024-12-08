@@ -29,15 +29,28 @@ public class InterfazProfesor extends JFrame {
         setTitle("Interfaz Profesor - Bienvenido " + usuarioID);
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBackground(new Color(230, 240, 255));
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        JPanel panelSuperior = new JPanel();
+        // Panel superior para la imagen
+        JPanel panelSuperior = new JPanel(new BorderLayout());
+        panelSuperior.setBackground(Color.WHITE);
+
+        JLabel lblImagen = new JLabel();
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenesInterfaz/iconoP.jpg"));
+        lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH)));
+        lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+
         lblBienvenida = new JLabel("Selecciona una opción");
         lblBienvenida.setFont(new Font("Arial", Font.BOLD, 18));
-        panelSuperior.add(lblBienvenida);
+        lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
+
+        panelSuperior.add(lblImagen, BorderLayout.NORTH);
+        panelSuperior.add(lblBienvenida, BorderLayout.SOUTH);
         add(panelSuperior, BorderLayout.NORTH);
 
+        // Panel central para el CardLayout
         cardLayout = new CardLayout();
         panelCentral = new JPanel(cardLayout);
 
@@ -50,8 +63,20 @@ public class InterfazProfesor extends JFrame {
         panelCentral.add(new PanelVerProgresoEstudiante(cardLayout, panelCentral, lblBienvenida), "VerProgresoEstudiante");
         panelCentral.add(new PanelRevisarFeedback(cardLayout, panelCentral, lblBienvenida), "RevisarFeedback");
         panelCentral.add(new PanelCalcularRating(cardLayout, panelCentral, lblBienvenida), "CalcularRating");
+        panelCentral.add(new PanelProgresoGeneral(cardLayout, panelCentral, lblBienvenida), "ProgresoGeneral");
 
         add(panelCentral, BorderLayout.CENTER);
+
+        // Panel inferior para los botones
+        JPanel panelInferior = new JPanel();
+        panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelInferior.setBackground(Color.WHITE);
+
+        JButton btnSalir = new JButton("Salir");
+        btnSalir.addActionListener(event -> salir());
+        panelInferior.add(btnSalir);
+
+        add(panelInferior, BorderLayout.SOUTH);
     }
 
     public void cambiarMensaje(String mensaje) {
@@ -59,7 +84,7 @@ public class InterfazProfesor extends JFrame {
     }
 
     public void salir() {
-        int confirm = JOptionPane.showConfirmDialog(this, "Salir", "Confirmar", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Deseas salir?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             dispose();
         }

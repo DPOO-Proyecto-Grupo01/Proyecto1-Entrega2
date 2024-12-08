@@ -13,6 +13,7 @@ public class Feedback {
 	private String estudiante;
 	
 	private LearningPath learningPath;
+	private String LearningPathID;
 
 	
 
@@ -25,6 +26,7 @@ public class Feedback {
 		this.estudiante = estudianteId;
 		
 		this.learningPath = learningPath;
+		this.LearningPathID = learningPath.getLearningPathID();
 	}
 
 	public String getFeedbackID() {
@@ -63,7 +65,7 @@ public class Feedback {
 		map.put("ComentarioEstudiante", comentario);
 		map.put("rating", Integer.toString(calificacion));
 		map.put("Estudiante", estudiante);
-		map.put("Learning Path", learningPath.getLearningPathID());
+		map.put("Learning Path", LearningPathID);
 		
 		return map;
 	}
