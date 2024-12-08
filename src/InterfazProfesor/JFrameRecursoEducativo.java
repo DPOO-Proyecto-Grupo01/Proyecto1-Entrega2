@@ -149,7 +149,7 @@ public class JFrameRecursoEducativo extends JFrame {
                     // Crear el Recurso Educativo a través de ConsolaProfesor
                     ConsolaProfesor.crearActividad(
                             actividadID, descripcion, objetivo, nivelDificultad, duracion, esObligatoria,
-                            fechaLimite, resenas, resultado, calificacion, "RecursoEducativo", learningPathID,
+                            fechaLimite, resenas, resultado, calificacion, "Recurso Educativo", learningPathID,
                             actividadesPrevias, actividadesSeguimiento, parametrosEspecificos, ""
                     );
 
