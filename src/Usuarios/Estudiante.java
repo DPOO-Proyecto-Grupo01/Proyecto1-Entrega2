@@ -428,7 +428,9 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
             }
 		//Imprime la lista de learning paths inscritos
 		Feedback feedbackEstudiante= new Feedback(feedbackID, feedback, calificacion, this.getNombre(), lp);
-		lp.getFeedback().add(feedbackEstudiante);
+		List<Feedback> feedbacks= lp.getFeedback();
+		feedbacks.add(feedbackEstudiante);
+		lp.setFeedback(feedbacks);
 	}
 	
 	public Progreso crearProgreso(LearningPath learningPath, Date fechaInicio, Date fechaCompletado, int tiempoDedicado,

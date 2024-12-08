@@ -24,7 +24,8 @@ public class Botones {
         JButton btnVerProgresoEstudiante = new JButton("Ver Progreso de Estudiante");
         JButton btnRevisarFeedback = new JButton("Revisar Feedback");
         JButton btnCalcularRating = new JButton("Calcular Rating");
-        JButton btnSalir = new JButton("Salir");
+        JButton btnprogresoGeneral = new JButton("Ver Progreso General");
+        
 
         panel.add(btnCrearActividad);
         panel.add(btnCrearLearningPath);
@@ -32,7 +33,8 @@ public class Botones {
         panel.add(btnVerProgresoEstudiante);
         panel.add(btnRevisarFeedback);
         panel.add(btnCalcularRating);
-        panel.add(btnSalir);
+        panel.add(btnprogresoGeneral);
+        
 
         btnCrearActividad.addActionListener(e -> cardLayout.show(panelCentral, "CrearActividad"));
         btnCrearLearningPath.addActionListener(e -> cardLayout.show(panelCentral, "CrearLearningPath"));
@@ -40,7 +42,8 @@ public class Botones {
         btnRevisarEstadoActividad.addActionListener(e -> cardLayout.show(panelCentral, "RevisarEstadodeActividad"));
         btnRevisarFeedback.addActionListener(e -> cardLayout.show(panelCentral, "RevisarFeedback"));
         btnCalcularRating.addActionListener(e -> cardLayout.show(panelCentral, "CalcularRating"));
-        btnSalir.addActionListener(e -> interfaz.salir());
+        btnprogresoGeneral.addActionListener(e -> cardLayout.show(panelCentral, "ProgresoGeneral"));
+        
 
         return panel;
     }

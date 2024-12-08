@@ -43,51 +43,56 @@ public class Interfaz implements ActionListener {
 	private JFrame frame;
 
 	public Interfaz() {
-		frame = new JFrame();
-		frame.setSize(400, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setTitle("¡Bienvenido!");
-		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenesInterfaz/logo-universidad-de-los-andes.png"));
-		frame.setIconImage(icon.getImage());
+	    frame = new JFrame();
+	    frame.setSize(500, 450); // Incrementamos el tamaño de la ventana para acomodar la imagen más grande
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setLocationRelativeTo(null);
+	    frame.setTitle("¡Bienvenido!");
+	    
+	    ImageIcon icon = new ImageIcon(getClass().getResource("/imagenesInterfaz/logo-universidad-de-los-andes.png"));
+	    frame.setIconImage(icon.getImage());
 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
 
-		ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenesInterfaz/logo.png"));
-		JLabel imagenLabel = new JLabel(
-				new ImageIcon(imagen.getImage().getScaledInstance(200, 150, java.awt.Image.SCALE_SMOOTH)));
-		JPanel imagePanel = new JPanel();
-		imagePanel.add(imagenLabel);
+	    // Cargar y escalar la imagen a un tamaño más grande (350x200)
+	    ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenesInterfaz/logo.png"));
+	    JLabel imagenLabel = new JLabel(
+	            new ImageIcon(imagen.getImage().getScaledInstance(350, 200, java.awt.Image.SCALE_SMOOTH)));
+	    
+	    // Crear un panel para centrar la imagen
+	    JPanel imagePanel = new JPanel();
+	    imagePanel.add(imagenLabel);
 
-		tipoUsuario = new JLabel("Tipo Usuario");
-		tipoUsuario.setBounds(10, 80, 80, 25);
-		panel.add(tipoUsuario);
+	    // Agregar los componentes de selección de usuario
+	    tipoUsuario = new JLabel("Tipo Usuario:");
+	    tipoUsuario.setBounds(10, 80, 100, 25);
+	    panel.add(tipoUsuario);
 
-		estudianteRadio = new JRadioButton("Estudiante");
-		estudianteRadio.setBounds(100, 80, 100, 25);
-		panel.add(estudianteRadio);
+	    estudianteRadio = new JRadioButton("Estudiante");
+	    estudianteRadio.setBounds(120, 80, 100, 25);
+	    panel.add(estudianteRadio);
 
-		profesorRadio = new JRadioButton("Profesor");
-		profesorRadio.setBounds(200, 80, 100, 25);
-		panel.add(profesorRadio);
+	    profesorRadio = new JRadioButton("Profesor");
+	    profesorRadio.setBounds(250, 80, 100, 25);
+	    panel.add(profesorRadio);
 
-		tipoGroup = new ButtonGroup();
-		tipoGroup.add(estudianteRadio);
-		tipoGroup.add(profesorRadio);
+	    tipoGroup = new ButtonGroup();
+	    tipoGroup.add(estudianteRadio);
+	    tipoGroup.add(profesorRadio);
 
-		button = new JButton();
-		button.setBounds(120, 130, 10, 25);
-		button.setSize(150, 25);
-		button.setText("Ingresar");
-		button.addActionListener(this);
-		panel.add(button);
+	    button = new JButton("Ingresar");
+	    button.setBounds(180, 150, 120, 30); // Botón centrado con un tamaño adecuado
+	    button.addActionListener(this);
+	    panel.add(button);
 
-		frame.setLayout(new BorderLayout());
-		frame.add(imagePanel, BorderLayout.NORTH);
-		frame.add(panel, BorderLayout.CENTER);
-		frame.setVisible(true);
+	    // Configurar el diseño general del JFrame
+	    frame.setLayout(new BorderLayout());
+	    frame.add(imagePanel, BorderLayout.NORTH); // Imagen en la parte superior
+	    frame.add(panel, BorderLayout.CENTER);    // Panel con controles en el centro
+	    frame.setVisible(true);
 	}
+
 
 	public static void main(String[] args) {
 		new Interfaz();
