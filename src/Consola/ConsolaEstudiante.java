@@ -44,6 +44,7 @@ public class ConsolaEstudiante {
     public static List<Actividad> actividades;
     public static List<Estudiante> estudiantes;
     public static List<Progreso> progresos;
+    public static Map<String, String> lps = new HashMap<>();
 
     private static int contador = 1;
 
@@ -195,7 +196,7 @@ public class ConsolaEstudiante {
 
     private static void handleOption(int option) throws Exception {
         switch (option) {
-            case 1 -> mostrarRecomendacionesYInscribirLearningPath();
+            case 1 -> mostrarRecomendacionesYInscribirLearningPath(null, null, null);
             case 2 -> completarActividad();
             case 3 -> verProgresoLearningPath();
             case 4 -> verActividadesPorCompletar(null);
@@ -235,37 +236,22 @@ public class ConsolaEstudiante {
         return false;
     }
 
-    public static void mostrarRecomendacionesYInscribirLearningPath() throws LearningPathNoInscrito {
-        try {
-            System.out.println("Lista de profesores: \n");
-            for (Profesor profesor : profesores.values()) {
-                System.out.println(profesor.getUsuarioID() + "\n");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.print("Ingrese el ID del profesor al que desea inscribir: ");
-        String profesorID = scanner.nextLine();
-
+    public static String mostrarRecomendacionesYInscribirLearningPath(String profesorID, String intereses, String learningPathID) throws LearningPathNoInscrito {
+        
+        
         for (String profesor : profesores.keySet()) {
             if (profesor.equals(profesorID)) {
-                System.out.println("Profesor encontrado\n");
                 estudianteActual.inscribirProfesor(profesores.get(profesor), profesorID);
                 break;
             }
         }
-
-        System.out.print("Ingrese su intereses academicos: ");
-        String intereses = scanner.nextLine();
         estudianteActual.setIntereses(intereses);
         String recomendaciones = estudianteActual.obtenerRecomendacion(intereses, profesorID);
-        System.out.println(recomendaciones + "\n");
-
-        System.out.print("Ingrese el ID del Learning Path al que desea inscribirse: ");
-        String learningPathID = scanner.nextLine();
-
-        estudianteActual.inscribirLearningPath(learningPathID, profesorID);
+        lps=estudianteActual.inscribirLearningPath(learningPathID, profesorID);
+        
+        
+        return recomendaciones;
+        
     }
 
     private static void completarActividad() throws Exception {

@@ -18,6 +18,7 @@ import Exceptions.NombreRepetido;
 import Exceptions.YaSeCompleto;
 import InterfazPrincipal.Interfaz;
 import Usuarios.Estudiante;
+import Usuarios.Profesor;
 
 public class EstudianteInterfaz extends Interfaz {
 
@@ -25,55 +26,65 @@ public class EstudianteInterfaz extends Interfaz {
 	private JFrame ventana;
 	private IniciarSesión panelInicial;
 	private Inscribir panelInscribir;
-	private CompletarActividad panelCompletarActividad;
 	private CardLayout cardLayout;
 	private panelBotones panelBotones;
+	private CompletarActividad panelCompletarActividad;
 	private boolean sesionIniciada;
+	public String LearningPathTitulo;
 	protected Estudiante estudianteActual;
+	
 
-	public EstudianteInterfaz() throws Exception {
-		
-		sesionIniciada = false; 
-		mundo = new ConsolaEstudiante();
+	public EstudianteInterfaz() throws NombreRepetido, LearningPathNoInscrito, ActividadNoPertenece, YaSeCompleto {
+	    sesionIniciada = false;
+	    mundo = new ConsolaEstudiante();
 
-		ConsolaEstudiante.cargarActividades();
-        ConsolaEstudiante.cargarLearningPaths();
-        ConsolaEstudiante.cargarProgresos();
-        ConsolaEstudiante.cargarActividadesLP(); 
-        ConsolaEstudiante.cargarProgresoLP();
-        ConsolaEstudiante.cargarProfesores();
-        ConsolaEstudiante.cargarEstudiantes();
-        ConsolaEstudiante.cargarLpEstudiantes();
-        ConsolaEstudiante.cargarLpProfesoress();
-        
+	    // Cargar datos necesarios
+	    ConsolaEstudiante.cargarActividades();
+	    ConsolaEstudiante.cargarLearningPaths();
+	    ConsolaEstudiante.cargarProgresos();
+	    ConsolaEstudiante.cargarActividadesLP();
+	    ConsolaEstudiante.cargarProgresoLP();
+	    ConsolaEstudiante.cargarProfesores();
+	    ConsolaEstudiante.cargarEstudiantes();
+	    ConsolaEstudiante.cargarLpEstudiantes();
+	    ConsolaEstudiante.cargarLpProfesoress();
 
-		ventana = new JFrame();
-		ventana.setSize(800, 800);
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setLocationRelativeTo(null);
-		ventana.setTitle("¡Bienvenido!");
-		
-		ventana.setLayout(new BorderLayout());
-		ventana.setVisible(true);
-		
-		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenesInterfaz/icono2.png"));
+	    // Configurar la ventana
+	    ventana = new JFrame();
+	    ventana.setSize(800, 800);
+	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    ventana.setLocationRelativeTo(null);
+	    ventana.setTitle("¡Bienvenido!");
 
-		cardLayout = new CardLayout();
-		
-		ventana.setLayout(cardLayout);
-		panelBotones = new panelBotones(this);
-		ventana.add(panelBotones, "Funcionalidades");
-		
-		panelInicial = new IniciarSesión(this);
-        ventana.add(panelInicial, "IniciarSesion");
-        
-     
-        cardLayout.show(ventana.getContentPane(), "IniciarSesion");
-        
-        panelInscribir = new Inscribir(this);
-        ventana.add(panelInscribir, "Inscribir");
+	    cardLayout = new CardLayout();
+	    ventana.setLayout(cardLayout);
 
+	    // Inicializar paneles básicos
+	    panelBotones = new panelBotones(this);
+	    ventana.add(panelBotones, "Funcionalidades");
+
+	    panelInicial = new IniciarSesión(this);
+	    ventana.add(panelInicial, "IniciarSesion");
+
+	    panelInscribir = new Inscribir(this);
+	    ventana.add(panelInscribir, "Inscribir");
+	    
+	    try {
+			panelCompletarActividad = new CompletarActividad(this);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    ventana.add(panelCompletarActividad, "CompletarActividad");
+
+	    // Mostrar el panel inicial
+	    cardLayout.show(ventana.getContentPane(), "IniciarSesion");
+	    
+	    
+
+	    ventana.setVisible(true);
 	}
+
 	
 	public CardLayout getCardLayout() {
         return cardLayout;
@@ -83,7 +94,7 @@ public class EstudianteInterfaz extends Interfaz {
         return ventana;
     }
     
-	public boolean IniciarSesion(String usuario, String contrasena) {
+    public boolean IniciarSesion(String usuario, String contrasena) {
 		boolean inicio = ConsolaEstudiante.authenticar(usuario, contrasena);
 		estudianteActual = ConsolaEstudiante.getEstudianteActual();
 		return inicio ;
@@ -96,23 +107,27 @@ public class EstudianteInterfaz extends Interfaz {
 	
 	public List<String> profesores(){
 		List<String> profesores1 = ConsolaEstudiante.profesores.keySet().stream().toList();
-		String mensaje = "";
-		for (String profesor : profesores1) {
-			mensaje += profesor + "\n";
-		}
-		JOptionPane.showMessageDialog(null, mensaje, "Profesores", JOptionPane.INFORMATION_MESSAGE);
 		return profesores1;
 	}
 	
+	public List<Profesor> getProfesores() {
+		List<Profesor> profesores = new ArrayList<>();
+		for (String profesor : ConsolaEstudiante.profesores.keySet()) {
+			profesores.add(ConsolaEstudiante.profesores.get(profesor));
+		}
+		return profesores;
+	}
 	
+	public String mostrarRecomendacionesYInscribirLearningPath(String profesorID, String intereses, String learningPathID) throws LearningPathNoInscrito {
+		return ConsolaEstudiante.mostrarRecomendacionesYInscribirLearningPath(profesorID, intereses, learningPathID);
+	}
+	
+
 
 	public static void main(String[] args) {
 		try {
 			new EstudianteInterfaz();
 		} catch (NombreRepetido | LearningPathNoInscrito | ActividadNoPertenece | YaSeCompleto e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

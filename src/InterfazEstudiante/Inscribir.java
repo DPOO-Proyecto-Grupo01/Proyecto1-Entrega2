@@ -10,17 +10,23 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import Exceptions.LearningPathNoInscrito;
+import InterfazProfesor.IniciarSesion;
+import Usuarios.Profesor;
+
 public class Inscribir extends JPanel {
 
     private JComboBox<String> comboProfesores;
-    private JComboBox<String> comboLearningPaths;
+    public JComboBox<String> comboLearningPaths;
     private EstudianteInterfaz padre;
+    private List<String> profesores;
+    public String LearningPathTitulo;
 
     public Inscribir(EstudianteInterfaz elPadre) {
         padre = elPadre;
 
         // Configurar diseño principal
-        this.setLayout(new GridLayout(3, 1, 10, 10));
+        this.setLayout(new GridLayout(4, 1, 10, 10)); // Ahora 4 filas (se agregó un nuevo panel)
         this.setBorder(new EmptyBorder(15, 15, 15, 15)); // Espaciado alrededor del panel
         this.setBackground(new Color(230, 240, 255));
 
@@ -34,7 +40,7 @@ public class Inscribir extends JPanel {
         lblProfesores.setHorizontalAlignment(SwingConstants.CENTER);
         panelProfesores.add(lblProfesores, BorderLayout.NORTH);
 
-        List<String> profesores = padre.profesores();
+        profesores = padre.profesores();
         comboProfesores = new JComboBox<>(profesores.toArray(new String[0]));
         comboProfesores.setFont(new Font("Arial", Font.PLAIN, 14));
         comboProfesores.addActionListener(new ProfesorSelectionListener());
@@ -56,14 +62,62 @@ public class Inscribir extends JPanel {
         actualizarLearningPaths("Profesor 1"); // Cargar datos iniciales
         panelLearningPaths.add(comboLearningPaths, BorderLayout.CENTER);
         this.add(panelLearningPaths);
+
+        // Panel de intereses del estudiante
+        JPanel panelIntereses = new JPanel(new BorderLayout());
+        panelIntereses.setBackground(Color.WHITE);
+        panelIntereses.setBorder(new TitledBorder("Intereses del Estudiante"));
+
+        JLabel lblIntereses = new JLabel("Escriba sus intereses:");
+        lblIntereses.setFont(new Font("Arial", Font.BOLD, 14));
+        lblIntereses.setHorizontalAlignment(SwingConstants.CENTER);
+        panelIntereses.add(lblIntereses, BorderLayout.NORTH);
+
+        JTextArea textAreaIntereses = new JTextArea(4, 20);
+        textAreaIntereses.setFont(new Font("Arial", Font.PLAIN, 14));
+        textAreaIntereses.setLineWrap(true);
+        textAreaIntereses.setWrapStyleWord(true);
+        JScrollPane scrollIntereses = new JScrollPane(textAreaIntereses);
+        panelIntereses.add(scrollIntereses, BorderLayout.CENTER);
+        this.add(panelIntereses);
         
+        LearningPathTitulo = "";
+        if (comboLearningPaths.getItemCount() > 0) {
+            Object selectedItem = comboLearningPaths.getSelectedItem();
+            LearningPathTitulo = (selectedItem != null) ? selectedItem.toString() : "";
+        }
+
+        // Botón de inscripción
         JButton btnInscribir = new JButton("Inscribirse");
         btnInscribir.setFont(new Font("Arial", Font.PLAIN, 14));
-		btnInscribir.addActionListener(e -> {
-			JOptionPane.showMessageDialog(this, "Inscripción exitosa", "Inscripción", JOptionPane.INFORMATION_MESSAGE);
-			
-		});
-		this.add(btnInscribir);
+        btnInscribir.addActionListener(e -> {
+            String intereses = textAreaIntereses.getText().trim();
+            if (intereses.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, introduzca sus intereses.", "Error", JOptionPane.WARNING_MESSAGE);
+            } else {
+                try {
+                    String recomendaciones = padre.mostrarRecomendacionesYInscribirLearningPath(
+                        (String) comboProfesores.getSelectedItem(),
+                        intereses,
+                        (String) comboLearningPaths.getSelectedItem()
+                    );
+                    JOptionPane.showMessageDialog(padre.getVentana(), recomendaciones, "Recomendaciones", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Obtener el título del Learning Path inscrito
+                    String learningPathTitulo = (String) comboLearningPaths.getSelectedItem();
+                    padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
+                    
+
+                } catch (LearningPathNoInscrito ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        this.add(btnInscribir);
+        
+        
+        
 
         // Botón para regresar
         JButton btnRegresar = new JButton("Regresar");
@@ -73,6 +127,7 @@ public class Inscribir extends JPanel {
         });
         this.add(btnRegresar);
     }
+
 
     // Listener para actualizar los Learning Paths según el profesor seleccionado
     private class ProfesorSelectionListener implements ActionListener {
@@ -86,26 +141,21 @@ public class Inscribir extends JPanel {
     // Método para actualizar los Learning Paths según el profesor
     private void actualizarLearningPaths(String profesor) {
         comboLearningPaths.removeAllItems(); 
-
         
-        String[] learningPaths;
-        switch (profesor) {
-            case "Profesor 1":
-                learningPaths = new String[]{"LP1 - Matemáticas", "LP2 - Física"};
-                break;
-            case "Profesor 2":
-                learningPaths = new String[]{"LP3 - Química", "LP4 - Biología"};
-                break;
-            case "Profesor 3":
-                learningPaths = new String[]{"LP5 - Historia", "LP6 - Literatura"};
-                break;
-            default:
-                learningPaths = new String[]{};
-        }
-
-        // Agregar los Learning Paths al JComboBox
-        for (String lp : learningPaths) {
-            comboLearningPaths.addItem(lp);
-        }
+        // Obtener los Learning Paths del profesor seleccionado
+		for (Profesor p : padre.getProfesores()) {
+			if (p.getNombre().equals(profesor)) {
+				for (String lp : p.getLearningPathsCreados().keySet()) {
+					comboLearningPaths.addItem(lp);
+				}
+				break;
+			}
+		}
+       
     }
+
+	public String getLearningPathTitulo() {
+		return LearningPathTitulo;
+	}
+    
 }

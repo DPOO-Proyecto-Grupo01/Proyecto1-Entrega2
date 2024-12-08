@@ -63,13 +63,10 @@ public class Estudiante extends Usuario {
 		
 		Profesor profesor = profesores.get(profesorID);
 		List<LearningPath> learningPaths = profesor.getLearningPathsCreados().values().stream().toList();
-		for (LearningPath lp : learningPaths) {
-		}
+		
 		List<String> recomendaciones = new ArrayList<>();
 		for (LearningPath lp : learningPaths) {
-			if (lp.getIntereses().contains(intereses)) {
 				recomendaciones.add(lp.getTitulo());
-			}
 		}
 		return recomendaciones.toString();
 	}
