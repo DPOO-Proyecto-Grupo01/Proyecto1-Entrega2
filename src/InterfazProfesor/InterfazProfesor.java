@@ -11,6 +11,7 @@ public class InterfazProfesor extends JFrame {
     private CardLayout cardLayout;
     private ConsolaProfesor mundo;
     private String usuarioID;
+    private InterfazEstudiante.CompletarActividad CompletarActividad;
 
     public InterfazProfesor(String usuarioID) {
         this.usuarioID = usuarioID; 
@@ -65,7 +66,7 @@ public class InterfazProfesor extends JFrame {
         panelCentral.add(new PanelVerProgresoEstudiante(cardLayout, panelCentral, lblBienvenida), "VerProgresoEstudiante");
         panelCentral.add(new PanelRevisarFeedback(cardLayout, panelCentral, lblBienvenida), "RevisarFeedback");
         panelCentral.add(new PanelCalcularRating(cardLayout, panelCentral, lblBienvenida), "CalcularRating");
-        panelCentral.add(new PanelProgresoGeneral(cardLayout, panelCentral, lblBienvenida), "ProgresoGeneral");
+        panelCentral.add(new PanelProgresoGeneral(cardLayout, panelCentral, lblBienvenida, CompletarActividad), "ProgresoGeneral");
 
         add(panelCentral, BorderLayout.CENTER);
 
