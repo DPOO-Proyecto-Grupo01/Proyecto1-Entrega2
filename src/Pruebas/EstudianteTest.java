@@ -17,7 +17,9 @@ import Actividades.*;
 import Exceptions.*;
 import LearningPaths.*;
 import Perisistencia.PersistenciaActividades;
+import Perisistencia.PersistenciaFeedback;
 import Perisistencia.PersistenciaLearningPaths;
+import Perisistencia.PersistenciaProgreso;
 import Perisistencia.PersistenciaUsuarios;
 import Usuarios.*;
 
@@ -37,6 +39,10 @@ class EstudianteTest {
 	private static PersistenciaUsuarios persistenciaUsuarios;
 	private static PersistenciaLearningPaths persistenciaLearningPaths;
 	private static PersistenciaActividades persistenciaActividades;
+	private static PersistenciaFeedback persistenciaFeedback;
+	private static PersistenciaProgreso persistenciaProgreso;
+	private static final String progresoFile = "src\\datos\\progreso.json";
+	private static final String feedbackFile = "src\\datos\\feedback.json";
 	private static final String actividadesFile = "src\\datos\\activities.json";
 	private static final String learningPathsFile = "src\\datos\\learning_paths.json";
 	private static final String usuarios = "src\\datos\\users.json";
@@ -49,6 +55,9 @@ class EstudianteTest {
 		persistenciaActividades = new PersistenciaActividades();
 		persistenciaUsuarios = new PersistenciaUsuarios();
 		persistenciaLearningPaths = new PersistenciaLearningPaths();
+		persistenciaFeedback = new PersistenciaFeedback();
+		persistenciaProgreso = new PersistenciaProgreso();
+		
 
 		try {
 		    // Cargar datos desde los archivos
@@ -57,6 +66,9 @@ class EstudianteTest {
 		    learningPaths = persistenciaLearningPaths.cargarLearningPath(learningPathsFile);
 		    actividades = persistenciaActividades.cargarActividades(actividadesFile);
 		    persistenciaLearningPaths.cargarActividadesDelLearningPath(actividades, learningPaths);
+		    feedback = persistenciaFeedback.cargarFeedback(feedbackFile);
+		    progreso = persistenciaProgreso.cargarProgreso(progresoFile);
+		    
 		    
 		    // Probar persistencia de quiz
 		    ArrayList<String> actividadesID = new ArrayList<>();
@@ -149,7 +161,9 @@ class EstudianteTest {
 			Actividad actividadCreada3 = profesor.crearActividad("A102", "Descripcion", "Objetivos", 3, 120, true, date,
 					"reseña", 0, 0, "Tarea", "LP106", actividadesPrevias, actividadesSeguimiento, atributosEspecificos,
 					"A103");
-
+			
+			estudiantePrueba = estudiante;
+		    learningPath = createdLearningPath;
 		    profesor.CalificacionMinima("A110", 60.1);
 
 		    estudiante.inscribirLearningPath("LP106", "P105");
@@ -169,8 +183,7 @@ class EstudianteTest {
 		        actividadesID2.add(actividad.getActividadID());
 		       
             }
-		    estudiantePrueba = estudiante;
-		    learningPath = createdLearningPath;
+		    
 		    
 		    Examen examen = new Examen("A102", "Examen Descripcion", "Examen Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0.5);
 		    Encuesta encuesta = new Encuesta("A103", "Encuesta Descripcion", "Encuesta Objetivo", 3, 120, true, new Date(), "reseña", 0, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
