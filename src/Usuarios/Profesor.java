@@ -106,7 +106,7 @@ public class Profesor extends Usuario {
 	        
 	        actividad = encuesta;
 	
-	    } else if (tipo.equals("RecursoEducativo")) {
+	    } else if (tipo.equals("Recurso Educativo")) {
 	        String tipoRecurso = parametrosEspecificos.get("tipoRecurso") != null ? (String) parametrosEspecificos.get("tipoRecurso") : "";
 	        String linkRecurso = parametrosEspecificos.get("linkRecurso") != null ? (String) parametrosEspecificos.get("linkRecurso") : "";
 	        RecursoEducativo recurso = new RecursoEducativo(actividadID, descripcion, objetivo, nivelDificultad, duracionEsperada,

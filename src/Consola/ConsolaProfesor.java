@@ -313,7 +313,7 @@ public class ConsolaProfesor {
 		        duracionEsperada, esObligatoria, fechaLimite, resenas,
 		        resultado, calificacion, tipo, learningPathID, actividadesPrevia, actividadesSeguimiento,
 		        parametrosEspecificos, actividadPrevia);
-		
+	
 		persistenciaActividades.salvarActividad(actividadesFile, actividad);
 		
 		} else if (tipo.equals("Tarea")) {

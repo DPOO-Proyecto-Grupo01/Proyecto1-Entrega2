@@ -202,9 +202,9 @@ public class JFrameQuiz extends JFrame {
                     }
 
                     HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-                    parametrosEspecificos.put("preguntas", preguntas);
-                    parametrosEspecificos.put("respuestasCorrectas", respuestasCorrectas);
-                    parametrosEspecificos.put("calificacionMinima", calificacionMinima);
+                    //parametrosEspecificos.put("preguntas", preguntas);
+                    //parametrosEspecificos.put("respuestasCorrectas", respuestasCorrectas);
+                    //parametrosEspecificos.put("calificacionMinima", calificacionMinima);
 
                     // Crear el Quiz a través de ConsolaProfesor
                     ConsolaProfesor.crearActividad(

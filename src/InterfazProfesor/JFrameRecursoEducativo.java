@@ -77,7 +77,7 @@ public class JFrameRecursoEducativo extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         inputPanel.add(actividadesSeguimientoField, gbc);
 
-        
+
         JScrollPane scrollPane = new JScrollPane(inputPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
@@ -91,14 +91,69 @@ public class JFrameRecursoEducativo extends JFrame {
                     String actividadID = actividadIDField.getText().trim();
                     String descripcion = descripcionField.getText().trim();
                     String objetivo = objetivoField.getText().trim();
-                    int nivelDificultad = Integer.parseInt(nivelDificultadField.getText().trim());
-                    int duracion = Integer.parseInt(duracionEsperadaField.getText().trim());
+                    
+                    // Validación de campos numéricos
+                    int nivelDificultad;
+                    try {
+                        nivelDificultad = Integer.parseInt(nivelDificultadField.getText().trim());
+                        if (nivelDificultad < 0 || nivelDificultad > 10) {
+                            JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "El nivel de dificultad debe estar entre 0 y 10.");
+                            return;
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "El nivel de dificultad debe ser un número entero entre 0 y 10.");
+                        return;
+                    }
+
+                    int duracion;
+                    try {
+                        duracion = Integer.parseInt(duracionEsperadaField.getText().trim());
+                        if (duracion <= 0) {
+                            JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "La duración esperada debe ser un valor positivo.");
+                            return;
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "La duración esperada debe ser un número entero positivo.");
+                        return;
+                    }
+
                     boolean esObligatoria = obligatoriaCheck.isSelected();
-                    Date fechaLimite = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimiteField.getText().trim());
+                    
+                    Date fechaLimite;
+                    try {
+                        fechaLimite = new SimpleDateFormat("dd/MM/yyyy").parse(fechaLimiteField.getText().trim());
+                    } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "Error: Formato de fecha incorrecto. Use dd/MM/yyyy.");
+                        return;
+                    }
+
                     String resenas = resenasField.getText().trim();
-                    double resultado = Double.parseDouble(resultadoField.getText().trim());
-                    int calificacion = Integer.parseInt(calificacionMinimaField.getText().trim());
+                    
+                    double resultado;
+                    try {
+                        resultado = Double.parseDouble(resultadoField.getText().trim());
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "El resultado debe ser un número válido.");
+                        return;
+                    }
+
+                    int calificacion;
+                    try {
+                        calificacion = Integer.parseInt(calificacionMinimaField.getText().trim());
+                        if (calificacion < 0 || calificacion > 100) { // Asumiendo calificación entre 0 y 100
+                            JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "La calificación mínima debe estar entre 0 y 100.");
+                            return;
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "La calificación mínima debe ser un número entero.");
+                        return;
+                    }
+
                     String learningPathID = learningPathField.getText().trim();
+                    if (learningPathID.isEmpty()) {
+                        JOptionPane.showMessageDialog(JFrameRecursoEducativo.this, "Debe ingresar el Learning Path ID.");
+                        return;
+                    }
 
                     // Obtener campos específicos para Recurso Educativo
                     String tipoRecurso = tipoRecursoField.getText().trim();
@@ -142,9 +197,8 @@ public class JFrameRecursoEducativo extends JFrame {
 
                     // Preparar parámetros específicos para el Recurso Educativo
                     HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-                    parametrosEspecificos.put("tipoRecurso", tipoRecurso);
-                    parametrosEspecificos.put("linkRecurso", linkRecurso);
-                    
+                    //parametrosEspecificos.put("tipoRecurso", tipoRecurso);
+                    //parametrosEspecificos.put("linkRecurso", linkRecurso);
 
                     // Crear el Recurso Educativo a través de ConsolaProfesor
                     ConsolaProfesor.crearActividad(

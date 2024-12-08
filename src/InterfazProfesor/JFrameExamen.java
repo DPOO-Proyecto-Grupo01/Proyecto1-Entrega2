@@ -175,8 +175,8 @@ public class JFrameExamen extends JFrame {
                     int calificacionMinimaEspecifica = Integer.parseInt(calificacionMinimaEspecificaStr);
 
                     HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-                    parametrosEspecificos.put("preguntas", preguntas);
-                    parametrosEspecificos.put("calificacionMinimaEspecifica", calificacionMinimaEspecifica);
+                    //parametrosEspecificos.put("preguntas", preguntas);
+                    //parametrosEspecificos.put("calificacionMinimaEspecifica", calificacionMinimaEspecifica);
 
                     ConsolaProfesor.crearActividad(
                             actividadID, descripcion, objetivo, nivelDificultad, duracion, esObligatoria,

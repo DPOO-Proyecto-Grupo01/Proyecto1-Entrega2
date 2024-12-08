@@ -188,9 +188,9 @@ public class JFrameTarea extends JFrame {
 
                     // Preparar parámetros específicos para la Tarea
                     HashMap<String, Object> parametrosEspecificos = new HashMap<>();
-                    parametrosEspecificos.put("preguntas", preguntas);
-                    parametrosEspecificos.put("instrucciones", instrucciones);
-                    parametrosEspecificos.put("estado", estado);
+                    //parametrosEspecificos.put("preguntas", preguntas);
+                    //parametrosEspecificos.put("instrucciones", instrucciones);
+                    //parametrosEspecificos.put("estado", estado);
 
                     // Crear la Tarea a través de ConsolaProfesor
                     ConsolaProfesor.crearActividad(
