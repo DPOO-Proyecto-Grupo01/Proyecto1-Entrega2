@@ -226,7 +226,7 @@ public class LearningPath {
 
 
 	public double actualizarProgreso(Progreso progreso, List<Actividad> actividades) throws Exception {
-		exitosas+=1;
+		exitosas+=3;
 		double porcentajeExitosas = ((double)exitosas/actividades.size());
 		
 		
