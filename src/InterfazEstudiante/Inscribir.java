@@ -105,10 +105,11 @@ public class Inscribir extends JPanel {
 
                     // Obtener el título del Learning Path inscrito
                     String learningPathTitulo = (String) comboLearningPaths.getSelectedItem();
+                    
                     padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
                     
 
-                } catch (LearningPathNoInscrito ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }

@@ -13,7 +13,7 @@ public class panelBotones extends JPanel {
 	public static final String VER_PROGRESO = "Ver progreso de un learningPath";
 	public static final String VER_ACTIVIDADES = "Ver actividades por completar";
 	public static final String ENVIAR_FEEDBACK = "Enviar Feedback";
-	public static final String SALIR = "Salir";
+	
 	public static final String INICIAR_SESION = "Iniciar Sesion";
 
 	private JButton btnInscribir;
@@ -21,7 +21,7 @@ public class panelBotones extends JPanel {
 	private JButton btnVerProgreso;
 	private JButton btnVerActividades;
 	private JButton btnEnviarFeedback;
-	private JButton btnSalir;
+	
 	private JButton btnIniciarSesion;
 
 	private EstudianteInterfaz padre;
@@ -36,7 +36,7 @@ public class panelBotones extends JPanel {
 		btnVerProgreso = new JButton(VER_PROGRESO);
 		btnVerActividades = new JButton(VER_ACTIVIDADES);
 		btnEnviarFeedback = new JButton(ENVIAR_FEEDBACK);
-		btnSalir = new JButton(SALIR);
+		
 
 		add(btnIniciarSesion);
 		add(btnInscribir);
@@ -44,7 +44,7 @@ public class panelBotones extends JPanel {
 		add(btnVerProgreso);
 		add(btnVerActividades);
 		add(btnEnviarFeedback);
-		add(btnSalir);
+		
 
 		btnIniciarSesion.addActionListener(
 				e -> padre.getCardLayout().show(padre.getVentana().getContentPane(), "IniciarSesion"));
@@ -58,7 +58,7 @@ public class panelBotones extends JPanel {
 				e -> padre.getCardLayout().show(padre.getVentana().getContentPane(), "VerActividades"));
 		btnEnviarFeedback.addActionListener(
 				e -> padre.getCardLayout().show(padre.getVentana().getContentPane(), "EnviarFeedback"));
-		btnSalir.addActionListener(e -> padre.salir());
+		
 	}
 	
 	

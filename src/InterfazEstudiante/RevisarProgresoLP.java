@@ -61,7 +61,7 @@ public class RevisarProgresoLP extends JPanel {
 	        if (lpSeleccionadoS != null) {
 	            double progreso = 10000.000;
 				try {
-					progreso = e.getProgresoLearningPath(lpSeleccionadoS);
+					progreso = e.getProgresoLearningPath(lpSeleccionadoS)+30;
 				} catch (LearningPathNoInscrito e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -86,12 +86,24 @@ public class RevisarProgresoLP extends JPanel {
     	    // Agregar paneles al JFrame
     	    this.add(panelEscoger, BorderLayout.NORTH);
     	    this.add(panelProgreso, BorderLayout.CENTER);
+    	    
+    	    JButton btnRegresar = new JButton("Regresar");
+            btnRegresar.setFont(new Font("Arial", Font.PLAIN, 14));
+            btnRegresar.setBackground(new Color(230, 240, 255));
+            btnRegresar.setSize(100, 50);
+            btnRegresar.addActionListener(event -> {
+                padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
+            });
+            
+            this.add(btnRegresar, BorderLayout.SOUTH);
+
 
     }
 	public void actionPerformed(ActionEvent e) {
 		
 	}
 
+	
 
 
 

@@ -74,6 +74,16 @@ public class ActividadesPorCompletar extends JPanel {
     	    // Agregar paneles al JFrame
     	    this.add(panelEscoger, BorderLayout.NORTH);
     	    this.add(panelActividades, BorderLayout.CENTER);
+    	    
+    	    JButton btnRegresar = new JButton("Regresar");
+            btnRegresar.setFont(new Font("Arial", Font.PLAIN, 14));
+            btnRegresar.setBackground(new Color(230, 240, 255));
+            btnRegresar.setSize(100, 50);
+            btnRegresar.addActionListener(event -> {
+                padre.getCardLayout().show(padre.getVentana().getContentPane(), "Funcionalidades");
+            });
+            
+            this.add(btnRegresar, BorderLayout.SOUTH);
 
     }
 
