@@ -226,7 +226,7 @@ public class LearningPath {
 
 
 	public double actualizarProgreso(Progreso progreso, List<Actividad> actividades) throws Exception {
-		exitosas+=3;
+		exitosas+=30;
 		double porcentajeExitosas = ((double)exitosas/actividades.size());
 		
 		
@@ -237,7 +237,7 @@ public class LearningPath {
 	}
 	
 	public Progreso obtenerProgresoEstudiante(String estudianteID) {
-		System.out.print(progresoEstudiante);
+		
 		return progresoEstudiante.get(estudianteID);
 	}
 

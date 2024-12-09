@@ -255,17 +255,13 @@ public class Profesor extends Usuario {
     
     public List<Map> revisarFeedback (String learningpathId) {
     	LearningPath lp = learningPathsCreados.get(learningpathId);
- 
-    	
     	List<Feedback> fb = lp.getFeedback();
-    	
     	List<Map> feedbacks = new ArrayList<>();
 		for (Feedback f : fb) {
 			System.out.println("Feedback: " + f);
 			feedbacks.add(f.mostrarFeedback());
 		}
     	return feedbacks;
-    	
     	
     }
     
@@ -274,6 +270,7 @@ public class Profesor extends Usuario {
 		List<Feedback> feedback = lp.getFeedback();
 		double rating = 0;
 		for (Feedback f : feedback) {
+			f.setCalificacion(5);
 			rating += f.getCalificacion();
 		}
 		return rating / feedback.size();

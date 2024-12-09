@@ -51,6 +51,9 @@ public class Feedback {
 		return calificacion;
 	}
 	
+	public void setCalificacion(int calificacion) {
+		this.calificacion = calificacion;
+	}
 
 	public String getEstudiante() {
 		return estudiante;

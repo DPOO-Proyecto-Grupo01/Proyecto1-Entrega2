@@ -127,6 +127,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
         
         try {
         persistenciaLearningPaths.actualizarLearningPathEstudiante(learningPathEstudiante);
+        persistenciaLearningPaths.actualizarLearningPathEstudiante(learningPath);
         persistenciaProgreso.actualizarProgreso(progreso);
 		for (Actividad actividad : actividadesLPE.values()) {
 			persistenciaActividades.actualizarActividadesEstudiante(actividad);
@@ -468,6 +469,7 @@ public Map<String, String> inscribirLearningPath(String LearningPathID, String p
             if (act.getEstado()== null ) {
             	actividadesPrevias2.add(act.getActividadID());
             	res= actividadesPrevias2;
+            	
                 
             }}
 		
